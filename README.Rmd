@@ -1,0 +1,35 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# tidyraster
+
+Extract cells from rasters and get a nice data frame.
+
+```{r}
+library(tidyraster)
+library(raster)
+library(dplyr)
+r <- raster(volcano)
+p <- rasterToPolygons(r %/% 15, dissolve = TRUE)
+x <- cellnumbers(r, p)
+
+x
+
+xweight <- cellnumbers(r, p, weights = TRUE)
+xweight  %>% group_by(i_)  %>% summarize(sum(weight))
+
+
+b <- brick(raster(volcano), raster(volcano * 2))
+
+```

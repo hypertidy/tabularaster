@@ -1,0 +1,15 @@
+Package: tidyraster
+Type: Package
+Title: Extract Cell Numbers from Rasters as Tidy Data
+Version: 0.1.0.9001
+Authors@R: c(
+    person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
+    )
+Description: Extract cell numbers from raster data and return the cells, values
+and weights as a data frame (rather than as lists of matrices or vectors.)
+License: GPL-3
+LazyData: TRUE
+Imports:
+    dplyr,
+    raster
+RoxygenNote: 5.0.1
