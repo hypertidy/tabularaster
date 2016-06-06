@@ -2,6 +2,9 @@
 output: github_document
 ---
 
+[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tidyraster.svg?branch=master)](https://travis-ci.org/mdsumner/tidyraster)
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
@@ -21,7 +24,7 @@ library(tidyraster)
 library(raster)
 library(dplyr)
 r <- raster(volcano)
-p <- rasterToPolygons(r %/% 15, dissolve = TRUE)
+p <- rasterToPolygons(r %/% 15, dissolve = TRUE)[c(4, 5), ]
 x <- cellnumbers(r, p)
 
 x

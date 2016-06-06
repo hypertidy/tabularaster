@@ -1,14 +1,13 @@
 #' Extract cell numbers from a Raster object.
 #'
 #' Currently only for single layer objects.
-#' @param object Raster object
+#' @param x Raster object
 #' @param ... arguments passed on
-#' @param p Spatial polygons object
+#' @param query Spatial object or matrix of coordinates
 #' @return tbl_df data frame
 #' @export
 #' @importFrom dplyr bind_rows
-#' @importFrom raster extract
-#' @examples
+#' @importFrom raster cellFromPolygon cellFromLine cellFromXY
 cellnumbers <- function(x, query, ...) {
 
   if (inherits(query, "SpatialPolygons")) {

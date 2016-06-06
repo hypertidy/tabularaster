@@ -2,27 +2,21 @@
 % Please edit documentation in R/cellnumbers.R
 \name{cellnumbers}
 \alias{cellnumbers}
-\alias{pcellnumbers}
-\alias{pwcellnumbers}
-\title{Title}
+\title{Extract cell numbers from a Raster object.}
 \usage{
-cellnumbers(x, ...)
-
-pcellnumbers(x, p)
-
-pwcellnumbers(x, p)
+cellnumbers(x, query, ...)
 }
 \arguments{
 \item{x}{Raster object}
 
-\item{...}{arguments to extract}
+\item{query}{Spatial object or matrix of coordinates}
 
-\item{p}{Spatial polygons object}
+\item{...}{arguments passed on}
 }
 \value{
 tbl_df data frame
 }
 \description{
-Title
+Currently only for single layer objects.
 }
 
