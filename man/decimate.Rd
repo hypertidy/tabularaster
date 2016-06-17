@@ -21,6 +21,7 @@ Reduce the resolution of a \code{\link[raster]{raster}} by ruthless decimation.
 This is fast, it's just fast extraction with total impunity.
 }
 \examples{
+library(raster)
 plot(decimate(raster(volcano)))
 contour(raster(volcano), add = TRUE)
 }
