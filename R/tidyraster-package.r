@@ -7,7 +7,7 @@ NULL
 #' The raster volcano.
 #'
 #' See data-raw/rastercano.r in the source repository.
-#' @format A \link[raster]{raster} created from the \code{\link[datasest]{volcano}} data.
+#' @format A \link[raster]{raster} created from the \code{\link[datasets]{volcano}} data.
 "rastercano"
 
 #' The raster volcano as polygons.

@@ -28,6 +28,7 @@ bufext <- function(e1, e2) {
 #' @export
 #' @seealso base::as.double
 #' @examples
+#' library(raster)
 #' as.double(extent(0, 1, 0, 1))
 #' as.numeric(extent(0, 1, 0, 1))
 #' as.integer(extent(0, 1, 0, 1) + c(2.5, 27.877, 100, 999.1))

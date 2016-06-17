@@ -24,6 +24,7 @@ Coerce a \code{\link[raster]{extent}} to an atomic vector of \code{c(xmin(x), xm
 Note that \code{as.integer} results in truncation, see rasterOps for positive buffering.
 }
 \examples{
+library(raster)
 as.double(extent(0, 1, 0, 1))
 as.numeric(extent(0, 1, 0, 1))
 as.integer(extent(0, 1, 0, 1) + c(2.5, 27.877, 100, 999.1))
