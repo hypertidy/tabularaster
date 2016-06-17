@@ -1,4 +1,6 @@
-# tidyraster 0.1.0.9001
+
+
+# tidyraster 0.2.0
 
 * new data sets rastercano and polycano
 

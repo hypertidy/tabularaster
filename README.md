@@ -5,7 +5,20 @@
 tidyraster
 ==========
 
+The `raster` package is extremely powerful in the R ecosystem for spatial data. It can be used very efficiently to drive data extraction and summary tools using its consistent cell-index and comprehensive helper functions for converting between cell values and less abstract raster grid properties.
+
+Tidyraster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query.
+
+Tidyraster provides:
+
+-   extraction of cells as a simple data frame with "object ID" and "cell index"
+-   a "buffer extent" capability to snap an extent to a tidy "whole grain" alignment
+-   a "decimate" function for fast as possible resolution reduction
+
+If this seems a little miscellaneous, well it is but it's at least a tidy place to collect these functions while I figure out where they belong. There are some parts, especially the dumb sharkcano joke that have some overlap with the "quadmesh" package.
+
 Extract cells from rasters and get a nice data frame.
+=====================================================
 
 ``` r
 library(tidyraster)
@@ -64,4 +77,63 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 ## weights not workin
 #xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
 #xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
+```
+
+Buffer "out" an extent to a whole grain
+=======================================
+
+``` r
+wholegrain <- 2400
+(untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
+#> class       : Extent 
+#> xmin        : -201.9481 
+#> xmax        : 19.74113 
+#> ymin        : 42.06818 
+#> ymax        : 91.96424
+
+(tidyextent <- bufext(untidyextent, wholegrain))
+#> class       : Extent 
+#> xmin        : -2400 
+#> xmax        : 2400 
+#> ymin        : 0 
+#> ymax        : 2400
+```
+
+Decimate
+========
+
+It may be that `raster::aggregate` is better than `decimate`.
+
+``` r
+(r <- raster(volcano))
+#> class       : RasterLayer 
+#> dimensions  : 87, 61, 5307  (nrow, ncol, ncell)
+#> resolution  : 0.01639344, 0.01149425  (x, y)
+#> extent      : 0, 1, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : NA 
+#> data source : in memory
+#> names       : layer 
+#> values      : 94, 195  (min, max)
+decimate(r, dec = 6)
+#> class       : RasterLayer 
+#> dimensions  : 14, 10, 140  (nrow, ncol, ncell)
+#> resolution  : 0.09836066, 0.06896552  (x, y)
+#> extent      : 0, 0.9836066, 0.03448276, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : NA 
+#> data source : in memory
+#> names       : layer 
+#> values      : 95, 189  (min, max)
+
+(r2 <- disaggregate(r, fact = 25))
+#> class       : RasterLayer 
+#> dimensions  : 2175, 1525, 3316875  (nrow, ncol, ncell)
+#> resolution  : 0.0006557377, 0.0004597701  (x, y)
+#> extent      : 0, 1, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : NA 
+#> data source : in memory
+#> names       : layer 
+#> values      : 94, 195  (min, max)
+system.time(decimate(r2, 25))
+#>    user  system elapsed 
+#>    0.45    0.07    0.51
 ```
