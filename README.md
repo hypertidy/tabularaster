@@ -1,4 +1,6 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tidyraster.svg?branch=master)](https://travis-ci.org/mdsumner/tidyraster)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 tidyraster
 ==========
@@ -21,173 +23,45 @@ library(dplyr)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
-r <- raster(volcano)
-p <- rasterToPolygons(r %/% 15, dissolve = TRUE)
-#> Loading required namespace: rgeos
-x <- cellnumbers(r, p)
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
+data("rastercano")
+data("polycano")
+cells <- cellnumbers(rastercano, polycano[4:5, ])
 
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
 
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-x
-#> Source: local data frame [5,307 x 3]
+cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
+#> Source: local data frame [235 x 2]
 #> 
-#>       i_  cell layer
-#>    (chr) (dbl) (dbl)
-#> 1      1   519   152
-#> 2      1   520   152
-#> 3      1   521   151
-#> 4      1   522   151
-#> 5      1   523   150
-#> 6      1   577   150
-#> 7      1   578   151
-#> 8      1   579   156
-#> 9      1   580   158
-#> 10     1   581   159
-#> ..   ...   ...   ...
-
-xweight <- cellnumbers(r, p, weights = TRUE)
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-
-#> Warning in `[<-`(`*tmp*`, cnt, value = p@polygons[[i]]@Polygons[[j]]):
-#> implicit list embedding of S4 objects is deprecated
-xweight  %>% group_by(i_)  %>% summarize(sum(weight))
-#> Source: local data frame [8 x 2]
+#>    object_ cell_
+#>      (chr) (dbl)
+#> 1        1  1129
+#> 2        1  1190
+#> 3        1  1251
+#> 4        2     1
+#> 5        2     2
+#> 6        2     3
+#> 7        2     4
+#> 8        2     5
+#> 9        2     6
+#> 10       2     7
+#> ..     ...   ...
+cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
+#> Source: local data frame [331 x 2]
 #> 
-#>      i_ sum(weight)
-#>   (chr)       (dbl)
-#> 1     1           1
-#> 2     2           1
-#> 3     3           1
-#> 4     4           1
-#> 5     5           1
-#> 6     6           1
-#> 7     7           1
-#> 8     8           1
+#>    object_ cell_
+#>      (chr) (dbl)
+#> 1        1  1129
+#> 2        2  1129
+#> 3        3  1251
+#> 4        4  1251
+#> 5        5  1129
+#> 6        6  1098
+#> 7        7  1098
+#> 8        8  1098
+#> 9        9  1098
+#> 10      10  1037
+#> ..     ...   ...
 
-
-b <- brick(raster(volcano), raster(volcano * 2))
+## weights not workin
+#xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
+#xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
 ```

@@ -23,16 +23,17 @@ Extract cells from rasters and get a nice data frame.
 library(tidyraster)
 library(raster)
 library(dplyr)
-r <- raster(volcano)
-p <- rasterToPolygons(r %/% 15, dissolve = TRUE)[c(4, 5), ]
-x <- cellnumbers(r, p)
-
-x
-
-xweight <- cellnumbers(r, p, weights = TRUE)
-xweight  %>% group_by(i_)  %>% summarize(sum(weight))
+data("rastercano")
+data("polycano")
+cells <- cellnumbers(rastercano, polycano[4:5, ])
 
 
-b <- brick(raster(volcano), raster(volcano * 2))
+cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
+cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
+
+## weights not workin
+#xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
+#xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
+
 
 ```

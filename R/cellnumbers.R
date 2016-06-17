@@ -19,13 +19,14 @@ cellnumbers <- function(x, query, ...) {
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     a <- cellFromXY(x, query)
   }
-  d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "i_")
+  d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "object_")
+  if (ncol(d) == 2L) names(d) <- c("object_", "cell_")
+  if (ncol(d) == 3L) names(d) <- c("object_", "cell_", "weight_")
   d
 
 }
 
-
-## general extarct?
+## general extract?
 
 # args <- list(...)
 # args$cellnumbers <- TRUE
