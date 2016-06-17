@@ -8,7 +8,9 @@ Authors@R: c(
 Description: Extract cell numbers from raster data and return the cells, values and weights as a data frame (rather than as lists of matrices or vectors.)
 License: GPL-3
 LazyData: TRUE
+Depends: R (>= 3.2.5)
 Imports:
     dplyr,
-    raster
+    raster,
+    sp
 RoxygenNote: 5.0.1
