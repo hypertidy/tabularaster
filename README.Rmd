@@ -2,8 +2,8 @@
 output: github_document
 ---
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tidyraster.svg?branch=master)](https://travis-ci.org/mdsumner/tidyraster)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/tidyraster?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/tidyraster)
+[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tabularaster.svg?branch=master)](https://travis-ci.org/mdsumner/tabularaster)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/tabularaster)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -15,14 +15,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# tidyraster
+# tabularaster
 
 The `raster` package is extremely powerful in the R ecosystem for spatial data. It can be used very efficiently to 
 drive data extraction and summary tools using its consistent cell-index and comprehensive helper functions for converting between cell values and less abstract raster grid properties. 
 
-Tidyraster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query. 
+Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query. 
 
-Tidyraster provides: 
+Tabularaster provides: 
 
 - extraction of cells as a simple data frame with "object ID" and "cell index"
 - a "buffer extent" capability to snap an extent to a tidy "whole grain" alignment
