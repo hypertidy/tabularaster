@@ -8,6 +8,8 @@
 
 #' library(raster)
 #' library(maptools)
+#' library(tibble)
+#' library(dplyr)
 #' data(wrld_simpl)
 #' r <- rasterize(wrld_simpl, raster(nrow = 256, ncol = 512))
 #' x <- rastertab(r)
@@ -21,7 +23,6 @@ celltab <- function(x) {
   tibble(cell = seq(ncell(x)))
 }
 
-library(tibble)
 rasterfrom1row <- function(x) {
   do.call(raster, x[, c("xmn", "xmx", "ymn", "ymx", "nrow", "ncol", "crs")])
 }
@@ -32,7 +33,7 @@ rastertab.RasterLayer <- function(x) {
                     nrow = nrow(x), ncol = ncol(x), 
                     crs = projection(x), 
                     metadata = levels(x), 
-                    cells = list(dplyr::bind_cols(datatab(x), celltab(x))))
+                    cells = list(dplyr::bind_cols(datatab(x), celltab(x)) %>% filter(!is.na(val)))
 
 
  class(x) <- c("rastertab", class(x))
