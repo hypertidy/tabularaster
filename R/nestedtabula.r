@@ -1,4 +1,10 @@
 ## create a nested raster in a single row with all metadata and attribute table
+## the idea was born from thinking about a single row table, 
+## representing a single cell that is the entire extent
+## with recursively nested tables that store progressing detailed versions
+
+## this could easily be flattened into a single table, with cell, level, value - as in Eonfusion
+## but the ability to store an entire ecosystem of rasters in a single table is interesting
 
 #' library(raster)
 #' library(maptools)
