@@ -47,4 +47,4 @@ cls <- cellFromXY(template, coordinates(r))
 #library(RSQLite)
 #db <- src_sqlite("etopo2.sqlite3", create = TRUE)
 #copy_to(db, tab)
-Contact GitHub 
+#Contact GitHub 
