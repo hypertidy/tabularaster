@@ -26,20 +26,20 @@ celltab <- function(x) {
 rasterfrom1row <- function(x) {
   do.call(raster, x[, c("xmn", "xmx", "ymn", "ymx", "nrow", "ncol", "crs")])
 }
-rastertab <- function(x, ...) UseMethod("rastertab")
-rastertab.RasterLayer <- function(x) {
- x <- tibble(xmn = xmin(x), xmx = xmax(x), 
-                    ymn = ymin(x), ymx = ymax(x), 
-                    nrow = nrow(x), ncol = ncol(x), 
-                    crs = projection(x), 
-                    metadata = levels(x), 
-                    cells = list(dplyr::bind_cols(datatab(x), celltab(x)) %>% filter(!is.na(val)))
+#rastertab <- function(x, ...) UseMethod("rastertab")
+#rastertab.RasterLayer <- function(x) {
+# x <- tibble(xmn = xmin(x), xmx = xmax(x), 
+#                    ymn = ymin(x), ymx = ymax(x), 
+#                    nrow = nrow(x), ncol = ncol(x), 
+#                    crs = projection(x), 
+#                    metadata = levels(x), 
+#                    cells = list(dplyr::bind_cols(datatab(x), celltab(x)) %>% filter(!is.na(val)))
 
 
- class(x) <- c("rastertab", class(x))
+ #class(x) <- c("rastertab", class(x))
 
- x
-}
+# x
+#}
 plot.rastertab <- function(x, y = 1, ...) {
   stopifnot(length(y) == 1)
   x <- x[1L, ]
