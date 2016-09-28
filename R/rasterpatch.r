@@ -1,11 +1,11 @@
 ## may well be that this is already in the other functions of tabularaster
 
 
-## example data
-r <- raster(volcano)
-## intervals (with +/- to ensure closed interval contains all raster values)
-ints <- c(93, 110, 140, 160, 196)
-rc <- cut(r, ints)
+# ## example data
+# r <- raster(volcano)
+# ## intervals (with +/- to ensure closed interval contains all raster values)
+# ints <- c(93, 110, 140, 160, 196)
+# rc <- cut(r, ints)
 
 patches <- function(x) {
   cells <- data_frame(cell = seq(ncell(x)))
@@ -22,4 +22,4 @@ patches <- function(x) {
   x
 }
 
-rp <- patches(rc)
+#rp <- patches(rc)
