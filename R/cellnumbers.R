@@ -7,9 +7,12 @@
 #' @return tbl_df data frame
 #' @export
 #' @importFrom dplyr bind_rows
-#' @importFrom raster cellFromPolygon cellFromLine cellFromXY
+#' @importFrom raster cellFromPolygon cellFromLine cellFromXY projection
 cellnumbers <- function(x, query, ...) {
 
+  if (projection(x) != projection(query)) {
+    warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
+  }
   if (inherits(query, "SpatialPolygons")) {
     a <- cellFromPolygon(x, query, ...)
   }
