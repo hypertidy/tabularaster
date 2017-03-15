@@ -49,30 +49,8 @@ as_raster <- function(x, ...) UseMethod("as_raster")
   raster::raster(raster::extent(unlist(as.list(tabula_transform(x))[c("xmin", "xmax", "ymin", "ymax")])), 
                  nrow = tabula_transform(x)$nrows, ncol = tabula_transform(x)$ncols)
  }
- sample_n.rasa <- function(x, ...) {
-   tt <- tabula_transform(x)
-   x <- add_cell_index(x) ## mutate(x, cell_index = row_number())
-   y <- NextMethod(x)
-   as_rasa_tibble(y, tt)
- }
-slice_.rasa <- function(x, ...) {
-  tt <- tabula_transform(x)
-  x <- add_cell_index(x) ## mutate(x, cell_index = row_number())
-  y <- NextMethod(x)
-  as_rasa_tibble(y, tt)
-}
-mutate_.rasa <- function(x, ...) {
-  tt <- tabula_transform(x)
-  y <- NextMethod(x)
-  as_rasa_tibble(y, tt)
-}
-filter_.rasa <- function(x, ...) {
-  tt <- tabula_transform(x)
-  x <- add_cell_index(x)
-#  x <- mutate(x, cell_index = row_number())
-  y <- NextMethod(x)
-  as_rasa_tibble(y, tt)
-}
+ 
+
 print.rasa <- function(x, ...) {
   print(tabula_transform(x))
   NextMethod(x)
@@ -100,4 +78,44 @@ tabula_transform.RasterLayer <- function(x, ...) {
 }
 tabula_transform.tbl_df <- function(x, ...) {
   x
+}
+
+
+unclass_rasa <- function(x, ...) {
+  attr(x, "tabula_transform") <- NULL
+  class(x) <- setdiff( class(x), "rasa")
+  x
+}
+as_tibble.rasa <- function(x, ...) {
+  as_tibble(unclass_rasa(x))
+}
+arrange_.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+count_.rasa <- function(x, ...) {
+  NextMethod()  ## what can count do?
+  #x <- add_cell_index(x)
+  #as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+#data_frame_
+distinct_.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+sample_n.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+slice_.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+mutate_.rasa <- function(x, ...) {
+  as_rasa_tibble(NextMethod(), tabula_transform(x))
+}
+filter_.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  x <- as_tibble(x)
+  as_rasa_tibble(filter_(x, ...), tabula_transform(x))
 }
