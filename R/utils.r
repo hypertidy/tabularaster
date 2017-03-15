@@ -1,6 +1,8 @@
-#' @importFrom dplyr as_data_frame
+#' @importFrom tibble as_tibble
 mat2d_f <- function(x) {
-
-  if (is.null(dim(x))) x <- matrix(x)
-  dplyr::as_data_frame(as.data.frame((x)))
+  
+  if (is.null(x)) {
+    return(NULL)
+  }
+  tibble::as_tibble(x)
 }

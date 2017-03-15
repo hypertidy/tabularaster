@@ -1,4 +1,6 @@
+## tabularaster dev
 
+* added boundary function
 
 # tidyraster 0.2.0
 
