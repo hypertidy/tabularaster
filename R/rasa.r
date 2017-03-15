@@ -11,6 +11,14 @@ rasa <- function(x, ...) {
 #' filter(tr, cell_value > 110)
 #' slice(tr, c(1000, 1001))
 #' plot(rasa(r) %>% filter(cell_value > 106) %>% slice(100:1000))
+#' 
+#' ## more realish
+#' library(maptools)
+#' data(wrld_simpl)
+#' r <- rasterize(wrld_simpl, raster(wrld_simpl, nrow = 360, ncol = 180))
+#' tr <- rasa(r) %>% filter(!is.na(cell_value))
+#' plot(tr %>% sample_n(15000))
+#' plot(tr %>% filter(cell_index > 3e4))
 rasa.RasterLayer <- function(x, ...) {
   out <- tibble::tibble(cell_value = attr(attr(x, "data"), "values"))
   as_rasa_tibble(out, tabula_transform(x))
@@ -40,7 +48,13 @@ as_raster <- function(x, ...) UseMethod("as_raster")
  as_raster.rasa <- function(x, ...) {
   raster::raster(raster::extent(unlist(as.list(tabula_transform(x))[c("xmin", "xmax", "ymin", "ymax")])), 
                  nrow = tabula_transform(x)$nrows, ncol = tabula_transform(x)$ncols)
-}
+ }
+ sample_n.rasa <- function(x, ...) {
+   tt <- tabula_transform(x)
+   x <- add_cell_index(x) ## mutate(x, cell_index = row_number())
+   y <- NextMethod(x)
+   as_rasa_tibble(y, tt)
+ }
 slice_.rasa <- function(x, ...) {
   tt <- tabula_transform(x)
   x <- add_cell_index(x) ## mutate(x, cell_index = row_number())
