@@ -16,4 +16,3 @@ Created in /data-raw/.
 data(voltab)
 plot(voltab, pch = 19, col = "#66666611")
 }
-

@@ -25,4 +25,3 @@ library(rastertable)
 r <- raster(volcano)
 rt <- rastertable(r)
 }
-

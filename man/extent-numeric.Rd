@@ -32,4 +32,3 @@ as.integer(extent(0, 1, 0, 1) + c(2.5, 27.877, 100, 999.1))
 \seealso{
 base::as.double
 }
-

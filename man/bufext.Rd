@@ -18,4 +18,3 @@ Ensure a raster extent aligns to whole parts.
 library(raster)
 bufext(extent(0.1, 2.2, 0, 3), 2)
 }
-

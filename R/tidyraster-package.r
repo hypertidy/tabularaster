@@ -33,7 +33,7 @@ NULL
 #' library(raster)
 #' rd <- attr(sharkcano, "rasterdim")
 #' rastershark <- raster(matrix(NA_integer_, rd[1], rd[2]))
-#' rastershark[sharkcano$cell] <- sharkcano$byte  ## byte, heh
+#' rastershark[sharkcano$cell_] <- sharkcano$byte  ## byte, heh
 #' ## I present to you, Sharkcano!  (Just wait for the 3D version, Quadshark).
 #' plot(rastercano)
 #' contour(rastershark, add = TRUE, labels = FALSE)

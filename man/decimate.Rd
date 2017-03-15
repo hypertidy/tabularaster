@@ -25,4 +25,3 @@ library(raster)
 plot(decimate(raster(volcano)))
 contour(raster(volcano), add = TRUE)
 }
-

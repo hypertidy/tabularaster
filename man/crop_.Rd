@@ -31,4 +31,3 @@ x <- voltab \%>\% crop_(c(0.5, 0.6, 0.1, 0.2))
 \seealso{
 \code{\link[raster]{crop}}
 }
-

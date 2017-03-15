@@ -19,4 +19,3 @@ tbl_df data frame
 \description{
 Currently only for single layer objects.
 }
-

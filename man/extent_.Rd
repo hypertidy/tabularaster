@@ -23,4 +23,3 @@ Return the extents of data values stored, as opposed to the full domain.
 \examples{
 extent_(voltab)
 }
-

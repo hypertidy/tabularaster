@@ -23,4 +23,3 @@ r <- rasterize(wrld_simpl, raster(nrow = 256, ncol = 512))
 x <- rastertab(r)
 plot(x, 6)
 }
-

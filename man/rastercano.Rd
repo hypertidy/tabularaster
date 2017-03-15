@@ -12,4 +12,3 @@ rastercano
 See data-raw/rastercano.r in the source repository.
 }
 \keyword{datasets}
-

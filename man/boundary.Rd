@@ -12,4 +12,3 @@ boundary(cds)
 \description{
 The first layer is treated as the X coordinate, second as Y.
 }
-

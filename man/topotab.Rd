@@ -33,4 +33,3 @@ g + scale_fill_gradient(low = "black", high = "white")
 g + scale_fill_gradientn(colours = topo.colors(100))
 
 }
-

@@ -21,7 +21,7 @@ The image was read in and all non-essential items dropped. The dimensions in \co
 library(raster)
 rd <- attr(sharkcano, "rasterdim")
 rastershark <- raster(matrix(NA_integer_, rd[1], rd[2]))
-rastershark[sharkcano$cell] <- sharkcano$byte  ## byte, heh
+rastershark[sharkcano$cell_] <- sharkcano$byte  ## byte, heh
 ## I present to you, Sharkcano!  (Just wait for the 3D version, Quadshark).
 plot(rastercano)
 contour(rastershark, add = TRUE, labels = FALSE)
@@ -35,4 +35,3 @@ This is the small version from here, see script in data-raw/sharkcano.r http://w
 Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennybc/free-photos
 }
 \keyword{datasets}
-
