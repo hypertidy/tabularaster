@@ -21,13 +21,15 @@ rasa <- function(x, ...) {
 #' plot(tr %>% filter(cell_index > 3e4))
 rasa.RasterLayer <- function(x, ...) {
   out <- tibble::tibble(cell_value = attr(attr(x, "data"), "values"))
-  as_rasa_tibble(out, tabula_transform(x))
+  as_rasa(out, tabula_transform(x))
 }
-as_rasa_tibble <- function(x, tt, ...) {
+as_rasa <- function(x, tt, ...) {UseMethod("as_rasa")}
+as_rasa.data.frame <- function(x, tt, ...) {
   class(x) <- c("rasa", class(x))
   attr(x, "tabula_transform") <- tabula_transform(tt)
   x
 }
+as_rasa.rasa <- function(x, tt, ...) x
 add_cell_index <- function(x, ...) {
   if (!"cell_index" %in% names(x)) {
     x[["cell_index"]] <- seq_len(nrow(x))
@@ -89,33 +91,57 @@ unclass_rasa <- function(x, ...) {
 as_tibble.rasa <- function(x, ...) {
   as_tibble(unclass_rasa(x))
 }
-arrange_.rasa <- function(x, ...) {
-  x <- add_cell_index(x)
-  as_rasa_tibble(NextMethod(), tabula_transform(x))
+arrange_.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
-count_.rasa <- function(x, ...) {
-  NextMethod()  ## what can count do?
-  #x <- add_cell_index(x)
-  #as_rasa_tibble(NextMethod(), tabula_transform(x))
+group_by_.rasa <- function (.data, ..., add = FALSE) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
+## count_.rasa ## not a generic
 #data_frame_
-distinct_.rasa <- function(x, ...) {
-  x <- add_cell_index(x)
-  as_rasa_tibble(NextMethod(), tabula_transform(x))
+# distinct_.rasa <- ## cannot do since cell_index gets dropped
+## function (.data, ..., .dots, .keep_all = FALSE) {
+#   tt <- tabula_transform(.data)
+#   .data <- add_cell_index(.data)
+#   as_rasa(NextMethod(), tt)
+# }
+rename_.rasa <- function (.data, ...) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
-sample_n.rasa <- function(x, ...) {
-  x <- add_cell_index(x)
-  as_rasa_tibble(NextMethod(), tabula_transform(x))
+select_.rasa <- function (.data, ...) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
-slice_.rasa <- function(x, ...) {
-  x <- add_cell_index(x)
-  as_rasa_tibble(NextMethod(), tabula_transform(x))
+transmute_.rasa <- function (.data, ...) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
-mutate_.rasa <- function(x, ...) {
-  as_rasa_tibble(NextMethod(), tabula_transform(x))
+sample_n.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
-filter_.rasa <- function(x, ...) {
-  x <- add_cell_index(x)
-  x <- as_tibble(x)
-  as_rasa_tibble(filter_(x, ...), tabula_transform(x))
+slice_.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
 }
+mutate_.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  #.data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
+} 
+filter_.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
+}
+
