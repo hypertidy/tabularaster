@@ -8,9 +8,19 @@
 #' @export
 #' @importFrom dplyr bind_rows
 #' @importFrom raster cellFromPolygon cellFromLine cellFromXY projection
+#' @examples 
+#' library(raster)
+#' r <- raster(volcano)
+#' cr <- cut(r,  pretty(values(r)))
+#' p <- raster::rasterToPolygons(cr, dissolve = TRUE)
+#' tt <- cellnumbers(cr, p)
+#' library(dplyr)
+#' tt %>% mutate(v = extract(r, cell_)) %>% 
+#' group_by(object_) %>% 
+#' summarize(mean(v)) %>% mutate(head(pretty(values(r)), -1))
 cellnumbers <- function(x, query, ...) {
-
-  if (projection(x) != projection(query)) {
+  if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
+  if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
   }
   if (inherits(query, "SpatialPolygons")) {
@@ -28,6 +38,7 @@ cellnumbers <- function(x, query, ...) {
   d
 
 }
+
 
 ## general extract?
 
