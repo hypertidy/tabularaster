@@ -37,6 +37,9 @@ as_rasa.data.frame <- function(x, tt, ...) {
 }
 as_rasa.rasa <- function(x, tt, ...) x
 add_cell_index <- function(x, ...) {
+  tt <- tabula_transform(x)
+  #nr <- unlist(tt[c("nrows", "ncols")])
+  #print(nr)
   if (!"cell_index" %in% names(x)) {
     #x[["cell_index"]] <- seq_len(nrow(x))
     x <- mutate(x, cell_index = row_number())
@@ -59,7 +62,15 @@ as_raster <- function(x, ...) UseMethod("as_raster")
                  nrow = tabula_transform(x)$nrows, ncol = tabula_transform(x)$ncols)
  }
  
-
+## convert the cell_index to xy form
+## rasa(sf) %>% xy_cell_index() %>% group_by(cell_index) %>% summarize(cell_value = max(cell_value)) %>% plot()
+xy_cell_index <- function(x, ...) UseMethod("xy_cell_index")
+xy_cell_index.rasa <- function(x, ...) {
+  x <- add_cell_index(x)
+  tt <- tabula_transform(x)
+  nr <- unlist(tt[c("nrows", "ncols")])
+  mutate(x, cell_index = ((cell_index - 1L) %% prod(nr)) + 1)
+}
 print.rasa <- function(x, ...) {
   print(tabula_transform(x))
   NextMethod(x)
@@ -137,6 +148,11 @@ sample_n.rasa <- function(.data, ..., .dots) {
   as_rasa(NextMethod(), tt)
 }
 slice_.rasa <- function(.data, ..., .dots) {
+  tt <- tabula_transform(.data)
+  .data <- add_cell_index(.data)
+  as_rasa(NextMethod(), tt)
+}
+summarise_.rasa <- function(.data, ..., .dots) {
   tt <- tabula_transform(.data)
   .data <- add_cell_index(.data)
   as_rasa(NextMethod(), tt)
