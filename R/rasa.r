@@ -23,6 +23,12 @@ rasa.RasterLayer <- function(x, ...) {
   out <- tibble::tibble(cell_value = attr(attr(x, "data"), "values"))
   as_rasa(out, tabula_transform(x))
 }
+rasa.RasterStackBrick <- function(x, ...) {
+  b <- bind_rows(lapply(seq_len(nlayers(x)), function(a) tibble::tibble(cell_value = attr(attr(x[[a]], "data"), "values"))), .id = "index")
+  b$cell_value <- b$cell_value * (as.integer(b$index) - 1)
+  b$index <- NULL
+  as_rasa(b, tabula_transform(x[[1L]]))
+}
 as_rasa <- function(x, tt, ...) {UseMethod("as_rasa")}
 as_rasa.data.frame <- function(x, tt, ...) {
   class(x) <- c("rasa", class(x))
@@ -32,7 +38,8 @@ as_rasa.data.frame <- function(x, tt, ...) {
 as_rasa.rasa <- function(x, tt, ...) x
 add_cell_index <- function(x, ...) {
   if (!"cell_index" %in% names(x)) {
-    x[["cell_index"]] <- seq_len(nrow(x))
+    #x[["cell_index"]] <- seq_len(nrow(x))
+    x <- mutate(x, cell_index = row_number())
   }
   x
 }

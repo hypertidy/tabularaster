@@ -8,7 +8,7 @@ Authors@R: c(
 Description: Treat rasters with tidy principles. Extract cell numbers from raster data and return the cells, values and weights as a data frame (rather than as lists of matrices or vectors.)
 License: GPL-3
 LazyData: TRUE
-Depends: R (>= 3.2.5)
+Depends: R (>= 3.2.5), ggplot2
 Imports:
     dplyr,
     raster,

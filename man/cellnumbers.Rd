@@ -19,3 +19,14 @@ tbl_df data frame
 \description{
 Currently only for single layer objects.
 }
+\examples{
+library(raster)
+r <- raster(volcano)
+cr <- cut(r,  pretty(values(r)))
+p <- raster::rasterToPolygons(cr, dissolve = TRUE)
+tt <- cellnumbers(cr, p)
+library(dplyr)
+tt \%>\% mutate(v = extract(r, cell_)) \%>\% 
+group_by(object_) \%>\% 
+summarize(mean(v)) \%>\% mutate(head(pretty(values(r)), -1))
+}
