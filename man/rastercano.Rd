@@ -4,7 +4,7 @@
 \name{rastercano}
 \alias{rastercano}
 \title{The raster volcano.}
-\format{A \link[raster]{raster} created from the \code{\link[datasets]{volcano}} data.}
+\format{A \link\link{raster}{raster} created from the \code{\link[datasets]{volcano}} data.}
 \usage{
 rastercano
 }

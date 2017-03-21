@@ -22,7 +22,7 @@ crop_(x, ...)
 rastertable
 }
 \description{
-The cells that fall within `y` are determined and the table is filtered to these.
+The cells that fall within \code{y} are determined and the table is filtered to these.
 If no rows are left . . . something something.
 }
 \examples{

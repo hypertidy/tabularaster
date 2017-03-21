@@ -1,7 +1,25 @@
+#' Create a rasa. 
+#' 
+#' A ... is a tibble storage mode for a "raster". This follows the model in the raster and sp packages where 
+#' raster cell values are stored in long form, in image-screen left-to-right, top-to-bottom order (same as used by GDAL). 
+#' 
+#' We are similar to sp in that the columns are for variables, rows are for observations. In raster this is muddled, since
+#' extra dimensions (e.g. time) are stored "wide" with a column for each "XY layer". Note that an RGB image is stored "wide"
+#' in raster too, so ultimately it cannot have time-layer or z-layer varying RGB or other multi-column data (like U- V- velocity
+#' vector components, or any multi-variable observations in higher than 2 dimensions). 
+#' @param x input model
+#' @para ... args for methods
+#' @name rasa
+#' @export
 rasa <- function(x, ...) {
   UseMethod("rasa")
 }
 
+#' Create a rasa. 
+#' 
+#' The `rasa` method for `raster::RasterLayer`
+#' @name rasa.RasterLayer
+#' @export
 #' @examples 
 #' r <- raster::raster(volcano)
 #' tr <- rasa(r)
@@ -25,7 +43,7 @@ rasa.RasterLayer <- function(x, ...) {
 }
 rasa.RasterStackBrick <- function(x, ...) {
   b <- bind_rows(lapply(seq_len(nlayers(x)), function(a) tibble::tibble(cell_value = attr(attr(x[[a]], "data"), "values"))), .id = "index")
-  b$cell_value <- b$cell_value * (as.integer(b$index) - 1)
+ # b$cell_value <- b$cell_value * (as.integer(b$index) - 1)
   b$index <- NULL
   as_rasa(b, tabula_transform(x[[1L]]))
 }
@@ -63,7 +81,7 @@ as_raster <- function(x, ...) UseMethod("as_raster")
  }
  
 ## convert the cell_index to xy form
-## rasa(sf) %>% xy_cell_index() %>% group_by(cell_index) %>% summarize(cell_value = max(cell_value)) %>% plot()
+## rasa(sf) %>% xy_cell_index() %>% group_by(cell_index) %>% summarize(cell_value = min(cell_value)) %>% plot()
 xy_cell_index <- function(x, ...) UseMethod("xy_cell_index")
 xy_cell_index.rasa <- function(x, ...) {
   x <- add_cell_index(x)

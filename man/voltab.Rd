@@ -6,8 +6,8 @@
 \title{Volcano raster map in rastertable form.}
 \description{
 This table is a raster with 61 columns and 87 rows, see \code{\link{volcano}}.
-The values are stored in columns `cell_` and `value_` using the left-right top-bottom convention used by the raster package.
-The raster skeleton of this is stored as an attribute `rtemplate`.
+The values are stored in columns \code{cell_} and \code{value_} using the left-right top-bottom convention used by the raster package.
+The raster skeleton of this is stored as an attribute \code{rtemplate}.
 }
 \details{
 Created in /data-raw/.

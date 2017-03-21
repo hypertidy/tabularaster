@@ -4,7 +4,7 @@
 \name{polycano}
 \alias{polycano}
 \title{The raster volcano as polygons.}
-\format{A \link[sp]{SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.}
+\format{A \link\link{sp}{SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.}
 \usage{
 polycano
 }

@@ -10,7 +10,7 @@ rastertable(x, ...)
 \method{rastertable}{Raster}(x, ...)
 }
 \arguments{
-\item{x}{object as defined in `raster` package}
+\item{x}{object as defined in \code{raster} package}
 
 \item{...}{unused}
 }
@@ -18,7 +18,7 @@ rastertable(x, ...)
 rastertable
 }
 \description{
-A raster table is a long-form of data in the `raster` package.
+A raster table is a long-form of data in the \code{raster} package.
 }
 \examples{
 library(rastertable)

@@ -6,8 +6,8 @@
 \title{Sharkcano, the shark and the volcano.}
 \format{A data frame with 117843 rows and 2 variables:
 \describe{
-  \item{\code{cell_}}{integer, cell index}
-  \item{\code{byte}}{integer, byte value of shark image pixels}
+\item{\code{cell_}}{integer, cell index}
+\item{\code{byte}}{integer, byte value of shark image pixels}
 }
 These are cell values on a grid that is 648x958.}
 \usage{

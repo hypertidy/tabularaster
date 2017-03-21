@@ -9,6 +9,7 @@ Description: Treat rasters with tidy principles. Extract cell numbers from raste
 License: GPL-3
 LazyData: TRUE
 Depends: R (>= 3.2.5), ggplot2
+Roxygen: list(markdown = TRUE)
 Imports:
     dplyr,
     raster,
