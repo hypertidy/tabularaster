@@ -1,5 +1,7 @@
 ## tabularaster dev
 
+* added as_tibble for rasters
+
 * added boundary function
 
 # tidyraster 0.2.0

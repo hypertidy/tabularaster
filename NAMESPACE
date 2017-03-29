@@ -2,6 +2,7 @@
 
 S3method(as.double,Extent)
 S3method(as.integer,Extent)
+S3method(as_tibble,BasicRaster)
 S3method(crop_,rastertable)
 S3method(extent_,rastertable)
 S3method(rasa,RasterLayer)
@@ -58,3 +59,4 @@ importFrom(sp,Polygons)
 importFrom(sp,SpatialPolygons)
 importFrom(sp,coordinates)
 importFrom(tibble,as_tibble)
+importFrom(tibble,tibble)
