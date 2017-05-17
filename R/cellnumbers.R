@@ -17,10 +17,17 @@
 #' library(dplyr)
 #' tt %>% mutate(v = extract(r, cell_)) %>% 
 #' group_by(object_) %>% 
-#' summarize(mean(v)) %>% mutate(head(pretty(values(r)), -1))
+#' summarize(mean(v)) 
+#' head(pretty(values(r)), -1)
 cellnumbers <- function(x, query, ...) {
   ## TODO rebuild as Spatial collection
   ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
+  if (inherits(query, "sf")) {
+    tab <- as.data.frame(query)
+    map <- spbabel::sptable(query)
+    crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
+    query <- spbabel::sp(map, tab, crs)
+  }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
   }

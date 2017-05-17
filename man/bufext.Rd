@@ -19,5 +19,6 @@ This function is deprecated, please use \code{spex::buffer_extent}.
 }
 \examples{
 library(spex)
+library(raster)
 buffer_extent(extent(0.1, 2.2, 0, 3), 2)
 }

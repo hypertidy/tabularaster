@@ -7,6 +7,7 @@
 #' @param e2 grain size
 #' @examples
 #' library(spex)
+#' library(raster)
 #' buffer_extent(extent(0.1, 2.2, 0, 3), 2)
 #' @importFrom spex buffer_extent
 #' @export

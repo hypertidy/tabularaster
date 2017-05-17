@@ -28,5 +28,6 @@ tt <- cellnumbers(cr, p)
 library(dplyr)
 tt \%>\% mutate(v = extract(r, cell_)) \%>\% 
 group_by(object_) \%>\% 
-summarize(mean(v)) \%>\% mutate(head(pretty(values(r)), -1))
+summarize(mean(v)) 
+head(pretty(values(r)), -1)
 }
