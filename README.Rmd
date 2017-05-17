@@ -33,7 +33,7 @@ If this seems a little miscellaneous, well it is but it's at least a tidy place 
 # Extract cells from rasters and get a nice data frame.
 
 ```{r}
-library(tidyraster)
+library(tabularaster)
 library(raster)
 library(dplyr)
 data("rastercano")
