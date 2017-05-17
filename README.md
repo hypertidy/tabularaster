@@ -22,7 +22,6 @@ Extract cells from rasters and get a nice data frame.
 
 ``` r
 library(tabularaster)
-#> Loading required package: ggplot2
 library(raster)
 #> Loading required package: sp
 library(dplyr)
@@ -94,10 +93,10 @@ Buffer "out" an extent to a whole grain
 wholegrain <- 2400
 (untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
 #> class       : Extent 
-#> xmin        : -1291.274 
-#> xmax        : -961.5862 
-#> ymin        : -385.1053 
-#> ymax        : 1024.183
+#> xmin        : -244.6498 
+#> xmax        : -25.10935 
+#> ymin        : 36.99658 
+#> ymax        : 227.9668
 
 (tidyextent <- bufext(untidyextent, wholegrain))
 #> Warning: 'bufext' is deprecated.
@@ -106,7 +105,7 @@ wholegrain <- 2400
 #> class       : Extent 
 #> xmin        : -2400 
 #> xmax        : 0 
-#> ymin        : -2400 
+#> ymin        : 0 
 #> ymax        : 2400
 ```
 
@@ -146,5 +145,5 @@ decimate(r, dec = 6)
 #> values      : 94, 195  (min, max)
 system.time(decimate(r2, 25))
 #>    user  system elapsed 
-#>   1.208   0.208   1.418
+#>   1.032   0.332   1.366
 ```

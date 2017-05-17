@@ -11,11 +11,11 @@
 #' @export
 #'
 #' @examples
+#' library(tibble)
 #' as_tibble(raster::raster(volcano))
-#' 
+#' library(raster)
 #' as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 #' @importFrom tibble as_tibble tibble
-#' @export tibble as_tibble
 #' @importFrom dplyr mutate
 #' @importFrom raster getZ nlayers values ncell
 #' @name as_tibble

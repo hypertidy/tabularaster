@@ -26,7 +26,8 @@ a tibble
 Convert a Raster to a tibble.
 }
 \examples{
+library(tibble)
 as_tibble(raster::raster(volcano))
-
+library(raster)
 as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 }

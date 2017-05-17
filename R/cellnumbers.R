@@ -19,7 +19,8 @@
 #' group_by(object_) %>% 
 #' summarize(mean(v)) %>% mutate(head(pretty(values(r)), -1))
 cellnumbers <- function(x, query, ...) {
-  if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
+  ## TODO rebuild as Spatial collection
+  ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
   }

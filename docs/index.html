@@ -32,9 +32,6 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
-</li>
-<li>
   <a href="news/index.html">News</a>
 </li>
       </ul>
@@ -73,7 +70,6 @@
 <h1 class="hasAnchor">
 <a href="#extract-cells-from-rasters-and-get-a-nice-data-frame-" class="anchor"></a>Extract cells from rasters and get a nice data frame.</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
-<span class="co">#&gt; Loading required package: ggplot2</span>
 <span class="kw">library</span>(raster)
 <span class="co">#&gt; Loading required package: sp</span>
 <span class="kw">library</span>(dplyr)
@@ -143,19 +139,19 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wholegrain &lt;-<span class="st"> </span><span class="dv">2400</span>
 (untidyextent &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>) *<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>:<span class="dv">1000</span>, <span class="dv">1</span>))))
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -1538.506 </span>
-<span class="co">#&gt; xmax        : -605.7914 </span>
-<span class="co">#&gt; ymin        : -364.1572 </span>
-<span class="co">#&gt; ymax        : 724.9902</span>
+<span class="co">#&gt; xmin        : 98.43897 </span>
+<span class="co">#&gt; xmax        : 247.8238 </span>
+<span class="co">#&gt; ymin        : 540.0243 </span>
+<span class="co">#&gt; ymax        : 584.3061</span>
 
 (tidyextent &lt;-<span class="st"> </span><span class="kw"><a href="reference/bufext.html">bufext</a></span>(untidyextent, wholegrain))
 <span class="co">#&gt; Warning: 'bufext' is deprecated.</span>
 <span class="co">#&gt; Use 'buffer_extent' instead.</span>
 <span class="co">#&gt; See help("Deprecated") and help("spex-deprecated").</span>
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -2400 </span>
-<span class="co">#&gt; xmax        : 0 </span>
-<span class="co">#&gt; ymin        : -2400 </span>
+<span class="co">#&gt; xmin        : 0 </span>
+<span class="co">#&gt; xmax        : 2400 </span>
+<span class="co">#&gt; ymin        : 0 </span>
 <span class="co">#&gt; ymax        : 2400</span></code></pre></div>
 </div>
 <div id="decimate" class="section level1">
@@ -192,7 +188,7 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#&gt; values      : 94, 195  (min, max)</span>
 <span class="kw">system.time</span>(<span class="kw"><a href="reference/decimate.html">decimate</a></span>(r2, <span class="dv">25</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.268   0.172   1.440</span></code></pre></div>
+<span class="co">#&gt;   1.184   0.272   1.458</span></code></pre></div>
 </div>
 </div>
   </div>

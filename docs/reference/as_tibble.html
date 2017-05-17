@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Whole cell buffer for an extent — bufext • tabularaster</title>
+<title>Convert a Raster to a tibble. — as_tibble • tabularaster</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -71,47 +71,84 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Whole cell buffer for an extent</h1>
+    <h1>Convert a Raster to a tibble.</h1>
     </div>
 
     
-    <p>Ensure a raster extent aligns to whole parts.</p>
+    <p>Convert a Raster to a tibble.</p>
     
 
-    <pre class="usage"><span class='fu'>bufext</span>(<span class='no'>e1</span>, <span class='no'>e2</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for BasicRaster</span>
+<span class='fu'>as_tibble</span>(<span class='no'>x</span>, <span class='kw'>cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>split_date</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>e1</th>
-      <td><p>input <code><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></code></p></td>
+      <th>x</th>
+      <td><p>a RasterLayer, RasterStack or RasterBrick</p></td>
     </tr>
     <tr>
-      <th>e2</th>
-      <td><p>grain size</p></td>
+      <th>cell</th>
+      <td><p>logical to include explicit cell number</p></td>
+    </tr>
+    <tr>
+      <th>dim</th>
+      <td><p>logical to include slice index</p></td>
+    </tr>
+    <tr>
+      <th>split_date</th>
+      <td><p>logical to split date into components</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>unused</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function is deprecated, please use <code>spex::buffer_extent</code>.</p>
+    <p>a tibble</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>spex</span>)
-<span class='fu'>buffer_extent</span>(<span class='fu'>extent</span>(<span class='fl'>0.1</span>, <span class='fl'>2.2</span>, <span class='fl'>0</span>, <span class='fl'>3</span>), <span class='fl'>2</span>)</div><div class='output co'>#&gt; class       : Extent 
-#&gt; xmin        : 0 
-#&gt; xmax        : 4 
-#&gt; ymin        : 0 
-#&gt; ymax        : 4 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>tibble</span>)
+<span class='fu'>as_tibble</span>(<span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>raster</span>(<span class='no'>volcano</span>))</div><div class='output co'>#&gt; # A tibble: 5,307 x 3
+#&gt;    cellvalue cellindex dimindex
+#&gt;        &lt;dbl&gt;     &lt;int&gt;    &lt;int&gt;
+#&gt;  1       100         1        1
+#&gt;  2       100         2        1
+#&gt;  3       101         3        1
+#&gt;  4       101         4        1
+#&gt;  5       101         5        1
+#&gt;  6       101         6        1
+#&gt;  7       101         7        1
+#&gt;  8       100         8        1
+#&gt;  9       100         9        1
+#&gt; 10       100        10        1
+#&gt; # ... with 5,297 more rows</div><div class='input'>
+<span class='fu'>as_tibble</span>(<span class='fu'>setZ</span>(<span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>raster</span>(<span class='no'>volcano</span>), <span class='fu'>Sys.Date</span>()), <span class='kw'>cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 5,307 x 5
+#&gt;    cellvalue cellindex  year month   day
+#&gt;        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+#&gt;  1       100         1  2017     5    18
+#&gt;  2       100         2  2017     5    18
+#&gt;  3       101         3  2017     5    18
+#&gt;  4       101         4  2017     5    18
+#&gt;  5       101         5  2017     5    18
+#&gt;  6       101         6  2017     5    18
+#&gt;  7       101         7  2017     5    18
+#&gt;  8       100         8  2017     5    18
+#&gt;  9       100         9  2017     5    18
+#&gt; 10       100        10  2017     5    18
+#&gt; # ... with 5,297 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
