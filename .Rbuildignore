@@ -6,3 +6,4 @@
 ^data-raw$
 ^appveyor\.yml$
 ^docs$
+^codecov\.yml$

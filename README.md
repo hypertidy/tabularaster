@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tabularaster.svg?branch=master)](https://travis-ci.org/mdsumner/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/tabularaster)
+[![Travis-CI Build Status](https://travis-ci.org/r-gris/tabularaster.svg?branch=master)](https://travis-ci.org/r-gris/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-gris/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/r-gris/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/r-gris/tabularaster/master.svg)](https://codecov.io/github/r-gris/tabularaster?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 tabularaster
@@ -93,10 +93,10 @@ Buffer "out" an extent to a whole grain
 wholegrain <- 2400
 (untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
 #> class       : Extent 
-#> xmin        : -949.1505 
-#> xmax        : -370.3032 
-#> ymin        : -209.5224 
-#> ymax        : 59.91569
+#> xmin        : -689.8908 
+#> xmax        : -449.6838 
+#> ymin        : 322.7974 
+#> ymax        : 331.1121
 
 (tidyextent <- bufext(untidyextent, wholegrain))
 #> Warning: 'bufext' is deprecated.
@@ -105,7 +105,7 @@ wholegrain <- 2400
 #> class       : Extent 
 #> xmin        : -2400 
 #> xmax        : 0 
-#> ymin        : -2400 
+#> ymin        : 0 
 #> ymax        : 2400
 ```
 
@@ -145,5 +145,5 @@ decimate(r, dec = 6)
 #> values      : 94, 195  (min, max)
 system.time(decimate(r2, 25))
 #>    user  system elapsed 
-#>   1.196   0.348   1.547
+#>   1.068   0.364   1.432
 ```

@@ -9,7 +9,7 @@ Description: Extract cell numbers from raster data and return the cells, values 
 License: GPL-3
 LazyData: TRUE
 Depends: R (>= 3.2.5)
-Roxygen: list(markdown = TRUE)
+Roxygen: Roxygen: list(markdown = TRUE)
 Imports:
     dplyr,
     raster,
@@ -18,5 +18,4 @@ Imports:
     spbabel,
     tibble
 RoxygenNote: 6.0.1
-Roxygen: list(markdown = TRUE)
-
+Suggests: covr

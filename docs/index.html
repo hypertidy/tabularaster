@@ -139,10 +139,10 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wholegrain &lt;-<span class="st"> </span><span class="dv">2400</span>
 (untidyextent &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>) *<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>:<span class="dv">1000</span>, <span class="dv">1</span>))))
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -168.7974 </span>
-<span class="co">#&gt; xmax        : -116.3153 </span>
-<span class="co">#&gt; ymin        : 18.00667 </span>
-<span class="co">#&gt; ymax        : 43.31601</span>
+<span class="co">#&gt; xmin        : -153.7848 </span>
+<span class="co">#&gt; xmax        : -102.9653 </span>
+<span class="co">#&gt; ymin        : 182.143 </span>
+<span class="co">#&gt; ymax        : 566.2111</span>
 
 (tidyextent &lt;-<span class="st"> </span><span class="kw"><a href="reference/bufext.html">bufext</a></span>(untidyextent, wholegrain))
 <span class="co">#&gt; Warning: 'bufext' is deprecated.</span>
@@ -188,7 +188,7 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#&gt; values      : 94, 195  (min, max)</span>
 <span class="kw">system.time</span>(<span class="kw"><a href="reference/decimate.html">decimate</a></span>(r2, <span class="dv">25</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.272   0.188   1.465</span></code></pre></div>
+<span class="co">#&gt;   1.052   0.292   1.346</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -202,8 +202,9 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/mdsumner/tabularaster"><img src="https://travis-ci.org/mdsumner/tabularaster.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/mdsumner/tabularaster"><img src="https://ci.appveyor.com/api/projects/status/github/mdsumner/tabularaster?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://travis-ci.org/r-gris/tabularaster"><img src="https://travis-ci.org/r-gris/tabularaster.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/r-gris/tabularaster"><img src="https://ci.appveyor.com/api/projects/status/github/r-gris/tabularaster?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://codecov.io/github/r-gris/tabularaster?branch=master"><img src="https://img.shields.io/codecov/c/github/r-gris/tabularaster/master.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
 
