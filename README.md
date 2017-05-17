@@ -1,15 +1,15 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tidyraster.svg?branch=master)](https://travis-ci.org/mdsumner/tidyraster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/tidyraster?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/tidyraster)
+[![Travis-CI Build Status](https://travis-ci.org/mdsumner/tabularaster.svg?branch=master)](https://travis-ci.org/mdsumner/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mdsumner/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/mdsumner/tabularaster)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-tidyraster
-==========
+tabularaster
+============
 
 The `raster` package is extremely powerful in the R ecosystem for spatial data. It can be used very efficiently to drive data extraction and summary tools using its consistent cell-index and comprehensive helper functions for converting between cell values and less abstract raster grid properties.
 
-Tidyraster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query.
+Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query.
 
-Tidyraster provides:
+Tabularaster provides:
 
 -   extraction of cells as a simple data frame with "object ID" and "cell index"
 -   a "buffer extent" capability to snap an extent to a tidy "whole grain" alignment
@@ -21,7 +21,8 @@ Extract cells from rasters and get a nice data frame.
 =====================================================
 
 ``` r
-library(tidyraster)
+library(tabularaster)
+#> Loading required package: ggplot2
 library(raster)
 #> Loading required package: sp
 library(dplyr)
@@ -39,40 +40,47 @@ library(dplyr)
 data("rastercano")
 data("polycano")
 cells <- cellnumbers(rastercano, polycano[4:5, ])
+#> Warning in cellnumbers(rastercano, polycano[4:5, ]): projections not the same 
+#>     x: NA
+#> query: NA
 
 
 cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
-#> Source: local data frame [235 x 2]
-#> 
+#> Warning in cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame")): projections not the same 
+#>     x: NA
+#> query: NA
+#> # A tibble: 235 x 2
 #>    object_ cell_
-#>      (chr) (dbl)
-#> 1        1  1129
-#> 2        1  1190
-#> 3        1  1251
-#> 4        2     1
-#> 5        2     2
-#> 6        2     3
-#> 7        2     4
-#> 8        2     5
-#> 9        2     6
+#>      <chr> <dbl>
+#>  1       1  1129
+#>  2       1  1190
+#>  3       1  1251
+#>  4       2     1
+#>  5       2     2
+#>  6       2     3
+#>  7       2     4
+#>  8       2     5
+#>  9       2     6
 #> 10       2     7
-#> ..     ...   ...
+#> # ... with 225 more rows
 cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
-#> Source: local data frame [331 x 2]
-#> 
+#> Warning in cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), : projections not the same 
+#>     x: NA
+#> query: NA
+#> # A tibble: 331 x 2
 #>    object_ cell_
-#>      (chr) (dbl)
-#> 1        1  1129
-#> 2        2  1129
-#> 3        3  1251
-#> 4        4  1251
-#> 5        5  1129
-#> 6        6  1098
-#> 7        7  1098
-#> 8        8  1098
-#> 9        9  1098
+#>      <chr> <dbl>
+#>  1       1  1129
+#>  2       2  1129
+#>  3       3  1251
+#>  4       4  1251
+#>  5       5  1129
+#>  6       6  1098
+#>  7       7  1098
+#>  8       8  1098
+#>  9       9  1098
 #> 10      10  1037
-#> ..     ...   ...
+#> # ... with 321 more rows
 
 ## weights not workin
 #xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
@@ -86,16 +94,19 @@ Buffer "out" an extent to a whole grain
 wholegrain <- 2400
 (untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
 #> class       : Extent 
-#> xmin        : -201.9481 
-#> xmax        : 19.74113 
-#> ymin        : 42.06818 
-#> ymax        : 91.96424
+#> xmin        : -1291.274 
+#> xmax        : -961.5862 
+#> ymin        : -385.1053 
+#> ymax        : 1024.183
 
 (tidyextent <- bufext(untidyextent, wholegrain))
+#> Warning: 'bufext' is deprecated.
+#> Use 'buffer_extent' instead.
+#> See help("Deprecated") and help("spex-deprecated").
 #> class       : Extent 
 #> xmin        : -2400 
-#> xmax        : 2400 
-#> ymin        : 0 
+#> xmax        : 0 
+#> ymin        : -2400 
 #> ymax        : 2400
 ```
 
@@ -135,5 +146,5 @@ decimate(r, dec = 6)
 #> values      : 94, 195  (min, max)
 system.time(decimate(r2, 25))
 #>    user  system elapsed 
-#>    0.45    0.07    0.51
+#>   1.208   0.208   1.418
 ```

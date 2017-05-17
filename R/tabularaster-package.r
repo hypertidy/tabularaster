@@ -7,22 +7,26 @@ NULL
 #' The raster volcano.
 #'
 #' See data-raw/rastercano.r in the source repository.
-#' @format A \link[raster]{raster} created from the \code{\link[datasets]{volcano}} data.
-"rastercano"
+#' @format A raster created from the \code{\link[datasets]{volcano}} data.
+#' @name rastercano
+NULL
 
 #' The raster volcano as polygons.
 #'
 #' See data-raw/rastercano.r in the source repository.
 #'
-#' @format A \link[sp]{SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.
-"polycano"
+#' @format A `sp::SpatialPolygonsDataFrame` with variables: \code{volcano_elevation}.
+#' @name polycano
+NULL
 
 #' Sharkcano, the shark and the volcano.
 #'
 #' This is just a free image off the internetz.
-#' The image was read in and all non-essential items dropped. The dimensions in \code{\link[raster]{raster}} terms is stored in \code{attr(sharkcano, "rasterdim")}.
-#' @references This is the small version from here, see script in data-raw/sharkcano.r http://www.freestockphotos.biz/stockphoto/16214
-#'Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennybc/free-photos
+#' The image was read in and all non-essential items dropped. The dimensions in `raster::raster` terms is stored in
+#'  \code{attr(sharkcano, "rasterdim")}.
+#' @references This is the small version from here, see script in data-raw/sharkcano.r 
+#' http://www.freestockphotos.biz/stockphoto/16214
+#' Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennybc/free-photos
 #' @format A data frame with 117843 rows and 2 variables:
 #' \describe{
 #'   \item{\code{cell_}}{integer, cell index}
@@ -41,4 +45,5 @@ NULL
 #' ## another way
 #' plot(rastercano)
 #' points(xyFromCell(rastershark, sharkcano$cell_), pch = ".")
-"sharkcano"
+#' @name sharkcano
+NULL

@@ -8,7 +8,7 @@ Authors@R: c(
 Description: Treat rasters with tidy principles. Extract cell numbers from raster data and return the cells, values and weights as a data frame (rather than as lists of matrices or vectors.)
 License: GPL-3
 LazyData: TRUE
-Depends: R (>= 3.2.5), ggplot2
+Depends: R (>= 3.2.5)
 Roxygen: list(markdown = TRUE)
 Imports:
     dplyr,
@@ -17,3 +17,5 @@ Imports:
     spex,
     tibble
 RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
+

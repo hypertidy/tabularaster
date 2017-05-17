@@ -1,0 +1,73 @@
+---
+title: "Brangl"
+author: "Michael Sumner"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: yes
+    fig_width: 5
+    fig_height: 5
+vignette: >
+  %\VignetteIndexEntry{Brangl} 
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+
+
+```{r setup, echo=FALSE, results="asis"}
+source("setup.R")
+set.seed(123)
+```
+
+## Introduction
+
+```{r plot3d, rgl=TRUE}
+
+## using a symlink to some files
+fs <- list.files("data", full.names = TRUE)
+
+## gris approach
+library(gris)
+library(palr)
+library(raster)
+library(ncdf)
+library(dplyr)
+library(rgl)
+brangl <- function (x, exy, z = NULL, na.rm = FALSE) 
+{
+  ##x <- x[[1]]
+  ##exy <- edgesXY(x)
+  ind <- apply(gris:::prs(seq(ncol(x) + 1)), 1, gris:::p4, nc = ncol(x) + 
+                 1)
+  ind0 <- as.vector(ind) + rep(seq(0, length = nrow(x), by = ncol(x) + 
+                                     1), each = 4 * ncol(x))
+  if (na.rm) {
+    ind1 <- matrix(ind0, nrow = 4)
+    ind0 <- ind1[, !is.na(raster::values(x))]
+  }
+  ob <- rgl::oh3d()
+  if (is.null(z)) z <- 0
+  
+  ob$vb <- t(cbind(exy, z, 1))
+  ob$ib <- matrix(ind0, nrow = 4)
+  ob
+}
+nc <- open.ncdf(fs[1])
+lon <- get.var.ncdf(nc, "xt_ocean")
+lat <- get.var.ncdf(nc, "yt_ocean")
+
+r <- raster(fs[1], stopIfNotEqualSpaced=FALSE, varname = "temp")
+exy <- expand.grid(c(0, lon), c(max(lat) + 1, rev(lat)))
+dummy <- extend(r, extent(r) + c(0, res(r)[1], 0, res(r)[2]))
+eta <- raster(fs[1], stopIfNotEqualSpaced = FALSE, varname = "eta_t")
+eta <- extend(eta, extent(eta) + c(0, res(eta)[1], 0, res(eta)[2]))
+#b <- brangl(r, exy, z = values(dummy) * 2500)
+b <- brangl(r, exy, z = values(eta) * 1e5)
+#b <- brangl(r, exy)
+b$vb[1:3, ] <- t(llh2xyz(t(b$vb[1:3, ])))
+ 
+pal <- sstPal(palette = TRUE)
+ shade3d(b, col = rep(sstPal(values(r)), each = 4), lit = TRUE)
+
+```
