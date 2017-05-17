@@ -1,5 +1,7 @@
 ## tabularaster dev
 
+* migrated the buffer extent logic to spex, deprecated `bufext`
+
 * added as_tibble for rasters
 
 * added boundary function

@@ -1,7 +1,7 @@
 Package: tabularaster
 Type: Package
 Title: Tools for Rasters as Tidy Data
-Version: 0.2.0
+Version: 0.2.9001
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
@@ -14,5 +14,6 @@ Imports:
     dplyr,
     raster,
     sp, 
+    spex,
     tibble
 RoxygenNote: 6.0.1

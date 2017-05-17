@@ -14,7 +14,10 @@ bufext(e1, e2)
 \description{
 Ensure a raster extent aligns to whole parts.
 }
+\details{
+This function is deprecated, please use \code{spex::buffer_extent}.
+}
 \examples{
-library(raster)
-bufext(extent(0.1, 2.2, 0, 3), 2)
+library(spex)
+buffer_extent(extent(0.1, 2.2, 0, 3), 2)
 }

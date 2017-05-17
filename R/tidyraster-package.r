@@ -1,6 +1,6 @@
 #' tidyraster.
 #'
-#' @name tidyraster
+#' @name tabularaster
 #' @docType package
 NULL
 
