@@ -139,18 +139,18 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wholegrain &lt;-<span class="st"> </span><span class="dv">2400</span>
 (untidyextent &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>) *<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>:<span class="dv">1000</span>, <span class="dv">1</span>))))
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : 98.43897 </span>
-<span class="co">#&gt; xmax        : 247.8238 </span>
-<span class="co">#&gt; ymin        : 540.0243 </span>
-<span class="co">#&gt; ymax        : 584.3061</span>
+<span class="co">#&gt; xmin        : -168.7974 </span>
+<span class="co">#&gt; xmax        : -116.3153 </span>
+<span class="co">#&gt; ymin        : 18.00667 </span>
+<span class="co">#&gt; ymax        : 43.31601</span>
 
 (tidyextent &lt;-<span class="st"> </span><span class="kw"><a href="reference/bufext.html">bufext</a></span>(untidyextent, wholegrain))
 <span class="co">#&gt; Warning: 'bufext' is deprecated.</span>
 <span class="co">#&gt; Use 'buffer_extent' instead.</span>
 <span class="co">#&gt; See help("Deprecated") and help("spex-deprecated").</span>
 <span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : 0 </span>
-<span class="co">#&gt; xmax        : 2400 </span>
+<span class="co">#&gt; xmin        : -2400 </span>
+<span class="co">#&gt; xmax        : 0 </span>
 <span class="co">#&gt; ymin        : 0 </span>
 <span class="co">#&gt; ymax        : 2400</span></code></pre></div>
 </div>
@@ -188,7 +188,7 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#&gt; values      : 94, 195  (min, max)</span>
 <span class="kw">system.time</span>(<span class="kw"><a href="reference/decimate.html">decimate</a></span>(r2, <span class="dv">25</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.184   0.272   1.458</span></code></pre></div>
+<span class="co">#&gt;   1.272   0.188   1.465</span></code></pre></div>
 </div>
 </div>
   </div>

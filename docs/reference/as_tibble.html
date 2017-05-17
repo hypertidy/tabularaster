@@ -127,7 +127,7 @@
 #&gt;  8       100         8        1
 #&gt;  9       100         9        1
 #&gt; 10       100        10        1
-#&gt; # ... with 5,297 more rows</div><div class='input'>
+#&gt; # ... with 5,297 more rows</div><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
 <span class='fu'>as_tibble</span>(<span class='fu'>setZ</span>(<span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>raster</span>(<span class='no'>volcano</span>), <span class='fu'>Sys.Date</span>()), <span class='kw'>cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 5,307 x 5
 #&gt;    cellvalue cellindex  year month   day
 #&gt;        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;

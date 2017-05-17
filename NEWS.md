@@ -1,5 +1,7 @@
 ## tabularaster dev
 
+* consolidated on the central tools, removed experiments
+
 * migrated the buffer extent logic to spex, deprecated `bufext`
 
 * added as_tibble for rasters

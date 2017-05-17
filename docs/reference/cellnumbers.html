@@ -111,15 +111,15 @@
 #&gt; <span class='warning'>query: NA</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>tt</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>extract</span>(<span class='no'>r</span>, <span class='no'>cell_</span>)) <span class='kw'>%&gt;%</span>
 <span class='fu'>group_by</span>(<span class='no'>object_</span>) <span class='kw'>%&gt;%</span>
-<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 3
-#&gt;   object_ `mean(v)` `head(pretty(values(r)), -1)`
-#&gt;     &lt;chr&gt;     &lt;dbl&gt;                         &lt;int&gt;
-#&gt; 1       1  97.38693                            80
-#&gt; 2       2 110.20931                           100
-#&gt; 3       3 130.40073                           120
-#&gt; 4       4 149.72827                           140
-#&gt; 5       5 170.44589                           160
-#&gt; 6       6 186.32022                           180</div></pre>
+<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 2
+#&gt;   object_ `mean(v)`
+#&gt;     &lt;chr&gt;     &lt;dbl&gt;
+#&gt; 1       1  97.38693
+#&gt; 2       2 110.20931
+#&gt; 3       3 130.40073
+#&gt; 4       4 149.72827
+#&gt; 5       5 170.44589
+#&gt; 6       6 186.32022</div><div class='input'><span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1]  80 100 120 140 160 180</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
