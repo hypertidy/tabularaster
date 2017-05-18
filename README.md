@@ -17,8 +17,8 @@ Tabularaster provides:
 
 there is some overlap with `quadmesh` and `spex` while I figure out where things belong
 
-Extract cells from rasters and get a nice data frame.
-=====================================================
+Extract cells from rasters
+==========================
 
 ``` r
 library(tabularaster)
@@ -86,28 +86,10 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 #xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
 ```
 
-Buffer "out" an extent to a whole grain
-=======================================
+Extract values or cell numbers with sf object
+=============================================
 
-``` r
-wholegrain <- 2400
-(untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
-#> class       : Extent 
-#> xmin        : -392.27 
-#> xmax        : 409.1152 
-#> ymin        : 417.9813 
-#> ymax        : 1287.174
-
-(tidyextent <- bufext(untidyextent, wholegrain))
-#> Warning: 'bufext' is deprecated.
-#> Use 'buffer_extent' instead.
-#> See help("Deprecated") and help("spex-deprecated").
-#> class       : Extent 
-#> xmin        : -2400 
-#> xmax        : 2400 
-#> ymin        : 0 
-#> ymax        : 2400
-```
+...
 
 Decimate
 ========
@@ -145,5 +127,5 @@ decimate(r, dec = 6)
 #> values      : 94, 195  (min, max)
 system.time(decimate(r2, 25))
 #>    user  system elapsed 
-#>   1.112   0.244   1.358
+#>   1.360   0.368   1.729
 ```

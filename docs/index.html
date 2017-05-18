@@ -61,14 +61,14 @@
 <p>Tabularaster provides:</p>
 <ul>
 <li>extraction of cells as a simple data frame with “object ID” and “cell index”</li>
-<li>a “buffer extent” capability to snap an extent to a tidy “whole grain” alignment</li>
 <li>a “decimate” function for fast as possible resolution reduction</li>
+<li>workers to bring sf into the raster fold, WIP</li>
 </ul>
-<p>If this seems a little miscellaneous, well it is but it’s at least a tidy place to collect these functions while I figure out where they belong. There are some parts, especially the dumb sharkcano joke that have some overlap with the “quadmesh” package.</p>
+<p>there is some overlap with <code>quadmesh</code> and <code>spex</code> while I figure out where things belong</p>
 </div>
-<div id="extract-cells-from-rasters-and-get-a-nice-data-frame-" class="section level1">
+<div id="extract-cells-from-rasters" class="section level1">
 <h1 class="hasAnchor">
-<a href="#extract-cells-from-rasters-and-get-a-nice-data-frame-" class="anchor"></a>Extract cells from rasters and get a nice data frame.</h1>
+<a href="#extract-cells-from-rasters" class="anchor"></a>Extract cells from rasters</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
 <span class="kw">library</span>(raster)
 <span class="co">#&gt; Loading required package: sp</span>
@@ -133,26 +133,10 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#xweight &lt;- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)</span>
 <span class="co">#xweight  %&gt;% group_by(object_)  %&gt;% summarize(sum(weight_))</span></code></pre></div>
 </div>
-<div id="buffer-out-an-extent-to-a-whole-grain" class="section level1">
+<div id="extract-values-or-cell-numbers-with-sf-object" class="section level1">
 <h1 class="hasAnchor">
-<a href="#buffer-out-an-extent-to-a-whole-grain" class="anchor"></a>Buffer “out” an extent to a whole grain</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wholegrain &lt;-<span class="st"> </span><span class="dv">2400</span>
-(untidyextent &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>) *<span class="st"> </span><span class="kw">sample</span>(<span class="dv">100</span>:<span class="dv">1000</span>, <span class="dv">1</span>))))
-<span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -153.7848 </span>
-<span class="co">#&gt; xmax        : -102.9653 </span>
-<span class="co">#&gt; ymin        : 182.143 </span>
-<span class="co">#&gt; ymax        : 566.2111</span>
-
-(tidyextent &lt;-<span class="st"> </span><span class="kw"><a href="reference/bufext.html">bufext</a></span>(untidyextent, wholegrain))
-<span class="co">#&gt; Warning: 'bufext' is deprecated.</span>
-<span class="co">#&gt; Use 'buffer_extent' instead.</span>
-<span class="co">#&gt; See help("Deprecated") and help("spex-deprecated").</span>
-<span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -2400 </span>
-<span class="co">#&gt; xmax        : 0 </span>
-<span class="co">#&gt; ymin        : 0 </span>
-<span class="co">#&gt; ymax        : 2400</span></code></pre></div>
+<a href="#extract-values-or-cell-numbers-with-sf-object" class="anchor"></a>Extract values or cell numbers with sf object</h1>
+<p>…</p>
 </div>
 <div id="decimate" class="section level1">
 <h1 class="hasAnchor">
@@ -188,7 +172,7 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#&gt; values      : 94, 195  (min, max)</span>
 <span class="kw">system.time</span>(<span class="kw"><a href="reference/decimate.html">decimate</a></span>(r2, <span class="dv">25</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   1.052   0.292   1.346</span></code></pre></div>
+<span class="co">#&gt;   1.096   0.236   1.337</span></code></pre></div>
 </div>
 </div>
   </div>

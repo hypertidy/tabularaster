@@ -52,14 +52,12 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 #xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
 
 ```
-# Buffer "out" an extent to a whole grain
 
-```{r}
-wholegrain <- 2400
-(untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
+# Extract values or cell numbers with sf object
 
-(tidyextent <- bufext(untidyextent, wholegrain))
-```
+...
+
+
 
 # Decimate
 

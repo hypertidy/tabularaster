@@ -14,7 +14,7 @@ Imports:
     dplyr,
     raster,
     sp, 
-    spex,
+    spex (>= 0.3.0),
     spbabel,
     tibble
 RoxygenNote: 6.0.1
