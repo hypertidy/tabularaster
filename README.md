@@ -12,10 +12,10 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 Tabularaster provides:
 
 -   extraction of cells as a simple data frame with "object ID" and "cell index"
--   a "buffer extent" capability to snap an extent to a tidy "whole grain" alignment
 -   a "decimate" function for fast as possible resolution reduction
+-   workers to bring sf into the raster fold, WIP
 
-If this seems a little miscellaneous, well it is but it's at least a tidy place to collect these functions while I figure out where they belong. There are some parts, especially the dumb sharkcano joke that have some overlap with the "quadmesh" package.
+there is some overlap with `quadmesh` and `spex` while I figure out where things belong
 
 Extract cells from rasters and get a nice data frame.
 =====================================================
@@ -93,10 +93,10 @@ Buffer "out" an extent to a whole grain
 wholegrain <- 2400
 (untidyextent <- extent(sort(rnorm(4) * sample(100:1000, 1))))
 #> class       : Extent 
-#> xmin        : -689.8908 
-#> xmax        : -449.6838 
-#> ymin        : 322.7974 
-#> ymax        : 331.1121
+#> xmin        : -392.27 
+#> xmax        : 409.1152 
+#> ymin        : 417.9813 
+#> ymax        : 1287.174
 
 (tidyextent <- bufext(untidyextent, wholegrain))
 #> Warning: 'bufext' is deprecated.
@@ -104,7 +104,7 @@ wholegrain <- 2400
 #> See help("Deprecated") and help("spex-deprecated").
 #> class       : Extent 
 #> xmin        : -2400 
-#> xmax        : 0 
+#> xmax        : 2400 
 #> ymin        : 0 
 #> ymax        : 2400
 ```
@@ -145,5 +145,5 @@ decimate(r, dec = 6)
 #> values      : 94, 195  (min, max)
 system.time(decimate(r2, 25))
 #>    user  system elapsed 
-#>   1.068   0.364   1.432
+#>   1.112   0.244   1.358
 ```

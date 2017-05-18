@@ -26,12 +26,14 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 Tabularaster provides: 
 
 - extraction of cells as a simple data frame with "object ID" and "cell index"
-- a "buffer extent" capability to snap an extent to a tidy "whole grain" alignment
 - a "decimate" function for fast as possible resolution reduction
+- workers to bring sf into the raster fold, WIP
 
-If this seems a little miscellaneous, well it is but it's at least a tidy place to collect these functions while I figure out where they belong. There are some parts, especially the dumb sharkcano joke that have some overlap with the "quadmesh" package. 
 
-# Extract cells from rasters and get a nice data frame.
+there is some overlap with `quadmesh` and `spex` while I figure out where things belong
+
+
+# Extract cells from rasters 
 
 ```{r}
 library(tabularaster)
