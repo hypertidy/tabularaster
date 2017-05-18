@@ -1,10 +1,12 @@
 ## tabularaster dev
 
+* removed `boundary` (see `romsboundary` in `angstroms`)
+
 * consolidated on the central tools, removed experiments
 
-* migrated the buffer extent logic to spex, deprecated `bufext`
+* migrated the buffer extent logic to `spex`, deprecated `bufext`
 
-* added as_tibble for rasters
+* added `as_tibble` for rasters
 
 * added boundary function
 

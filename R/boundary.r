@@ -5,8 +5,10 @@
 #'
 #' @importFrom sp SpatialPolygons Polygons Polygon
 #' @importFrom raster as.matrix cellFromRow cellFromCol xmin xmax ymin ymax trim setExtent setValues raster extract flip extent 
-#' @export
+#' @keywords internal
+#' @noRd
 boundary <- function(cds) {
+  .Defunct(new = "romsboundary", package = "angstroms")
   left <- cellFromCol(cds, 1)
   bottom <- cellFromRow(cds, nrow(cds))
   right <- rev(cellFromCol(cds, ncol(cds)))
