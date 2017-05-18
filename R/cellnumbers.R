@@ -24,9 +24,10 @@ cellnumbers <- function(x, query, ...) {
   ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
   if (inherits(query, "sf")) {
     tab <- as.data.frame(query)
+    if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
     map <- spbabel::sptable(query)
     crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
-    query <- spbabel::sp(map, tab, crs)
+    stop("sf not yet supported")
   }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
