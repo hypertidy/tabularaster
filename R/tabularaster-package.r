@@ -12,7 +12,9 @@ NULL
 #' details. 
 #' 
 #' `sst_regions` is a simple polygon region layer to sit over the SST data.
+#' @importFrom viridis viridis
 #' @examples 
+#' library(raster)
 #' plot(ghrsst, col = viridis::viridis(100))
 #' plot(sst_regions, add = TRUE, col = NA)
 #' ## cellnumbers(ghrsst, sst_regions) 

@@ -1,7 +1,7 @@
 Package: tabularaster
 Type: Package
 Title: Tools for Rasters as Tidy Data
-Version: 0.3
+Version: 0.3.0
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
@@ -17,7 +17,8 @@ Imports:
     sp, 
     spex (>= 0.3.0),
     spbabel (>= 0.4.8),
-    tibble
+    tibble, 
+    viridis
 RoxygenNote: 6.0.1
 Suggests: covr
 Remotes: mdsumner/spbabel
