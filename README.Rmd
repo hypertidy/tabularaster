@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 [![Travis-CI Build Status](https://travis-ci.org/r-gris/tabularaster.svg?branch=master)](https://travis-ci.org/r-gris/tabularaster)
@@ -26,12 +28,71 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 Tabularaster provides: 
 
 - extraction of cells as a simple data frame with "object ID" and "cell index"
-- a "decimate" function for fast as possible resolution reduction
-- workers to bring sf into the raster fold, WIP
+- workers to bring `sf` support to  `raster`
+
+There is some overlap with `quadmesh` and `spex` while I figure out where things belong. 
+
+# Example
+
+This example uses extracted data per polygon and uses base R to `lapply` across the list of values
+extracted per polygon. Here we show a more `dplyrish` version after extracting the cell numbers with `tabularaster`. 
+
+```{r}
+library(tabularaster)
+## https://gis.stackexchange.com/questions/102870/step-by-step-how-do-i-extract-raster-values-from-polygon-overlay-with-q-gis-or
+
+library(raster)
+
+# Create integer class raster
+r <- raster(ncol=36, nrow=18)
+r[] <- round(runif(ncell(r),1,10),digits=0)
+
+# Create two polygons
+cds1 <- rbind(c(-180,-20), c(-160,5), c(-60, 0), c(-160,-60), c(-180,-20))
+cds2 <- rbind(c(80,0), c(100,60), c(120,0), c(120,-55), c(80,0))
+polys <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(Polygon(cds1)), 1), 
+                                                       Polygons(list(Polygon(cds2)), 2))),data.frame(ID=c(1,2)))
+
+## do extraction in abstract terms
+(cn <- cellnumbers(r, polys))
+
+library(dplyr)
+## now perform extraction for real
+## and pipe into grouping by polygon (object_) and value, and
+## calculate class percentage from class counts per polygon
+cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
+  mutate(v.pct = count / sum(count)) 
+# Extract raster values to polygons                             
+#( v <- extract(r, polys) )
+# Get class counts for each polygon
+#v.counts <- lapply(v,table)
+# Calculate class percentages for each polygon
+#( v.pct <- lapply(v.counts, FUN=function(x){ x / sum(x) } ) )
 
 
-there is some overlap with `quadmesh` and `spex` while I figure out where things belong
+```
 
+# Extract cell numbers
+
+```{r}
+library(tabularaster)
+data("ghrsst")  ## a RasterLayer
+data("sst_regions") ## a polygon layer, contiguous with ghrsst
+
+gcells <- cellnumbers(ghrsst, sst_regions) %>% mutate(object_ = as.integer(object_))
+
+result <- gcells %>% mutate(sst = raster::extract(ghrsst, cell_)) %>% 
+  group_by(object_) %>% 
+  summarize_at(vars(sst), funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE), length))
+
+library(spdplyr)
+sst_regions <- sst_regions %>% inner_join(result, c("ghrsst" = "object_"))
+
+plot(ghrsst, col = bpy.colors(30), addfun = function() plot(sst_regions, add = TRUE), 
+     main = "SST data with simple regional polygon layer")
+library(sf)
+plot(st_as_sf(sst_regions))
+```
 
 # Extract cells from rasters 
 
@@ -55,18 +116,46 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 
 # Extract values or cell numbers with sf object
 
-...
+It's an unfortunate symptom of fragmentation in the R spatial tools that two of the best and most
+highly used packages `raster` and `sf` have no formal way to be used together. 
 
+Here we use the `extent` capability of `spex`, and the tabularaster tools `extract` and `cellnumbers` to build a raster from an `sf` layer. 
 
-
-# Decimate
-
- It may be that `raster::aggregate` is better than `decimate`. 
- 
 ```{r}
-(r <- raster(volcano))
-decimate(r, dec = 6)
+library(sf)
 
-(r2 <- disaggregate(r, fact = 25))
-system.time(decimate(r2, 25))
+poly <- read_sf(system.file("shape/nc.shp", package="sf"))
+library(spex)
+extent(poly)
+spex(poly)
+## we can't do this
+try(grid <-  raster(poly))
+
+## but we can do 
+
+(grid <- raster(spex(poly), nrow = 100, ncol = 140))
+
+## index the raster with the sf layer
+(cn <- cellnumbers(grid, poly))
+
+grid[cn$cell_] <- cn$object_
+
+## we slasterized it (slow rasterize)
+plot(grid)
+
+
+```
+
+That's nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g.  for time series extraction where we need to visit
+each time step iteratively. (Raster is already index-optimized for multi-layers raster objects). 
+
+Now use `fasterize` to generate the grid, and use cellnumbers to extract. 
+
+```{r}
+## fasterize it
+library(fasterize)
+#poly$object_ <- as.integer(seq_len(nrow(poly)))
+fgrid <- fasterize(poly, grid, field = "AREA")
+scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
+plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
 ```
