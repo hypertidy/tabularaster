@@ -4,6 +4,24 @@
 #' @docType package
 NULL
 
+#' Sea surface temperature data. 
+#' 
+#' A smoothed subset of GHRSST. 
+#'
+#' See "data-raw/ghrsst.R" and "data-raw/ghrsst-readme.txt" for
+#' details. 
+#' 
+#' `sst_regions` is a simple polygon region layer to sit over the SST data.
+#' @examples 
+#' plot(ghrsst, col = viridis::viridis(100))
+#' plot(sst_regions, add = TRUE, col = NA)
+#' ## cellnumbers(ghrsst, sst_regions) 
+#' @format A raster created GHRSST data and raster smoothing.
+#' @name ghrsst
+#' @aliases sst_regions
+NULL
+
+
 #' The raster volcano.
 #'
 #' See data-raw/rastercano.r in the source repository.
