@@ -9,7 +9,7 @@
 #' library(spex)
 #' library(raster)
 #' buffer_extent(extent(0.1, 2.2, 0, 3), 2)
-#' @importFrom spex buffer_extent
+#' @importFrom spex buffer_extent spex
 #' @export
 bufext <- function(e1, e2) {
   .Deprecated(new = "buffer_extent", package = "spex")

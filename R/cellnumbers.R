@@ -27,7 +27,7 @@ cellnumbers <- function(x, query, ...) {
     if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
     map <- spbabel::sptable(query)
     crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
-    stop("sf not yet supported")
+    query <- spbabel::sp(map, tab, crs)
   }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
@@ -38,8 +38,15 @@ cellnumbers <- function(x, query, ...) {
   if (inherits(query, "SpatialLines")) {
     a <- cellFromLine(x, query, ...)
   }
+  
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     a <- cellFromXY(x, query)
+  }
+  if (inherits(query, "SpatialMultiPoints")) {
+    #ind <- dplyr::bind_rows(lapply(query@coords, tibble::as_tibble), .id = "feature")
+    a <- lapply(query@coords, function(xymat) cellFromXY(x, xymat))
+    ## yikes the old [unique(id)] trick to avoid split lexo sorting
+    #a <- split(cellFromXY(x, as.matrix(ind[, -1])), ind$feature)[unique(ind$feature)]
   }
   d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "object_")
   if (ncol(d) == 2L) names(d) <- c("object_", "cell_")

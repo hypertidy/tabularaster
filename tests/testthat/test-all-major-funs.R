@@ -31,9 +31,13 @@ test_that("spex sf works", {
   spex(psf)
 })
 
+
+mp <- st_sf(a = 1:2, geometry = st_sfc(st_multipoint(cbind(0, 1:2)), st_multipoint(cbind(0, 1:4))))
+r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
+
 test_that("extract of sf works", {
-  #cellnumbers(r, psf)
-  #extract(r, psf) %>% lengths()
-  ## it's not the same, yet
-  #extract(r, as(psf, "Spatial")) %>% lengths()
+  cellnumbers(r, psf)
+  extract(r, psf) %>% lengths()
+  extract(r, as(psf, "Spatial")) %>% lengths()
+  cellnumbers(r2, mp)
 })

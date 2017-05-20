@@ -12,10 +12,12 @@ Depends: R (>= 3.2.5)
 Roxygen: list(markdown = TRUE)
 Imports:
     dplyr,
+    methods, 
     raster,
     sp, 
     spex (>= 0.3.0),
-    spbabel,
+    spbabel (>= 0.4.8),
     tibble
 RoxygenNote: 6.0.1
 Suggests: covr
+Remotes: mdsumner/spbabel
