@@ -86,10 +86,13 @@ Warnings
 
 1.  I tend to end up using `tidyr::extract` and `raster::extract`, `dplyr::select` and `raster::select` as I always use these packages together.
 2.  `cellnumbers` doesn't currently reproject the second argument `query`, even when would make sense to do so like `extract` does. This is purely to reduce the required dependencies.
+3.  There's no formal link between the cell number values and the raster object itself. I use this "loose coupling" so extensively that I have developed habits that tend to make it pretty robust. Please use with caution, you can easily get incorrect answers by asking a different raster a question based on the wrong cell numbers.
 
 If you find that things don't work, first check if it's a namespace problem, there are a few function name overlaps in the `tidyverse` and `raster`, and in R generally. There is no way to fix this properly atm.
 
 Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I'd like a light-weight reprojection engine in order to do this, and `proj4` is a candidate that I've explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need.
+
+Ultimately the cell index vector should probably be a formal class, with knowledge of its extent and grain. I'd love this to be formalized, but I seem to not have the design expertise required to get the system right. It's something that `ggplot2` needs, but there aren't any existing examples in R anywhere as far as I can tell. The [stars project](https://github.com/edzer/stars) is a good place to see what else is happening in this space in R. Other examples are the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`, `geometry`, `RTriangle`, `TBA`, (and there are many others).
 
 If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/r-gris/tabularaster/issues) or [discuss at r-spatial](https://github.com/r-spatial/discuss), get on [twitter \#rstats](https://twitter.com/hashtag/rstats) or contact me directly.
 
@@ -151,30 +154,28 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 20 x 4
+#> # A tibble: 18 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <chr> <dbl> <int>      <dbl>
-#>  1       1     1     2 0.05263158
-#>  2       1     2     5 0.13157895
-#>  3       1     3     1 0.02631579
+#>  1       1     1     4 0.10526316
+#>  2       1     2     3 0.07894737
+#>  3       1     3     2 0.05263158
 #>  4       1     4     3 0.07894737
 #>  5       1     5     3 0.07894737
-#>  6       1     6     6 0.15789474
-#>  7       1     7     3 0.07894737
+#>  6       1     6     7 0.18421053
+#>  7       1     7     4 0.10526316
 #>  8       1     8     6 0.15789474
-#>  9       1     9     5 0.13157895
-#> 10       1    10     4 0.10526316
-#> 11       2     1     2 0.08000000
-#> 12       2     2     2 0.08000000
-#> 13       2     3     2 0.08000000
-#> 14       2     4     2 0.08000000
-#> 15       2     5     2 0.08000000
-#> 16       2     6     5 0.20000000
-#> 17       2     7     4 0.16000000
-#> 18       2     8     3 0.12000000
-#> 19       2     9     2 0.08000000
-#> 20       2    10     1 0.04000000
+#>  9       1     9     4 0.10526316
+#> 10       1    10     2 0.05263158
+#> 11       2     2     5 0.20000000
+#> 12       2     3     3 0.12000000
+#> 13       2     4     4 0.16000000
+#> 14       2     5     3 0.12000000
+#> 15       2     6     2 0.08000000
+#> 16       2     7     2 0.08000000
+#> 17       2     8     3 0.12000000
+#> 18       2     9     3 0.12000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
