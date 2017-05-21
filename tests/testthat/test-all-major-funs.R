@@ -35,7 +35,17 @@ test_that("spex sf works", {
 
 
 #mp <- st_sf(a = 1:2, geometry = st_sfc(st_multipoint(cbind(0, 1:2)), st_multipoint(cbind(0, 1:4))))
-#r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
+mp <- structure(list(a = 1:2, geometry = structure(list(structure(c(0, 
+                                                                    0, 1, 2), .Dim = c(2L, 2L), class = c("XY", "MULTIPOINT", "sfg"
+                                                                    )), structure(c(0, 0, 0, 0, 1, 2, 3, 4), .Dim = c(4L, 2L), class = c("XY", 
+                                                                                                                                         "MULTIPOINT", "sfg"))), n_empty = 0L, class = c("sfc_MULTIPOINT", 
+                                                                                                                                                                                         "sfc"), precision = 0, crs = structure(list(epsg = NA_integer_, 
+                                                                                                                                                                                                                                     proj4string = NA_character_), .Names = c("epsg", "proj4string"
+                                                                                                                                                                                                                                     ), class = "crs"), bbox = structure(c(0, 1, 0, 4), .Names = c("xmin", 
+                                                                                                                                                                                                                                                                                                   "ymin", "xmax", "ymax")))), .Names = c("a", "geometry"), row.names = 1:2, class = c("sf", 
+                                                                                                                                                                                                                                                                                                                                                                                       "data.frame"), sf_column = "geometry", agr = structure(NA_integer_, class = "factor", .Label = c("constant", 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "aggregate", "identity"), .Names = "a"))
+r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
 
 test_that("extract of sf works", {
   cellnumbers(r, psf[c(1, 10), ]) %>% expect_named(c("object_", "cell_")) 
@@ -43,5 +53,5 @@ test_that("extract of sf works", {
   expect_that(sum(ll), equals(5307))
   #extract(r, as(psf, "Spatial")) %>% lengths()
   ## awaiting fix in spbabel https://github.com/r-gris/tabularaster/issues/8
-  ##cellnumbers(r2, mp)
+  cellnumbers(r2, mp)
 })

@@ -154,28 +154,27 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 18 x 4
+#> # A tibble: 17 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <chr> <dbl> <int>      <dbl>
-#>  1       1     1     4 0.10526316
+#>  1       1     1     2 0.05263158
 #>  2       1     2     3 0.07894737
-#>  3       1     3     2 0.05263158
-#>  4       1     4     3 0.07894737
+#>  3       1     3     3 0.07894737
+#>  4       1     4     4 0.10526316
 #>  5       1     5     3 0.07894737
 #>  6       1     6     7 0.18421053
-#>  7       1     7     4 0.10526316
-#>  8       1     8     6 0.15789474
+#>  7       1     7     9 0.23684211
+#>  8       1     8     3 0.07894737
 #>  9       1     9     4 0.10526316
-#> 10       1    10     2 0.05263158
-#> 11       2     2     5 0.20000000
-#> 12       2     3     3 0.12000000
-#> 13       2     4     4 0.16000000
-#> 14       2     5     3 0.12000000
-#> 15       2     6     2 0.08000000
-#> 16       2     7     2 0.08000000
-#> 17       2     8     3 0.12000000
-#> 18       2     9     3 0.12000000
+#> 10       2     2     5 0.20000000
+#> 11       2     3     3 0.12000000
+#> 12       2     4     2 0.08000000
+#> 13       2     5     3 0.12000000
+#> 14       2     6     4 0.16000000
+#> 15       2     7     2 0.08000000
+#> 16       2     8     4 0.16000000
+#> 17       2     9     2 0.08000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
