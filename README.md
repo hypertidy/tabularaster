@@ -16,8 +16,85 @@ Tabularaster provides:
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong.
 
-Example
-=======
+Installation
+============
+
+Tabularaster is currently only available from Github, and it's early days so please use with caution. There are some things that I might need to change.
+
+``` r
+devtools::install_github("r-gris/tabularaster")
+```
+
+Usage
+=====
+
+Extract the cell numbers of raster `r` that are co-located with object `q`. (The argument names are `x` and `query`).
+
+``` r
+cellnumbers(r, q)
+```
+
+In the above example, `r` is any *raster* object and `q` is another spatial object, used as a query. Cell numbers can be extracted from any raster object, any of a `raster::raster`, `raster::stack` or `raster::brick`. It's not really relevant what that object contains, as only the *dimensions* (number of cells in x and y) and the *extent* (geographic range in x and y) determine the result. The `r` object can actually not contain any data - this is a very powerful but seemingly under-used feature of the `raster` package.
+
+The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
+
+Simple example
+==============
+
+In straightforward usage, `cellnumbers` returns a tibble with `object_` to identify the spatial object by number, and `cell_` which is specific to the raster object, a function of its `extent`, `dim`ensions and `projection` (crs - coordinate reference system).
+
+``` r
+library(raster)
+#> Loading required package: sp
+library(tabularaster)
+(r <- raster(volcano))
+#> class       : RasterLayer 
+#> dimensions  : 87, 61, 5307  (nrow, ncol, ncell)
+#> resolution  : 0.01639344, 0.01149425  (x, y)
+#> extent      : 0, 1, 0, 1  (xmin, xmax, ymin, ymax)
+#> coord. ref. : NA 
+#> data source : in memory
+#> names       : layer 
+#> values      : 94, 195  (min, max)
+(cell <- cellnumbers(r, cbind(0.5, 0.5)))
+#> Warning in cellnumbers(r, cbind(0.5, 0.5)): projections not the same 
+#>     x: NA
+#> query: NA
+#> # A tibble: 1 x 2
+#>   object_ cell_
+#>     <chr> <dbl>
+#> 1       1  2654
+```
+
+This cell number query can be then be used to drive other raster functions, like `extract` and `xyFromCell` and many others.
+
+``` r
+xyFromCell(r, cell$cell_)
+#>        x   y
+#> [1,] 0.5 0.5
+
+
+raster::extract(r, cell$cell_)
+#>     
+#> 161
+```
+
+This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It's also very useful for using `dplyr` to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects.
+
+Warnings
+========
+
+1.  I tend to end up using `tidyr::extract` and `raster::extract`, `dplyr::select` and `raster::select` as I always use these packages together.
+2.  `cellnumbers` doesn't currently reproject the second argument `query`, even when would make sense to do so like `extract` does. This is purely to reduce the required dependencies.
+
+If you find that things don't work, first check if it's a namespace problem, there are a few function name overlaps in the `tidyverse` and `raster`, and in R generally. There is no way to fix this properly atm.
+
+Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I'd like a light-weight reprojection engine in order to do this, and `proj4` is a candidate that I've explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need.
+
+If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/r-gris/tabularaster/issues) or [discuss at r-spatial](https://github.com/r-spatial/discuss), get on [twitter \#rstats](https://twitter.com/hashtag/rstats) or contact me directly.
+
+Applied example
+===============
 
 This example uses extracted data per polygon and uses base R to `lapply` across the list of values extracted per polygon. Here we show a more `dplyrish` version after extracting the cell numbers with `tabularaster`.
 
@@ -26,7 +103,6 @@ library(tabularaster)
 ## https://gis.stackexchange.com/questions/102870/step-by-step-how-do-i-extract-raster-values-from-polygon-overlay-with-q-gis-or
 
 library(raster)
-#> Loading required package: sp
 
 # Create integer class raster
 r <- raster(ncol=36, nrow=18)
@@ -75,28 +151,32 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 18 x 4
+#> # A tibble: 20 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <chr> <dbl> <int>      <dbl>
-#>  1       1     1     1 0.02631579
-#>  2       1     2     3 0.07894737
-#>  3       1     3     5 0.13157895
-#>  4       1     4     8 0.21052632
-#>  5       1     5     2 0.05263158
-#>  6       1     6     5 0.13157895
-#>  7       1     7     4 0.10526316
-#>  8       1     8     5 0.13157895
+#>  1       1     1     2 0.05263158
+#>  2       1     2     5 0.13157895
+#>  3       1     3     1 0.02631579
+#>  4       1     4     3 0.07894737
+#>  5       1     5     3 0.07894737
+#>  6       1     6     6 0.15789474
+#>  7       1     7     3 0.07894737
+#>  8       1     8     6 0.15789474
 #>  9       1     9     5 0.13157895
-#> 10       2     1     2 0.08000000
-#> 11       2     2     1 0.04000000
-#> 12       2     3     3 0.12000000
-#> 13       2     4     3 0.12000000
-#> 14       2     5     2 0.08000000
-#> 15       2     6     4 0.16000000
-#> 16       2     7     3 0.12000000
-#> 17       2     8     4 0.16000000
-#> 18       2     9     3 0.12000000
+#> 10       1    10     4 0.10526316
+#> 11       2     1     2 0.08000000
+#> 12       2     2     2 0.08000000
+#> 13       2     3     2 0.08000000
+#> 14       2     4     2 0.08000000
+#> 15       2     5     2 0.08000000
+#> 16       2     6     5 0.20000000
+#> 17       2     7     4 0.16000000
+#> 18       2     8     3 0.12000000
+#> 19       2     9     2 0.08000000
+#> 20       2    10     1 0.04000000
+
+## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
 #( v <- extract(r, polys) )
 # Get class counts for each polygon
@@ -126,7 +206,7 @@ plot(ghrsst, col = bpy.colors(30), addfun = function() plot(sst_regions, add = T
      main = "SST data with simple regional polygon layer")
 ```
 
-![](README-unnamed-chunk-3-1.png)
+![](README-unnamed-chunk-7-1.png)
 
 ``` r
 library(sf)
@@ -134,7 +214,7 @@ library(sf)
 plot(st_as_sf(sst_regions))
 ```
 
-![](README-unnamed-chunk-3-2.png)
+![](README-unnamed-chunk-7-2.png)
 
 Extract cells from rasters
 ==========================
@@ -268,7 +348,7 @@ grid[cn$cell_] <- cn$object_
 plot(grid)
 ```
 
-![](README-unnamed-chunk-5-1.png)
+![](README-unnamed-chunk-9-1.png)
 
 That's nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).
 
@@ -288,4 +368,4 @@ scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
 plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
 ```
 
-![](README-unnamed-chunk-6-1.png)
+![](README-unnamed-chunk-10-1.png)

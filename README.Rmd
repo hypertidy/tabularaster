@@ -32,7 +32,64 @@ Tabularaster provides:
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong. 
 
-# Example
+# Installation
+
+Tabularaster is currently only available from Github, and it's early days so please use with caution. There are some things that I might need to change. 
+
+```{r, eval=FALSE}
+devtools::install_github("r-gris/tabularaster")
+```
+
+
+# Usage
+
+Extract the cell numbers of raster `r` that are co-located with object `q`.  (The argument names are `x` and `query`). 
+
+```{r, eval=FALSE}
+cellnumbers(r, q)
+```
+
+In the above example, `r` is any *raster* object and `q` is another spatial object, used as a query. Cell numbers can be extracted 
+from any raster object, any of a `raster::raster`, `raster::stack` or `raster::brick`. It's not really relevant what that object
+contains, as only the *dimensions* (number of cells in x and y) and the *extent* (geographic range in x and y) determine the result. The `r` object can actually not contain any data - this is a very powerful but seemingly under-used feature of the `raster` package. 
+
+The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
+
+
+# Simple example
+
+In straightforward usage, `cellnumbers` returns a tibble with `object_` to identify the spatial object by number, and `cell_` which is specific to the raster object, a function of its `extent`, `dim`ensions and `projection` (crs - coordinate reference system). 
+
+```{r}
+library(raster)
+library(tabularaster)
+(r <- raster(volcano))
+(cell <- cellnumbers(r, cbind(0.5, 0.5)))
+```
+
+This cell number query can be then be used to drive other raster functions, like `extract` and `xyFromCell` and many others. 
+
+```{r}
+xyFromCell(r, cell$cell_)
+
+
+raster::extract(r, cell$cell_)
+```
+
+This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It's also very useful for using `dplyr` to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects. 
+
+# Warnings
+
+1. I tend to end up using `tidyr::extract` and `raster::extract`, `dplyr::select` and `raster::select` as I always use these packages together. 
+2. `cellnumbers` doesn't currently reproject the second argument `query`, even when would make sense to do so like `extract` does. This is purely to reduce the required dependencies. 
+
+If you find that things don't work, first check if it's a namespace problem, there are a few function name overlaps in the `tidyverse` and `raster`, and in R generally. There is no way to fix this properly atm.
+
+Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I'd like a light-weight reprojection engine in order to do this, and `proj4` is a candidate that I've explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need. 
+
+If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/r-gris/tabularaster/issues) or [discuss at  r-spatial](https://github.com/r-spatial/discuss), get on [twitter #rstats](https://twitter.com/hashtag/rstats) or contact me directly. 
+
+# Applied example
 
 This example uses extracted data per polygon and uses base R to `lapply` across the list of values
 extracted per polygon. Here we show a more `dplyrish` version after extracting the cell numbers with `tabularaster`. 
@@ -62,6 +119,8 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
+
+## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
 #( v <- extract(r, polys) )
 # Get class counts for each polygon

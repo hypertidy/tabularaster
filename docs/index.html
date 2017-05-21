@@ -66,15 +66,75 @@
 </ul>
 <p>There is some overlap with <code>quadmesh</code> and <code>spex</code> while I figure out where things belong.</p>
 </div>
-<div id="example" class="section level1">
+<div id="installation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h1>
+<a href="#installation" class="anchor"></a>Installation</h1>
+<p>Tabularaster is currently only available from Github, and it’s early days so please use with caution. There are some things that I might need to change.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"r-gris/tabularaster"</span>)</code></pre></div>
+</div>
+<div id="usage" class="section level1">
+<h1 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h1>
+<p>Extract the cell numbers of raster <code>r</code> that are co-located with object <code>q</code>. (The argument names are <code>x</code> and <code>query</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(r, q)</code></pre></div>
+<p>In the above example, <code>r</code> is any <em>raster</em> object and <code>q</code> is another spatial object, used as a query. Cell numbers can be extracted from any raster object, any of a <code>raster::raster</code>, <code>raster::stack</code> or <code>raster::brick</code>. It’s not really relevant what that object contains, as only the <em>dimensions</em> (number of cells in x and y) and the <em>extent</em> (geographic range in x and y) determine the result. The <code>r</code> object can actually not contain any data - this is a very powerful but seemingly under-used feature of the <code>raster</code> package.</p>
+<p>The object <code>q</code> may be any of <code>sf</code>, <code>sp</code> layer types or a matrix of raw coordinates (x-y). (‘Exotic’ <code>sf</code> types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we’ll make it work.)</p>
+</div>
+<div id="simple-example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#simple-example" class="anchor"></a>Simple example</h1>
+<p>In straightforward usage, <code>cellnumbers</code> returns a tibble with <code>object_</code> to identify the spatial object by number, and <code>cell_</code> which is specific to the raster object, a function of its <code>extent</code>, <code>dim</code>ensions and <code>projection</code> (crs - coordinate reference system).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<span class="co">#&gt; Loading required package: sp</span>
+<span class="kw">library</span>(tabularaster)
+(r &lt;-<span class="st"> </span><span class="kw">raster</span>(volcano))
+<span class="co">#&gt; class       : RasterLayer </span>
+<span class="co">#&gt; dimensions  : 87, 61, 5307  (nrow, ncol, ncell)</span>
+<span class="co">#&gt; resolution  : 0.01639344, 0.01149425  (x, y)</span>
+<span class="co">#&gt; extent      : 0, 1, 0, 1  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : NA </span>
+<span class="co">#&gt; data source : in memory</span>
+<span class="co">#&gt; names       : layer </span>
+<span class="co">#&gt; values      : 94, 195  (min, max)</span>
+(cell &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(r, <span class="kw">cbind</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))
+<span class="co">#&gt; Warning in cellnumbers(r, cbind(0.5, 0.5)): projections not the same </span>
+<span class="co">#&gt;     x: NA</span>
+<span class="co">#&gt; query: NA</span>
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   object_ cell_</span>
+<span class="co">#&gt;     &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1       1  2654</span></code></pre></div>
+<p>This cell number query can be then be used to drive other raster functions, like <code>extract</code> and <code>xyFromCell</code> and many others.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xyFromCell</span>(r, cell$cell_)
+<span class="co">#&gt;        x   y</span>
+<span class="co">#&gt; [1,] 0.5 0.5</span>
+
+
+raster::<span class="kw">extract</span>(r, cell$cell_)
+<span class="co">#&gt;     </span>
+<span class="co">#&gt; 161</span></code></pre></div>
+<p>This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It’s also very useful for using <code>dplyr</code> to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects.</p>
+</div>
+<div id="warnings" class="section level1">
+<h1 class="hasAnchor">
+<a href="#warnings" class="anchor"></a>Warnings</h1>
+<ol style="list-style-type: decimal">
+<li>I tend to end up using <code>tidyr::extract</code> and <code>raster::extract</code>, <code>dplyr::select</code> and <code>raster::select</code> as I always use these packages together.</li>
+<li>
+<code>cellnumbers</code> doesn’t currently reproject the second argument <code>query</code>, even when would make sense to do so like <code>extract</code> does. This is purely to reduce the required dependencies.</li>
+</ol>
+<p>If you find that things don’t work, first check if it’s a namespace problem, there are a few function name overlaps in the <code>tidyverse</code> and <code>raster</code>, and in R generally. There is no way to fix this properly atm.</p>
+<p>Tabularaster doesn’t reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I’d like a light-weight reprojection engine in order to do this, and <code>proj4</code> is a candidate that I’ve explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need.</p>
+<p>If you are interested in these issues please get in touch, use the <a href="https://github.com/r-gris/tabularaster/issues">Issues tab</a> or <a href="https://github.com/r-spatial/discuss">discuss at r-spatial</a>, get on <a href="https://twitter.com/hashtag/rstats">twitter #rstats</a> or contact me directly.</p>
+</div>
+<div id="applied-example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#applied-example" class="anchor"></a>Applied example</h1>
 <p>This example uses extracted data per polygon and uses base R to <code>lapply</code> across the list of values extracted per polygon. Here we show a more <code>dplyrish</code> version after extracting the cell numbers with <code>tabularaster</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
 ## https://gis.stackexchange.com/questions/102870/step-by-step-how-do-i-extract-raster-values-from-polygon-overlay-with-q-gis-or
 
 <span class="kw">library</span>(raster)
-<span class="co">#&gt; Loading required package: sp</span>
 
 <span class="co"># Create integer class raster</span>
 r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">ncol=</span><span class="dv">36</span>, <span class="dt">nrow=</span><span class="dv">18</span>)
@@ -127,25 +187,27 @@ cn %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt
 <span class="co">#&gt; # Groups:   object_ [2]</span>
 <span class="co">#&gt;    object_     v count      v.pct</span>
 <span class="co">#&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1     1     3 0.07894737</span>
-<span class="co">#&gt;  2       1     2     3 0.07894737</span>
-<span class="co">#&gt;  3       1     3     4 0.10526316</span>
-<span class="co">#&gt;  4       1     4     7 0.18421053</span>
-<span class="co">#&gt;  5       1     5     3 0.07894737</span>
-<span class="co">#&gt;  6       1     6     4 0.10526316</span>
-<span class="co">#&gt;  7       1     7     4 0.10526316</span>
-<span class="co">#&gt;  8       1     8     4 0.10526316</span>
-<span class="co">#&gt;  9       1     9     5 0.13157895</span>
-<span class="co">#&gt; 10       1    10     1 0.02631579</span>
-<span class="co">#&gt; 11       2     1     1 0.04000000</span>
-<span class="co">#&gt; 12       2     2     7 0.28000000</span>
-<span class="co">#&gt; 13       2     3     1 0.04000000</span>
-<span class="co">#&gt; 14       2     4     2 0.08000000</span>
-<span class="co">#&gt; 15       2     5     2 0.08000000</span>
-<span class="co">#&gt; 16       2     6     3 0.12000000</span>
-<span class="co">#&gt; 17       2     7     4 0.16000000</span>
-<span class="co">#&gt; 18       2     8     1 0.04000000</span>
-<span class="co">#&gt; 19       2     9     4 0.16000000</span>
+<span class="co">#&gt;  1       1     1     2 0.05263158</span>
+<span class="co">#&gt;  2       1     2    12 0.31578947</span>
+<span class="co">#&gt;  3       1     3     1 0.02631579</span>
+<span class="co">#&gt;  4       1     4     6 0.15789474</span>
+<span class="co">#&gt;  5       1     5     2 0.05263158</span>
+<span class="co">#&gt;  6       1     6     3 0.07894737</span>
+<span class="co">#&gt;  7       1     7     2 0.05263158</span>
+<span class="co">#&gt;  8       1     8     2 0.05263158</span>
+<span class="co">#&gt;  9       1     9     4 0.10526316</span>
+<span class="co">#&gt; 10       1    10     4 0.10526316</span>
+<span class="co">#&gt; 11       2     2     1 0.04000000</span>
+<span class="co">#&gt; 12       2     3     3 0.12000000</span>
+<span class="co">#&gt; 13       2     4     1 0.04000000</span>
+<span class="co">#&gt; 14       2     5     4 0.16000000</span>
+<span class="co">#&gt; 15       2     6     2 0.08000000</span>
+<span class="co">#&gt; 16       2     7     3 0.12000000</span>
+<span class="co">#&gt; 17       2     8     2 0.08000000</span>
+<span class="co">#&gt; 18       2     9     5 0.20000000</span>
+<span class="co">#&gt; 19       2    10     4 0.16000000</span>
+
+## here is the traditional code used in the stackoverflow example
 <span class="co"># Extract raster values to polygons                             </span>
 <span class="co">#( v &lt;- extract(r, polys) )</span>
 <span class="co"># Get class counts for each polygon</span>
@@ -171,11 +233,11 @@ sst_regions &lt;-<span class="st"> </span>sst_regions %&gt;%<span class="st"> </
 
 <span class="kw">plot</span>(ghrsst, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">30</span>), <span class="dt">addfun =</span> function() <span class="kw">plot</span>(sst_regions, <span class="dt">add =</span> <span class="ot">TRUE</span>), 
      <span class="dt">main =</span> <span class="st">"SST data with simple regional polygon layer"</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="README-unnamed-chunk-7-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
 <span class="co">#&gt; Linking to GEOS 3.5.1, GDAL 2.1.2, proj.4 4.9.3</span>
 <span class="kw">plot</span>(<span class="kw">st_as_sf</span>(sst_regions))</code></pre></div>
-<p><img src="README-unnamed-chunk-3-2.png" width="672"></p>
+<p><img src="README-unnamed-chunk-7-2.png" width="672"></p>
 </div>
 <div id="extract-cells-from-rasters" class="section level1">
 <h1 class="hasAnchor">
@@ -302,7 +364,7 @@ grid[cn$cell_] &lt;-<span class="st"> </span>cn$object_
 
 ## we slasterized it (slow rasterize)
 <span class="kw">plot</span>(grid)</code></pre></div>
-<p><img src="README-unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="README-unnamed-chunk-9-1.png" width="672"></p>
 <p>That’s nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).</p>
 <p>Now use <code>fasterize</code> to generate the grid, and use cellnumbers to extract.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fasterize it
@@ -316,7 +378,7 @@ grid[cn$cell_] &lt;-<span class="st"> </span>cn$object_
 fgrid &lt;-<span class="st"> </span><span class="kw">fasterize</span>(poly, grid, <span class="dt">field =</span> <span class="st">"AREA"</span>)
 scl &lt;-<span class="st"> </span>function(x) {rg &lt;-<span class="st"> </span><span class="kw">range</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>); (x   -<span class="st"> </span>rg[<span class="dv">1</span>])/<span class="kw">diff</span>(rg)}
 <span class="kw">plot</span>(<span class="kw">xyFromCell</span>(grid, cn$cell_), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.4</span>, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">26</span>)[<span class="kw">scl</span>(raster::<span class="kw">extract</span>(fgrid, cn$cell_)) *<span class="st"> </span><span class="dv">25</span> +<span class="st"> </span><span class="dv">1</span>])</code></pre></div>
-<p><img src="README-unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 </div>
   </div>

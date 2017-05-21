@@ -106,13 +106,26 @@
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>)
 <span class='no'>cr</span> <span class='kw'>&lt;-</span> <span class='fu'>cut</span>(<span class='no'>r</span>,  <span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)))
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>rasterToPolygons</span>(<span class='no'>cr</span>, <span class='kw'>dissolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>tt</span> <span class='kw'>&lt;-</span> <span class='fu'>cellnumbers</span>(<span class='no'>cr</span>, <span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: projections not the same </span>
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>rasterToPolygons</span>(<span class='no'>cr</span>, <span class='kw'>dissolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='input'><span class='no'>tt</span> <span class='kw'>&lt;-</span> <span class='fu'>cellnumbers</span>(<span class='no'>cr</span>, <span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: projections not the same </span>
 #&gt; <span class='warning'>    x: NA</span>
-#&gt; <span class='warning'>query: NA</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='no'>tt</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>extract</span>(<span class='no'>r</span>, <span class='no'>cell_</span>)) <span class='kw'>%&gt;%</span>
+#&gt; <span class='warning'>query: NA</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:raster’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, select, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='no'>tt</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>extract</span>(<span class='no'>r</span>, <span class='no'>cell_</span>)) <span class='kw'>%&gt;%</span>
 <span class='fu'>group_by</span>(<span class='no'>object_</span>) <span class='kw'>%&gt;%</span>
-<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>))</div><div class='output co'>#&gt; <span class='error'>Error in mutate_impl(.data, dots): no applicable method for 'extract_' applied to an object of class "c('RasterLayer', 'Raster', 'BasicRaster')"</span></div><div class='input'><span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1]  80 100 120 140 160 180</div></pre>
+<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 2
+#&gt;   object_ `mean(v)`
+#&gt;     &lt;chr&gt;     &lt;dbl&gt;
+#&gt; 1       1  97.38693
+#&gt; 2       2 110.20931
+#&gt; 3       3 130.40073
+#&gt; 4       4 149.72827
+#&gt; 5       5 170.44589
+#&gt; 6       6 186.32022</div><div class='input'><span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1]  80 100 120 140 160 180</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
