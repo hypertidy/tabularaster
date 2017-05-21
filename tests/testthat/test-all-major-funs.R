@@ -1,3 +1,4 @@
+library(testthat)
 context("all-major-funs")
 
 r <- rastercano
@@ -41,5 +42,6 @@ test_that("extract of sf works", {
   ll <- extract(r, psf) %>% expect_length(24) %>% lengths()
   expect_that(sum(ll), equals(5307))
   extract(r, as(psf, "Spatial")) %>% lengths()
-  cellnumbers(r2, mp)
+  ## awaiting fix in spbabel https://github.com/r-gris/tabularaster/issues/8
+  ##cellnumbers(r2, mp)
 })
