@@ -2,7 +2,7 @@
 % Please edit documentation in R/buffer_extent.r
 \name{bufext}
 \alias{bufext}
-\title{Whole cell buffer for an extent}
+\title{Deprected tabularaster function}
 \usage{
 bufext(e1, e2)
 }

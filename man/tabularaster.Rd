@@ -4,7 +4,7 @@
 \name{tabularaster}
 \alias{tabularaster}
 \alias{tabularaster-package}
-\title{tidyraster.}
+\title{Tabular tools for raster, tidy tools for raster.}
 \description{
-tidyraster.
+Tabular tools for raster, tidy tools for raster.
 }

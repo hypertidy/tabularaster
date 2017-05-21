@@ -1,4 +1,4 @@
-#' Whole cell buffer for an extent
+#' Deprected tabularaster function 
 #'
 #' Ensure a raster extent aligns to whole parts.
 #' 

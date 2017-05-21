@@ -1,5 +1,5 @@
-#' tidyraster.
-#'
+#' Tabular tools for raster, tidy tools for raster.
+#' 
 #' @name tabularaster
 #' @docType package
 NULL
