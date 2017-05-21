@@ -19,7 +19,7 @@ test_that("decimate is available", {
 library(spex)
 library(raster)
 library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
-library(sf, quietly = TRUE, verbose = FALSE)
+#library(sf, quietly = TRUE, verbose = FALSE)
 psf <- polygonize(aggregate(r, fact = 16)) 
 
 #csf <- ct_triangulate(psf, a = .0001)
@@ -34,8 +34,8 @@ test_that("spex sf works", {
 })
 
 
-mp <- st_sf(a = 1:2, geometry = st_sfc(st_multipoint(cbind(0, 1:2)), st_multipoint(cbind(0, 1:4))))
-r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
+#mp <- st_sf(a = 1:2, geometry = st_sfc(st_multipoint(cbind(0, 1:2)), st_multipoint(cbind(0, 1:4))))
+#r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
 
 test_that("extract of sf works", {
   cellnumbers(r, psf[c(1, 10), ]) %>% expect_named(c("object_", "cell_")) 
