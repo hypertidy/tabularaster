@@ -62,7 +62,7 @@ library(tabularaster)
 #> query: NA
 #> # A tibble: 1 x 2
 #>   object_ cell_
-#>     <chr> <dbl>
+#>     <int> <dbl>
 #> 1       1  2654
 ```
 
@@ -124,7 +124,7 @@ polys <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(Polygon(cds
 #> query: NA
 #> # A tibble: 63 x 2
 #>    object_ cell_
-#>      <chr> <dbl>
+#>      <int> <dbl>
 #>  1       1   326
 #>  2       1   327
 #>  3       1   328
@@ -154,27 +154,29 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 17 x 4
+#> # A tibble: 19 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
-#>      <chr> <dbl> <int>      <dbl>
+#>      <int> <dbl> <int>      <dbl>
 #>  1       1     1     2 0.05263158
 #>  2       1     2     3 0.07894737
-#>  3       1     3     3 0.07894737
+#>  3       1     3     8 0.21052632
 #>  4       1     4     4 0.10526316
-#>  5       1     5     3 0.07894737
+#>  5       1     5     2 0.05263158
 #>  6       1     6     7 0.18421053
-#>  7       1     7     9 0.23684211
-#>  8       1     8     3 0.07894737
-#>  9       1     9     4 0.10526316
-#> 10       2     2     5 0.20000000
-#> 11       2     3     3 0.12000000
-#> 12       2     4     2 0.08000000
-#> 13       2     5     3 0.12000000
-#> 14       2     6     4 0.16000000
-#> 15       2     7     2 0.08000000
-#> 16       2     8     4 0.16000000
-#> 17       2     9     2 0.08000000
+#>  7       1     7     4 0.10526316
+#>  8       1     8     4 0.10526316
+#>  9       1     9     3 0.07894737
+#> 10       1    10     1 0.02631579
+#> 11       2     1     1 0.04000000
+#> 12       2     2     4 0.16000000
+#> 13       2     3     3 0.12000000
+#> 14       2     4     2 0.08000000
+#> 15       2     6     4 0.16000000
+#> 16       2     7     4 0.16000000
+#> 17       2     8     2 0.08000000
+#> 18       2     9     2 0.08000000
+#> 19       2    10     3 0.12000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
@@ -237,7 +239,7 @@ cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
 #> query: NA
 #> # A tibble: 235 x 2
 #>    object_ cell_
-#>      <chr> <dbl>
+#>      <int> <dbl>
 #>  1       1  1129
 #>  2       1  1190
 #>  3       1  1251
@@ -255,7 +257,7 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 #> query: NA
 #> # A tibble: 331 x 2
 #>    object_ cell_
-#>      <chr> <dbl>
+#>      <int> <dbl>
 #>  1       1  1129
 #>  2       2  1129
 #>  3       3  1251
@@ -267,11 +269,30 @@ cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "Spatia
 #>  9       9  1098
 #> 10      10  1037
 #> # ... with 321 more rows
-
-## weights not workin
-#xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
-#xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
 ```
+
+In the case of polygons, there's an argument `weights` that can be used to get an approximate weighting for partial cell coverage.
+
+``` r
+poly <- sf::st_sf(a = 1, geometry = sf::st_sfc(sf::st_polygon(list(
+  cbind(c(0.57, 0.55, 0.19, 0.43, 0.82, 0.57), 
+        c(0.22, 0.24, 0.46, 0.77, 0.56, 0.22))))))
+
+
+
+
+xweight <- cellnumbers(rastercano, poly, weights = TRUE)
+#> Warning in cellnumbers(rastercano, poly, weights = TRUE): projections not the same 
+#>     x: NA
+#> query: NA
+
+dgrid <- setValues(rastercano, NA_real_)
+dgrid[xweight$cell_] <- xweight$weight_
+plot(dgrid, main = "cell weights based on partial overlap", col = viridis::viridis(9), 
+     addfun = function() polygon(poly$geometry[[c(1, 1)]]))
+```
+
+![](README-unnamed-chunk-9-1.png)
 
 Extract values or cell numbers with sf object
 =============================================
@@ -329,7 +350,7 @@ try(grid <-  raster(poly))
 #> query: +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat
 #> # A tibble: 7,233 x 2
 #>    object_ cell_
-#>      <chr> <dbl>
+#>      <int> <dbl>
 #>  1       1    43
 #>  2       1    44
 #>  3       1    45
@@ -348,7 +369,7 @@ grid[cn$cell_] <- cn$object_
 plot(grid)
 ```
 
-![](README-unnamed-chunk-9-1.png)
+![](README-unnamed-chunk-10-1.png)
 
 That's nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).
 
@@ -368,4 +389,4 @@ scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
 plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
 ```
 
-![](README-unnamed-chunk-10-1.png)
+![](README-unnamed-chunk-11-1.png)

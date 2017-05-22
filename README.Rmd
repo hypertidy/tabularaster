@@ -169,10 +169,27 @@ cells <- cellnumbers(rastercano, polycano[4:5, ])
 
 cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
 cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
+```
 
-## weights not workin
-#xweight <- cellnumbers(rastercano, polycano[4:5, ], weights = TRUE)
-#xweight  %>% group_by(object_)  %>% summarize(sum(weight_))
+
+In the case of polygons, there's an argument `weights` that can be used to get an approximate weighting for
+partial cell coverage. 
+
+
+```{r}
+poly <- sf::st_sf(a = 1, geometry = sf::st_sfc(sf::st_polygon(list(
+  cbind(c(0.57, 0.55, 0.19, 0.43, 0.82, 0.57), 
+        c(0.22, 0.24, 0.46, 0.77, 0.56, 0.22))))))
+
+
+
+
+xweight <- cellnumbers(rastercano, poly, weights = TRUE)
+
+dgrid <- setValues(rastercano, NA_real_)
+dgrid[xweight$cell_] <- xweight$weight_
+plot(dgrid, main = "cell weights based on partial overlap", col = viridis::viridis(9), 
+     addfun = function() polygon(poly$geometry[[c(1, 1)]]))
 
 ```
 

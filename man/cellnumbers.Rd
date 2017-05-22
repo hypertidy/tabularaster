@@ -11,13 +11,16 @@ cellnumbers(x, query, ...)
 
 \item{query}{Spatial object or matrix of coordinates}
 
-\item{...}{arguments passed on}
+\item{...}{arguments passed on to \code{raster::cellFromPolygon} for polygon input}
 }
 \value{
 tbl_df data frame
 }
 \description{
 Currently only for single layer objects.
+}
+\details{
+The dots argument can be used to set \code{weights=TRUE} for the polygon case, this is otherwise ignored.
 }
 \examples{
 library(raster)

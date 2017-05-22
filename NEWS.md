@@ -1,5 +1,7 @@
 ## tabularaster dev
 
+* object_ is now integer, 1-based to match the rows in query
+
 * removed `boundary` (see `romsboundary` in `angstroms`)
 
 * consolidated on the central tools, removed experiments

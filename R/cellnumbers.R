@@ -1,8 +1,10 @@
 #' Extract cell numbers from a Raster object.
 #'
-#' Currently only for single layer objects.
+#' Currently only for single layer objects.  
+#' 
+#' The dots argument can be used to set `weights=TRUE` for the polygon case, this is otherwise ignored. 
 #' @param x Raster object
-#' @param ... arguments passed on
+#' @param ... arguments passed on to `raster::cellFromPolygon` for polygon input
 #' @param query Spatial object or matrix of coordinates
 #' @return tbl_df data frame
 #' @export
@@ -36,7 +38,7 @@ cellnumbers <- function(x, query, ...) {
     a <- cellFromPolygon(x, query, ...)
   }
   if (inherits(query, "SpatialLines")) {
-    a <- cellFromLine(x, query, ...)
+    a <- cellFromLine(x, query)
   }
   
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
@@ -49,6 +51,7 @@ cellnumbers <- function(x, query, ...) {
     #a <- split(cellFromXY(x, as.matrix(ind[, -1])), ind$feature)[unique(ind$feature)]
   }
   d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "object_")
+  d[["object_"]] <- as.integer(d[["object_"]])
   if (ncol(d) == 2L) names(d) <- c("object_", "cell_")
   if (ncol(d) == 3L) names(d) <- c("object_", "cell_", "weight_")
   d
