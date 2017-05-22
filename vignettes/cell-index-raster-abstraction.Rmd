@@ -1,0 +1,47 @@
+---
+title: "The raster cell abstraction"
+author: "Michael Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Raster Cell Abstraction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following functions in the `raster` package are designed to work with cell indexes. 
+
+`fun(r, cell)`
+
+* `[`
+* `adjacent`
+* `colFromCell`
+* `rasterFromCells`
+* `rowColFromCell`	
+* `rowFromCell`
+* `validCell`
+* `xyFromCell`
+* `xFromCell`
+* `yFromCell`
+
+The following functions will return cell indexes. 
+
+`fun(r, query)` to return cells
+
+* `cellFromCol`
+* `cellFromLine`
+* `cellFromPolygon`
+* `cellFromRow`
+* `cellFromRowCol`
+* `cellFromRowColCombine`
+* `cellFromXY`
+* `cellsFromExtent`
+* `fourCellsFromXY`
+
+Others
+
+* `setValues` will work as `fun(r, vals, index)` only for `RasterLayerSparse`
+
+The sparse raster is a under-used feature and needs to be fleshed out. 
+
+

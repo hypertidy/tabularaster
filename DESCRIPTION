@@ -20,5 +20,8 @@ Imports:
     tibble, 
     viridis
 RoxygenNote: 6.0.1
-Suggests: covr, testthat
+Suggests: covr, testthat,
+    knitr,
+    rmarkdown
 Remotes: mdsumner/spbabel
+VignetteBuilder: knitr

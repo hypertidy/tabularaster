@@ -1,5 +1,7 @@
 ## tabularaster dev
 
+* new vignette stub to list all relevant raster functions
+
 * object_ is now integer, 1-based to match the rows in query
 
 * removed `boundary` (see `romsboundary` in `angstroms`)
