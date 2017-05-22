@@ -15,6 +15,7 @@
 #'
 #' @examples
 #' library(tabularaster)
+#' library(tibble)
 #' as_tibble(raster::raster(volcano))
 #' as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 #' @importFrom tibble as_tibble tibble
