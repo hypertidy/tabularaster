@@ -57,7 +57,7 @@ contains, as only the *dimensions* (number of cells in x and y) and the *extent*
 The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
 
 
-# Simple example
+# Simple examples
 
 In straightforward usage, `cellnumbers` returns a tibble with `object_` to identify the spatial object by number, and `cell_` which is specific to the raster object, a function of its `extent`, `dim`ensions and `projection` (crs - coordinate reference system). 
 
@@ -78,6 +78,29 @@ raster::extract(r, cell$cell_)
 ```
 
 This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It's also very useful for using `dplyr` to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects. 
+
+## as tibble
+
+There is an `as_tibble` method with options for cell, dimension, and date. 
+
+```{r}
+library(dplyr)
+as_tibble(r)
+b <- brick(r, r*2)
+as_tibble(b)
+as_tibble(b, cell = FALSE) %>% arrange(desc(dimindex)) ## leave out the cell index
+```
+
+The date or date-time is used as the dimension index if present. 
+
+```{r}
+btime <- setZ(b, Sys.time() + c(1, 10))
+as_tibble(btime) %>% group_by(dimindex) %>% summarize(n = n())
+
+as_tibble(btime, split_date = TRUE)
+
+```
+
 
 # Warnings
 

@@ -32,7 +32,7 @@ cellnumbers <- function(x, query, ...) {
     query <- spbabel::sp(map, tab, crs)
   }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
-    warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)))
+    warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }
   if (inherits(query, "SpatialPolygons")) {
     a <- cellFromPolygon(x, query, ...)

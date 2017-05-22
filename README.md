@@ -12,6 +12,7 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 Tabularaster provides:
 
 -   extraction of cells as a simple data frame with "object ID" and "cell index"
+-   `as_tibble` for raster data, with options for value column and cell, dimension and date indexing
 -   workers to bring `sf` support to `raster`
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong.
@@ -38,8 +39,8 @@ In the above example, `r` is any *raster* object and `q` is another spatial obje
 
 The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
 
-Simple example
-==============
+Simple examples
+===============
 
 In straightforward usage, `cellnumbers` returns a tibble with `object_` to identify the spatial object by number, and `cell_` which is specific to the raster object, a function of its `extent`, `dim`ensions and `projection` (crs - coordinate reference system).
 
@@ -57,7 +58,7 @@ library(tabularaster)
 #> names       : layer 
 #> values      : 94, 195  (min, max)
 (cell <- cellnumbers(r, cbind(0.5, 0.5)))
-#> Warning in cellnumbers(r, cbind(0.5, 0.5)): projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: NA
 #> # A tibble: 1 x 2
@@ -80,6 +81,100 @@ raster::extract(r, cell$cell_)
 ```
 
 This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It's also very useful for using `dplyr` to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects.
+
+as tibble
+---------
+
+There is an `as_tibble` method with options for cell, dimension, and date.
+
+``` r
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:raster':
+#> 
+#>     intersect, select, union
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+as_tibble(r)
+#> # A tibble: 5,307 x 2
+#>    cellvalue cellindex
+#>        <dbl>     <int>
+#>  1       100         1
+#>  2       100         2
+#>  3       101         3
+#>  4       101         4
+#>  5       101         5
+#>  6       101         6
+#>  7       101         7
+#>  8       100         8
+#>  9       100         9
+#> 10       100        10
+#> # ... with 5,297 more rows
+b <- brick(r, r*2)
+as_tibble(b)
+#> # A tibble: 10,614 x 3
+#>    cellvalue cellindex dimindex
+#>        <dbl>     <int>    <int>
+#>  1       100         1        1
+#>  2       100         2        1
+#>  3       101         3        1
+#>  4       101         4        1
+#>  5       101         5        1
+#>  6       101         6        1
+#>  7       101         7        1
+#>  8       100         8        1
+#>  9       100         9        1
+#> 10       100        10        1
+#> # ... with 10,604 more rows
+as_tibble(b, cell = FALSE) %>% arrange(desc(dimindex)) ## leave out the cell index
+#> # A tibble: 10,614 x 2
+#>    cellvalue dimindex
+#>        <dbl>    <int>
+#>  1       200        2
+#>  2       200        2
+#>  3       202        2
+#>  4       202        2
+#>  5       202        2
+#>  6       202        2
+#>  7       202        2
+#>  8       200        2
+#>  9       200        2
+#> 10       200        2
+#> # ... with 10,604 more rows
+```
+
+The date or date-time is used as the dimension index if present.
+
+``` r
+btime <- setZ(b, Sys.time() + c(1, 10))
+as_tibble(btime) %>% group_by(dimindex) %>% summarize(n = n())
+#> # A tibble: 2 x 2
+#>              dimindex     n
+#>                <dttm> <int>
+#> 1 2017-05-23 00:59:54  5307
+#> 2 2017-05-23 01:00:03  5307
+
+as_tibble(btime, split_date = TRUE)
+#> # A tibble: 10,614 x 5
+#>    cellvalue cellindex  year month   day
+#>        <dbl>     <int> <int> <int> <int>
+#>  1       100         1  2017     5    23
+#>  2       100         2  2017     5    23
+#>  3       101         3  2017     5    23
+#>  4       101         4  2017     5    23
+#>  5       101         5  2017     5    23
+#>  6       101         6  2017     5    23
+#>  7       101         7  2017     5    23
+#>  8       100         8  2017     5    23
+#>  9       100         9  2017     5    23
+#> 10       100        10  2017     5    23
+#> # ... with 10,604 more rows
+```
 
 Warnings
 ========
@@ -119,7 +214,7 @@ polys <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(Polygon(cds
 
 ## do extraction in abstract terms
 (cn <- cellnumbers(r, polys))
-#> Warning in cellnumbers(r, polys): projections not the same 
+#> Warning: projections not the same 
 #>     x: +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0
 #> query: NA
 #> # A tibble: 63 x 2
@@ -138,45 +233,32 @@ polys <- SpatialPolygonsDataFrame(SpatialPolygons(list(Polygons(list(Polygon(cds
 #> # ... with 53 more rows
 
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:raster':
-#> 
-#>     intersect, select, union
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 ## now perform extraction for real
 ## and pipe into grouping by polygon (object_) and value, and
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 19 x 4
+#> # A tibble: 17 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <int> <dbl> <int>      <dbl>
-#>  1       1     1     3 0.07894737
-#>  2       1     2     5 0.13157895
-#>  3       1     3     3 0.07894737
-#>  4       1     4     6 0.15789474
-#>  5       1     5     3 0.07894737
-#>  6       1     6     3 0.07894737
+#>  1       1     1     4 0.10526316
+#>  2       1     2     4 0.10526316
+#>  3       1     3     5 0.13157895
+#>  4       1     4     4 0.10526316
+#>  5       1     5     5 0.13157895
+#>  6       1     6     4 0.10526316
 #>  7       1     7     5 0.13157895
 #>  8       1     8     3 0.07894737
-#>  9       1     9     4 0.10526316
-#> 10       1    10     3 0.07894737
-#> 11       2     1     2 0.08000000
-#> 12       2     2     3 0.12000000
-#> 13       2     3     4 0.16000000
+#>  9       1     9     2 0.05263158
+#> 10       1    10     2 0.05263158
+#> 11       2     2     3 0.12000000
+#> 12       2     3     5 0.20000000
+#> 13       2     4     6 0.24000000
 #> 14       2     5     2 0.08000000
-#> 15       2     6     4 0.16000000
-#> 16       2     7     2 0.08000000
-#> 17       2     8     1 0.04000000
-#> 18       2     9     4 0.16000000
-#> 19       2    10     3 0.12000000
+#> 15       2     6     3 0.12000000
+#> 16       2     7     4 0.16000000
+#> 17       2     9     2 0.08000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
@@ -208,7 +290,7 @@ plot(ghrsst, col = bpy.colors(30), addfun = function() plot(sst_regions, add = T
      main = "SST data with simple regional polygon layer")
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](README-unnamed-chunk-9-1.png)
 
 ``` r
 library(sf)
@@ -216,7 +298,7 @@ library(sf)
 plot(st_as_sf(sst_regions))
 ```
 
-![](README-unnamed-chunk-7-2.png)
+![](README-unnamed-chunk-9-2.png)
 
 Extract cells from rasters
 ==========================
@@ -228,13 +310,13 @@ library(dplyr)
 data("rastercano")
 data("polycano")
 cells <- cellnumbers(rastercano, polycano[4:5, ])
-#> Warning in cellnumbers(rastercano, polycano[4:5, ]): projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: NA
 
 
 cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
-#> Warning in cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame")): projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: NA
 #> # A tibble: 235 x 2
@@ -252,7 +334,7 @@ cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
 #> 10       2     7
 #> # ... with 225 more rows
 cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
-#> Warning in cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), : projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: NA
 #> # A tibble: 331 x 2
@@ -282,7 +364,7 @@ poly <- sf::st_sf(a = 1, geometry = sf::st_sfc(sf::st_polygon(list(
 
 
 xweight <- cellnumbers(rastercano, poly, weights = TRUE)
-#> Warning in cellnumbers(rastercano, poly, weights = TRUE): projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: NA
 
@@ -292,7 +374,7 @@ plot(dgrid, main = "cell weights based on partial overlap", col = viridis::virid
      addfun = function() polygon(poly$geometry[[c(1, 1)]]))
 ```
 
-![](README-unnamed-chunk-9-1.png)
+![](README-unnamed-chunk-11-1.png)
 
 Extract values or cell numbers with sf object
 =============================================
@@ -345,7 +427,7 @@ try(grid <-  raster(poly))
 
 ## index the raster with the sf layer
 (cn <- cellnumbers(grid, poly))
-#> Warning in cellnumbers(grid, poly): projections not the same 
+#> Warning: projections not the same 
 #>     x: NA
 #> query: +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat
 #> # A tibble: 7,233 x 2
@@ -369,7 +451,7 @@ grid[cn$cell_] <- cn$object_
 plot(grid)
 ```
 
-![](README-unnamed-chunk-10-1.png)
+![](README-unnamed-chunk-12-1.png)
 
 That's nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).
 
@@ -389,4 +471,4 @@ scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
 plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
 ```
 
-![](README-unnamed-chunk-11-1.png)
+![](README-unnamed-chunk-13-1.png)
