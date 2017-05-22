@@ -28,6 +28,7 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 Tabularaster provides: 
 
 - extraction of cells as a simple data frame with "object ID" and "cell index"
+- `as_tibble` for raster data, with options for value column and cell, dimension and date indexing
 - workers to bring `sf` support to  `raster`
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong. 

@@ -1,5 +1,8 @@
 ## tabularaster dev
 
+* extra handling for as_tibble, value is now optional so that data-less rasters can be used to 
+ build cell and dimension indices
+ 
 * new vignette stub to list all relevant raster functions
 
 * object_ is now integer, 1-based to match the rows in query

@@ -5,8 +5,8 @@
 \alias{as_tibble.BasicRaster}
 \title{Convert a Raster to a tibble.}
 \usage{
-\method{as_tibble}{BasicRaster}(x, cell = TRUE, dim = TRUE,
-  split_date = TRUE, ...)
+\method{as_tibble}{BasicRaster}(x, cell = TRUE, dim = nlayers(x) > 1L,
+  value = TRUE, split_date = FALSE, ...)
 }
 \arguments{
 \item{x}{a RasterLayer, RasterStack or RasterBrick}
@@ -14,6 +14,8 @@
 \item{cell}{logical to include explicit cell number}
 
 \item{dim}{logical to include slice index}
+
+\item{value}{logical to return the values as a column or not}
 
 \item{split_date}{logical to split date into components}
 
@@ -23,7 +25,8 @@
 a tibble
 }
 \description{
-Convert a Raster to a tibble.
+If the raster has only one layer, the slice index is not added. Use \code{dim = FALSE} to not include
+the slice index value.
 }
 \examples{
 library(tibble)

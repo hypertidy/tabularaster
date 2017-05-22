@@ -1,9 +1,15 @@
+library(testthat)
 context("as_tibble")
 
 test_that("multiplication works", {
-   as_tibble(raster::raster(volcano))
+   as_tibble(raster::raster(volcano)) %>% expect_s3_class("tbl_df") %>% expect_named(c("cellvalue", "cellindex"))
+    expect_warning(  as_tibble(raster::raster(volcano), dim = TRUE, split_date = TRUE), "not convertible to a Date or POSIXct")
+      as_tibble(raster::raster(volcano), dim = TRUE, split_date = FALSE) %>%   expect_named(c("cellvalue", "cellindex", "dimindex"))
+      as_tibble(raster::raster(volcano), dim = FALSE, split_date = FALSE) %>%  expect_named(c("cellvalue", "cellindex")) 
    
-   as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+   as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)  %>%  expect_named(c("cellvalue", "cellindex")) 
+   as_tibble(setZ(raster::raster(volcano), Sys.Date()), dim = TRUE)  %>%  expect_named(c("cellvalue", "cellindex", "dimindex")) 
+   as_tibble(setZ(raster::raster(volcano), Sys.Date()), dim = TRUE, cell = FALSE)  %>%  expect_named(c("cellvalue",  "dimindex")) 
    
    as_tibble(setZ(brick(raster::raster(volcano), raster::raster(volcano)), Sys.Date() + 1:2), cell = TRUE)
    

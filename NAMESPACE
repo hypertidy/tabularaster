@@ -3,6 +3,7 @@
 S3method(as_tibble,BasicRaster)
 export(bufext)
 export(cellnumbers)
+importFrom(dplyr,bind_cols)
 importFrom(dplyr,bind_rows)
 importFrom(dplyr,mutate)
 importFrom(methods,setMethod)

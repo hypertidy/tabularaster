@@ -1,10 +1,13 @@
 #' Convert a Raster to a tibble. 
 #'
-#' 
+#' If the raster has only one layer, the slice index is not added. Use `dim = FALSE` to not include
+#' the slice index value. 
+#'
 #' @param x a RasterLayer, RasterStack or RasterBrick
 #' @param cell logical to include explicit cell number
 #' @param dim logical to include slice index 
 #' @param split_date logical to split date into components
+#' @param value logical to return the values as a column or not
 #' @param ... unused
 #'
 #' @return a tibble
@@ -16,28 +19,31 @@
 #' library(raster)
 #' as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 #' @importFrom tibble as_tibble tibble
-#' @importFrom dplyr mutate
+#' @importFrom dplyr bind_cols mutate
 #' @importFrom raster getZ nlayers values ncell
 #' @name as_tibble
-as_tibble.BasicRaster <- function(x, cell = TRUE, dim = TRUE, split_date = TRUE, ...) {
+as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value = TRUE, split_date = FALSE, ...) {
   dimindex <- raster::getZ(x)
   
   if (is.null(dimindex)) {
     dimindex <- seq(raster::nlayers(x))
     if (split_date) {
-      e <- try(as.Date(dimindex), silent = TRUE)
-      if (inherits(e, "try-error") | any(is.na(range(e)))) {
+      e1 <- try(as.Date(dimindex), silent = TRUE)
+      e2 <- try(as.POSIXct(dimindex, tz = "GMT"), silent = TRUE)
+      if ((inherits(e1, "try-error") & inherits(e2, "try-error")) | any(is.na(range(e1)))) {
+        warning("cannot `split_date`, convert `getZ(x)` not convertible to a Date or POSIXct")
         split_date <- FALSE
       }
     }
   } 
-  
-  d <- tibble(cellvalue = as.vector(raster::values(x)))
-  if (cell) d <- dplyr::mutate(d, cellindex = rep(seq(raster::ncell(x)), raster::nlayers(x)))
+  cellvalue <- cellindex <-  NULL
+  if (value) cellvalue <- as.vector(values(x))
+  if (cell) cellindex <-  rep(seq(raster::ncell(x)), raster::nlayers(x))
+  d <- dplyr::bind_cols(cellvalue = cellvalue, cellindex = cellindex)
   if (dim) {
     dimindex <- rep(dimindex, each = ncell(x))
     if (split_date) {
-      d <- mutate(d, year = as.integer(format(dimindex, "%Y")), 
+      d <- dplyr::mutate(d, year = as.integer(format(dimindex, "%Y")), 
                                 month = as.integer(format(dimindex, "%m")), 
                                 day = as.integer(format(dimindex, "%d")))
       
