@@ -14,10 +14,9 @@
 #' @export
 #'
 #' @examples
-#' library(tibble)
+#' library(tabularaster)
 #' as_tibble(raster::raster(volcano))
-#' library(raster)
-#' as_tibble(setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+#' as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 #' @importFrom tibble as_tibble tibble
 #' @export as_tibble
 #' @importFrom dplyr bind_cols mutate
