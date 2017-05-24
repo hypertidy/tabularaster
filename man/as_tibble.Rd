@@ -29,8 +29,8 @@ If the raster has only one layer, the slice index is not added. Use \code{dim = 
 the slice index value.
 }
 \examples{
-library(tabularaster)
-library(tibble)
-as_tibble(raster::raster(volcano))
-as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+#library(tabularaster)
+#library(tibble)
+#as_tibble(raster::raster(volcano))
+#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 }
