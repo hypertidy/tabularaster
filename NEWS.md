@@ -1,5 +1,7 @@
 # tabularaster dev
 
+* fixed unnecessary lapply call for the points case, so that is now not slow
+
 * extra handling for as_tibble, value is now optional so that data-less rasters can be used to 
  build cell and dimension indices
  

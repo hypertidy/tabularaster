@@ -42,7 +42,7 @@ cellnumbers <- function(x, query, ...) {
   }
   
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
-    a <- cellFromXY(x, query)
+    a <- list(cellFromXY(x, query))
   }
   if (inherits(query, "SpatialMultiPoints")) {
     #ind <- dplyr::bind_rows(lapply(query@coords, tibble::as_tibble), .id = "feature")
