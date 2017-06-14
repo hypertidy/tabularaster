@@ -187,23 +187,23 @@ b &lt;-<span class="st"> </span><span class="kw">brick</span>(r, r*<span class="
 <span class="co">#&gt; # A tibble: 2 x 2</span>
 <span class="co">#&gt;              dimindex     n</span>
 <span class="co">#&gt;                &lt;dttm&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1 2017-05-23 04:29:47  5307</span>
-<span class="co">#&gt; 2 2017-05-23 04:29:56  5307</span>
+<span class="co">#&gt; 1 2017-06-14 21:39:13  5307</span>
+<span class="co">#&gt; 2 2017-06-14 21:39:22  5307</span>
 
 <span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; # A tibble: 10,614 x 5</span>
 <span class="co">#&gt;    cellvalue cellindex  year month   day</span>
 <span class="co">#&gt;        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt;  1       100         1  2017     5    23</span>
-<span class="co">#&gt;  2       100         2  2017     5    23</span>
-<span class="co">#&gt;  3       101         3  2017     5    23</span>
-<span class="co">#&gt;  4       101         4  2017     5    23</span>
-<span class="co">#&gt;  5       101         5  2017     5    23</span>
-<span class="co">#&gt;  6       101         6  2017     5    23</span>
-<span class="co">#&gt;  7       101         7  2017     5    23</span>
-<span class="co">#&gt;  8       100         8  2017     5    23</span>
-<span class="co">#&gt;  9       100         9  2017     5    23</span>
-<span class="co">#&gt; 10       100        10  2017     5    23</span>
+<span class="co">#&gt;  1       100         1  2017     6    14</span>
+<span class="co">#&gt;  2       100         2  2017     6    14</span>
+<span class="co">#&gt;  3       101         3  2017     6    14</span>
+<span class="co">#&gt;  4       101         4  2017     6    14</span>
+<span class="co">#&gt;  5       101         5  2017     6    14</span>
+<span class="co">#&gt;  6       101         6  2017     6    14</span>
+<span class="co">#&gt;  7       101         7  2017     6    14</span>
+<span class="co">#&gt;  8       100         8  2017     6    14</span>
+<span class="co">#&gt;  9       100         9  2017     6    14</span>
+<span class="co">#&gt; 10       100        10  2017     6    14</span>
 <span class="co">#&gt; # ... with 10,604 more rows</span></code></pre></div>
 </div>
 </div>
@@ -270,25 +270,25 @@ cn %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt
 <span class="co">#&gt; # Groups:   object_ [2]</span>
 <span class="co">#&gt;    object_     v count      v.pct</span>
 <span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1     1     1 0.02631579</span>
-<span class="co">#&gt;  2       1     2     5 0.13157895</span>
-<span class="co">#&gt;  3       1     3     4 0.10526316</span>
-<span class="co">#&gt;  4       1     4     1 0.02631579</span>
-<span class="co">#&gt;  5       1     5     3 0.07894737</span>
-<span class="co">#&gt;  6       1     6     7 0.18421053</span>
-<span class="co">#&gt;  7       1     7     6 0.15789474</span>
+<span class="co">#&gt;  1       1     1     3 0.07894737</span>
+<span class="co">#&gt;  2       1     2     3 0.07894737</span>
+<span class="co">#&gt;  3       1     3     5 0.13157895</span>
+<span class="co">#&gt;  4       1     4     6 0.15789474</span>
+<span class="co">#&gt;  5       1     5     4 0.10526316</span>
+<span class="co">#&gt;  6       1     6     8 0.21052632</span>
+<span class="co">#&gt;  7       1     7     3 0.07894737</span>
 <span class="co">#&gt;  8       1     8     4 0.10526316</span>
-<span class="co">#&gt;  9       1     9     6 0.15789474</span>
+<span class="co">#&gt;  9       1     9     1 0.02631579</span>
 <span class="co">#&gt; 10       1    10     1 0.02631579</span>
-<span class="co">#&gt; 11       2     1     2 0.08000000</span>
+<span class="co">#&gt; 11       2     1     1 0.04000000</span>
 <span class="co">#&gt; 12       2     2     1 0.04000000</span>
 <span class="co">#&gt; 13       2     3     1 0.04000000</span>
-<span class="co">#&gt; 14       2     4     4 0.16000000</span>
-<span class="co">#&gt; 15       2     6     3 0.12000000</span>
-<span class="co">#&gt; 16       2     7     5 0.20000000</span>
+<span class="co">#&gt; 14       2     5     4 0.16000000</span>
+<span class="co">#&gt; 15       2     6     5 0.20000000</span>
+<span class="co">#&gt; 16       2     7     4 0.16000000</span>
 <span class="co">#&gt; 17       2     8     5 0.20000000</span>
-<span class="co">#&gt; 18       2     9     2 0.08000000</span>
-<span class="co">#&gt; 19       2    10     2 0.08000000</span>
+<span class="co">#&gt; 18       2     9     3 0.12000000</span>
+<span class="co">#&gt; 19       2    10     1 0.04000000</span>
 
 ## here is the traditional code used in the stackoverflow example
 <span class="co"># Extract raster values to polygons                             </span>
@@ -362,15 +362,15 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumb
 <span class="co">#&gt;    object_ cell_</span>
 <span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt;  1       1  1129</span>
-<span class="co">#&gt;  2       2  1129</span>
-<span class="co">#&gt;  3       3  1251</span>
-<span class="co">#&gt;  4       4  1251</span>
-<span class="co">#&gt;  5       5  1129</span>
-<span class="co">#&gt;  6       6  1098</span>
-<span class="co">#&gt;  7       7  1098</span>
-<span class="co">#&gt;  8       8  1098</span>
-<span class="co">#&gt;  9       9  1098</span>
-<span class="co">#&gt; 10      10  1037</span>
+<span class="co">#&gt;  2       1  1129</span>
+<span class="co">#&gt;  3       1  1251</span>
+<span class="co">#&gt;  4       1  1251</span>
+<span class="co">#&gt;  5       1  1129</span>
+<span class="co">#&gt;  6       1  1098</span>
+<span class="co">#&gt;  7       1  1098</span>
+<span class="co">#&gt;  8       1  1098</span>
+<span class="co">#&gt;  9       1  1098</span>
+<span class="co">#&gt; 10       1  1037</span>
 <span class="co">#&gt; # ... with 321 more rows</span></code></pre></div>
 <p>In the case of polygons, there’s an argument <code>weights</code> that can be used to get an approximate weighting for partial cell coverage.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly &lt;-<span class="st"> </span>sf::<span class="kw">st_sf</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">geometry =</span> sf::<span class="kw">st_sfc</span>(sf::<span class="kw">st_polygon</span>(<span class="kw">list</span>(

@@ -17,6 +17,7 @@
 #' @noRd
 #' @keywords internal
 decimate <- function(x, dec = 10) {
+  .Deprecated()
   r <- raster(x); res(r) <- res(x) * dec
   setValues(r, extract(brick(x), coordinates(r)))
 }

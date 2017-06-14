@@ -12,8 +12,8 @@ test_that("cellnumber extraction is available", {
   expect_that(nrow(tib), equals(917L))
 })
 
-test_that("decimate is available", {
-  decimate(r, 10) %>% expect_s4_class("RasterLayer")
+test_that("decimate is not available", {
+   expect_warning(decimate(r, 10), "deprecated")
 })
 
 library(spex)
@@ -55,3 +55,4 @@ test_that("extract of sf works", {
   ## awaiting fix in spbabel https://github.com/r-gris/tabularaster/issues/8
   cellnumbers(r2, mp)
 })
+
