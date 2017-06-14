@@ -24,6 +24,7 @@ The dots argument can be used to set \code{weights=TRUE} for the polygon case, t
 }
 \examples{
 library(raster)
+library(dplyr)
 r <- raster(volcano) \%>\% aggregate(fact = 4)
 cr <- cut(r,  pretty(values(r)))
 p <- raster::rasterToPolygons(cr, dissolve = TRUE)

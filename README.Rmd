@@ -3,9 +3,9 @@ output: github_document
 ---
 
 
-[![Travis-CI Build Status](https://travis-ci.org/r-gris/tabularaster.svg?branch=master)](https://travis-ci.org/r-gris/tabularaster)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-gris/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/r-gris/tabularaster)
-[![Coverage Status](https://img.shields.io/codecov/c/github/r-gris/tabularaster/master.svg)](https://codecov.io/github/r-gris/tabularaster?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)](https://travis-ci.org/hypertidy/tabularaster)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster)
+[![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -37,7 +37,7 @@ There is some overlap with `quadmesh` and `spex` while I figure out where things
 Tabularaster is currently only available from Github, and it's early days so please use with caution. There are some things that I might need to change. 
 
 ```{r, eval=FALSE}
-devtools::install_github("r-gris/tabularaster")
+devtools::install_github("hypertidy/tabularaster")
 ```
 
 
@@ -113,7 +113,7 @@ Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (proj
 
 Ultimately the cell index vector should probably be a formal class, with knowledge of its extent and grain. I'd love this to be formalized, but I seem to not have the design expertise required to get the system right. It's something that `ggplot2` needs, but there aren't any existing examples in R anywhere as far as I can tell. The [stars project](https://github.com/edzer/stars)  is a good place to see what else is happening in this space in R. Other examples are the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`, `geometry`, `RTriangle`, `TBA`, (and there are many others). 
 
-If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/r-gris/tabularaster/issues) or [discuss at  r-spatial](https://github.com/r-spatial/discuss), get on [twitter #rstats](https://twitter.com/hashtag/rstats) or contact me directly. 
+If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/hypertidy/tabularaster/issues) or [discuss at  r-spatial](https://github.com/r-spatial/discuss), get on [twitter #rstats](https://twitter.com/hashtag/rstats) or contact me directly. 
 
 # Applied example
 

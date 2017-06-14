@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/r-gris/tabularaster.svg?branch=master)](https://travis-ci.org/r-gris/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-gris/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/r-gris/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/r-gris/tabularaster/master.svg)](https://codecov.io/github/r-gris/tabularaster?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)](https://travis-ci.org/hypertidy/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 tabularaster
@@ -23,7 +23,7 @@ Installation
 Tabularaster is currently only available from Github, and it's early days so please use with caution. There are some things that I might need to change.
 
 ``` r
-devtools::install_github("r-gris/tabularaster")
+devtools::install_github("hypertidy/tabularaster")
 ```
 
 Usage
@@ -156,8 +156,8 @@ as_tibble(btime) %>% group_by(dimindex) %>% summarize(n = n())
 #> # A tibble: 2 x 2
 #>              dimindex     n
 #>                <dttm> <int>
-#> 1 2017-06-14 22:46:58  5307
-#> 2 2017-06-14 22:47:07  5307
+#> 1 2017-06-14 23:18:10  5307
+#> 2 2017-06-14 23:18:19  5307
 
 as_tibble(btime, split_date = TRUE)
 #> # A tibble: 10,614 x 5
@@ -189,7 +189,7 @@ Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (proj
 
 Ultimately the cell index vector should probably be a formal class, with knowledge of its extent and grain. I'd love this to be formalized, but I seem to not have the design expertise required to get the system right. It's something that `ggplot2` needs, but there aren't any existing examples in R anywhere as far as I can tell. The [stars project](https://github.com/edzer/stars) is a good place to see what else is happening in this space in R. Other examples are the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`, `geometry`, `RTriangle`, `TBA`, (and there are many others).
 
-If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/r-gris/tabularaster/issues) or [discuss at r-spatial](https://github.com/r-spatial/discuss), get on [twitter \#rstats](https://twitter.com/hashtag/rstats) or contact me directly.
+If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/hypertidy/tabularaster/issues) or [discuss at r-spatial](https://github.com/r-spatial/discuss), get on [twitter \#rstats](https://twitter.com/hashtag/rstats) or contact me directly.
 
 Applied example
 ===============
@@ -238,28 +238,30 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 18 x 4
+#> # A tibble: 20 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <int> <dbl> <int>      <dbl>
-#>  1       1     2     4 0.10526316
-#>  2       1     3     5 0.13157895
-#>  3       1     4     2 0.05263158
-#>  4       1     5     8 0.21052632
-#>  5       1     6     3 0.07894737
-#>  6       1     7     4 0.10526316
-#>  7       1     8     3 0.07894737
-#>  8       1     9     7 0.18421053
-#>  9       1    10     2 0.05263158
-#> 10       2     2     2 0.08000000
-#> 11       2     3     4 0.16000000
-#> 12       2     4     4 0.16000000
-#> 13       2     5     3 0.12000000
-#> 14       2     6     2 0.08000000
-#> 15       2     7     4 0.16000000
-#> 16       2     8     1 0.04000000
-#> 17       2     9     4 0.16000000
-#> 18       2    10     1 0.04000000
+#>  1       1     1     4 0.10526316
+#>  2       1     2     4 0.10526316
+#>  3       1     3     5 0.13157895
+#>  4       1     4     4 0.10526316
+#>  5       1     5     5 0.13157895
+#>  6       1     6     5 0.13157895
+#>  7       1     7     2 0.05263158
+#>  8       1     8     5 0.13157895
+#>  9       1     9     2 0.05263158
+#> 10       1    10     2 0.05263158
+#> 11       2     1     3 0.12000000
+#> 12       2     2     1 0.04000000
+#> 13       2     3     4 0.16000000
+#> 14       2     4     2 0.08000000
+#> 15       2     5     2 0.08000000
+#> 16       2     6     2 0.08000000
+#> 17       2     7     1 0.04000000
+#> 18       2     8     5 0.20000000
+#> 19       2     9     3 0.12000000
+#> 20       2    10     2 0.08000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             

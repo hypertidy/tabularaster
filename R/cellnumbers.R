@@ -12,6 +12,7 @@
 #' @importFrom raster cellFromPolygon cellFromLine cellFromXY projection
 #' @examples 
 #' library(raster)
+#' library(dplyr)
 #' r <- raster(volcano) %>% aggregate(fact = 4)
 #' cr <- cut(r,  pretty(values(r)))
 #' p <- raster::rasterToPolygons(cr, dissolve = TRUE)
