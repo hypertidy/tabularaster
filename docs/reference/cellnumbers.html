@@ -111,23 +111,16 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>raster</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>) <span class='kw'>%&gt;%</span> <span class='fu'>aggregate</span>(<span class='kw'>fact</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>cr</span> <span class='kw'>&lt;-</span> <span class='fu'>cut</span>(<span class='no'>r</span>,  <span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)))
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>rasterToPolygons</span>(<span class='no'>cr</span>, <span class='kw'>dissolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>tt</span> <span class='kw'>&lt;-</span> <span class='fu'>cellnumbers</span>(<span class='no'>cr</span>, <span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: projections not the same </span>
-#&gt; <span class='warning'>    x: NA</span>
-#&gt; <span class='warning'>query: NA</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='no'>tt</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>extract</span>(<span class='no'>r</span>, <span class='no'>cell_</span>)) <span class='kw'>%&gt;%</span>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>volcano</span>) <span class='kw'>%&gt;%</span> <span class='fu'>aggregate</span>(<span class='kw'>fact</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='error'>Error in raster(volcano) %&gt;% aggregate(fact = 4): could not find function "%&gt;%"</span></div><div class='input'><span class='no'>cr</span> <span class='kw'>&lt;-</span> <span class='fu'>cut</span>(<span class='no'>r</span>,  <span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in cut(r, pretty(values(r))): object 'r' not found</span></div><div class='input'><span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>rasterToPolygons</span>(<span class='no'>cr</span>, <span class='kw'>dissolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in nlayers(x): object 'cr' not found</span></div><div class='input'><span class='no'>tt</span> <span class='kw'>&lt;-</span> <span class='fu'>cellnumbers</span>(<span class='no'>cr</span>, <span class='no'>p</span>)</div><div class='output co'>#&gt; <span class='error'>Error in inherits(query, "sf"): object 'p' not found</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:raster’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, select, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='no'>tt</span> <span class='kw'>%&gt;%</span> <span class='fu'>mutate</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>extract</span>(<span class='no'>r</span>, <span class='no'>cell_</span>)) <span class='kw'>%&gt;%</span>
 <span class='fu'>group_by</span>(<span class='no'>object_</span>) <span class='kw'>%&gt;%</span>
-<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 2
-#&gt;   object_ `mean(v)`
-#&gt;     &lt;int&gt;     &lt;dbl&gt;
-#&gt; 1       1   96.7309
-#&gt; 2       2  109.5867
-#&gt; 3       3  130.5587
-#&gt; 4       4  148.9317
-#&gt; 5       5  169.5195
-#&gt; 6       6  185.5188</div><div class='input'><span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1]  80 100 120 140 160 180</div></pre>
+<span class='fu'>summarize</span>(<span class='fu'>mean</span>(<span class='no'>v</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eval(lhs, parent, parent): object 'tt' not found</span></div><div class='input'><span class='fu'>head</span>(<span class='fu'>pretty</span>(<span class='fu'>values</span>(<span class='no'>r</span>)), -<span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in values(r): object 'r' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
