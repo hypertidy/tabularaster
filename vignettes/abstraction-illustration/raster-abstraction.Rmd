@@ -1,0 +1,61 @@
+---
+title: "Raster Abstraction"
+author: "Michael Sumner"
+date: "24/06/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Raster's cell-based index abstraction
+
+What is a raster? 
+
+Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? (Let's not get stuck here - the fact is that *it depends*). 
+
+What a raster is depends a lot on on what you are doing with the data, and what you need from it. All and none of these descriptions might make sense, but I want to completely put that topic aside so it doesn't get in our way. 
+
+The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. 
+
+This document aims to explain why that abstraction is very useful, and worth the effort to separate it from the specific workflows enabled by the raster package. 
+
+Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. 
+
+
+## Illustration
+
+A fairly straightforward use of the raster package is to extract values from cells (a.k.a. pixels). These values might be *data*, like a unit-measure quantity such as *temperature in Celsius* stored as a floating point number, or a more abstract depiction of data converted to a relative scale, such as grey-scale or Red-Green-Blue (RGB, or BGR). Put the colour-model variety aside for now, it adds another level of complication to the story that we don't need right now. 
+
+Here is a set of files containing ocean surface temperature (SST). This won't work on your local system, but it's a set files somewhere that R can see. (Our system is set up to provide very easy access to these kinds of files - to download these exact files or to emulate our system see the section below. )
+
+```{r}
+files <- raadtools::sstfiles()$file[13051:13062]
+root <- getOption("raadfiles.default.data.directory")
+
+print(basename(files))
+```
+
+A typical requirement from these data is to extract values from local sub-region/s and summarize. A sub-region might be an *extent* (bounding box in the coordinate system of the data), a set of point/s, a set of line/s or polygon/s. Each of these types of sub-regions is a *query* of the underlying gridded data. 
+
+(For now we ignore cases of varying query-in-time, continuous interpretation of cell values, and weighted or partial cell-coverage - these are specializations that build on lower level functionality of the simpler cases). 
+
+I've chosen two cases to illustrate, one with a single *extent* and another of two simple polygonal regions. For checking the context in which these queries will be built, first interrogate the data for the basic metadata. (I'm using 'readAll' simply to hide the full file path, it's unnecessary in the usual case). 
+
+```{r}
+library(raster)
+readAll(raster(file.path(root, files[1])))
+```
+
+In this case the interpretation of the underlying grid logic is sound, though in many cases this process needs some investigation and slight re-interpretation (to account for cell-centre vs. cell-edge alignment, incomplete coordinate reference system CRS or other incomplete or inaccurate interpretations.) There's no way to automate every possible case, these tools exist in a complex environment and not every situation can be handled without human oversight. Other options might need to restructure the data into *Atlantic view* with longitudes in -180, 180 but this *Pacific view* with longitudes 0, 360 is fairly common and sometimes required. 
+
+
+
+
+## Obtaining the illustrated files
+
+```{r,eval=FALSE}
+## Option 1: direct ftp download
+## Option 2. raadsync setup
+```
