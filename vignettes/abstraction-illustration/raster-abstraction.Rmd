@@ -48,7 +48,34 @@ library(raster)
 readAll(raster(file.path(root, files[1])))
 ```
 
-In this case the interpretation of the underlying grid logic is sound, though in many cases this process needs some investigation and slight re-interpretation (to account for cell-centre vs. cell-edge alignment, incomplete coordinate reference system CRS or other incomplete or inaccurate interpretations.) There's no way to automate every possible case, these tools exist in a complex environment and not every situation can be handled without human oversight. Other options might need to restructure the data into *Atlantic view* with longitudes in -180, 180 but this *Pacific view* with longitudes 0, 360 is fairly common and sometimes required. 
+In this case the interpretation of the underlying grid logic is sound, though in many cases this process needs some investigation and slight re-interpretation (to account for cell-centre vs. cell-edge alignment, incomplete coordinate reference system CRS or other incomplete or inaccurate interpretations.) There's no way to automate every possible case, these tools exist in a complex environment and not every situation can be handled without human oversight. Other options might need to restructure the data into *Atlantic view* with longitudes in -180, 180 but this *Pacific view* with longitudes 0, 360 is fairly common, and sometimes required, and neither case is inherently better or worse. 
+
+
+## Geographic extent
+
+What is an extent? For raster it is a set of four numbers, xmin, xmax, ymin and ymax and there are simple idioms for creating these. An *Extent* is a formal class that many raster operations formally understand, but at root it's just these four numbers. The magic of R functions for formal classes provides all the convenient behaviour to allow this to act like a rectangular polygon. 
+
+Let's build one, here using longitude latitude values local to my part of the world. 
+
+```{r}
+library(raster)
+ex <- extent(c(xmin = 130, xmax = 150, ymin = -50, ymax = -38))
+
+
+```
+
+We use to to conveniently hone in on just a small region of the global raster data. Here I really don't care about any interpretation of the data, it's just an illustration of the mechanics available to us. (Once we have mastery of these mechanics, and hopefully access to the best possible techniques then we can get back to the actual work of interpreting and using these data and honing our visualizations and analysis).  
+
+This is very nice, but note how the extent we asked for is not applied to the data we end up seeing in the plot. 
+
+```{r}
+rdata <- raster(file.path(root, files[1]))
+
+plot(ex)  ## the extent sets the plot context first
+plot(rdata, add = TRUE)
+plot(ex, add = TRUE)  ## put the extent layer on top
+```
+
 
 
 
