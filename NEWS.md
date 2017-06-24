@@ -1,5 +1,7 @@
 # tabularaster dev
 
+* added index extent functions `index_extent` and `cellsFromExtent`
+
 * removed decimate function
 
 * fixed unnecessary lapply call for the points case, so that is now not slow
