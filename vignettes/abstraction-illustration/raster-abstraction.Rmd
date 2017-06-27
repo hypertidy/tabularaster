@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Raster's cell-based index abstraction
 
+TODO: include some of this old crusty https://gis.stackexchange.com/a/43760/1204
+
 What is a raster? 
 
 Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? (Let's not get stuck here - the fact is that *it depends*). 
