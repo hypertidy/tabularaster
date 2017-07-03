@@ -19,18 +19,19 @@ Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a dis
 
 What a raster is depends a lot on on what you are doing with the data, and what you need from it. All and none of these descriptions might make sense, but I want to completely put that topic aside so it doesn't get in our way. 
 
-The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. 
+The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that very few people really grasp this
+distinction, and I contend that much benefit in efficiency of computation and understanding is missed because of this. 
 
 This document aims to explain why that abstraction is very useful, and worth the effort to separate it from the specific workflows enabled by the raster package. 
 
-Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. 
+Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. The possibilities for what a raster is and what it can be is not a finished story. 
 
 
 ## Illustration
 
 A fairly straightforward use of the raster package is to extract values from cells (a.k.a. pixels). These values might be *data*, like a unit-measure quantity such as *temperature in Celsius* stored as a floating point number, or a more abstract depiction of data converted to a relative scale, such as grey-scale or Red-Green-Blue (RGB, or BGR). Put the colour-model variety aside for now, it adds another level of complication to the story that we don't need right now. 
 
-Here is a set of files containing ocean surface temperature (SST). This won't work on your local system, but it's a set files somewhere that R can see. (Our system is set up to provide very easy access to these kinds of files - to download these exact files or to emulate our system see the section below. )
+Here is a set of files containing ocean surface temperature (SST). This won't work on your local system, but it's a set of files somewhere that R can see. (Our system is set up to provide very easy access to these kinds of files - to download these exact files or to emulate our system see the section below. )
 
 ```{r}
 files <- raadtools::sstfiles()$file[13051:13062]
