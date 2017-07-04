@@ -25,3 +25,4 @@ Suggests: covr, testthat,
     rmarkdown
 Remotes: mdsumner/spbabel
 VignetteBuilder: knitr
+ByteCompile: TRUE
