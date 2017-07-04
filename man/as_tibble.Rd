@@ -3,7 +3,7 @@
 \name{as_tibble}
 \alias{as_tibble}
 \alias{as_tibble.BasicRaster}
-\title{Convert a Raster to a tibble.}
+\title{Convert a Raster to a data frame.}
 \usage{
 \method{as_tibble}{BasicRaster}(x, cell = TRUE, dim = nlayers(x) > 1L,
   value = TRUE, split_date = FALSE, ...)
@@ -22,10 +22,15 @@
 \item{...}{unused}
 }
 \value{
-a tibble
+a data frame ('tbl_df'/'tibble' form)
 }
 \description{
-If the raster has only one layer, the slice index is not added. Use \code{dim = FALSE} to not include
+Generate a data frame version of any raster object. Use the arguments
+'cell', 'dim', 'split_date' and 'value' to control the columns that
+are included in the output.
+}
+\details{
+If the raster has only one layer, the slice index is not added. Use 'dim = FALSE' to not include
 the slice index value.
 }
 \examples{
