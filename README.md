@@ -1,7 +1,7 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)](https://travis-ci.org/hypertidy/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)\](<https://travis-ci.org/hypertidy/tabularaster>) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
+
 tabularaster
 ============
 
@@ -156,23 +156,23 @@ as_tibble(btime) %>% group_by(dimindex) %>% summarize(n = n())
 #> # A tibble: 2 x 2
 #>              dimindex     n
 #>                <dttm> <int>
-#> 1 2017-06-14 23:18:10  5307
-#> 2 2017-06-14 23:18:19  5307
+#> 1 2017-07-08 00:50:35  5307
+#> 2 2017-07-08 00:50:44  5307
 
 as_tibble(btime, split_date = TRUE)
 #> # A tibble: 10,614 x 5
 #>    cellvalue cellindex  year month   day
 #>        <dbl>     <int> <int> <int> <int>
-#>  1       100         1  2017     6    14
-#>  2       100         2  2017     6    14
-#>  3       101         3  2017     6    14
-#>  4       101         4  2017     6    14
-#>  5       101         5  2017     6    14
-#>  6       101         6  2017     6    14
-#>  7       101         7  2017     6    14
-#>  8       100         8  2017     6    14
-#>  9       100         9  2017     6    14
-#> 10       100        10  2017     6    14
+#>  1       100         1  2017     7     8
+#>  2       100         2  2017     7     8
+#>  3       101         3  2017     7     8
+#>  4       101         4  2017     7     8
+#>  5       101         5  2017     7     8
+#>  6       101         6  2017     7     8
+#>  7       101         7  2017     7     8
+#>  8       100         8  2017     7     8
+#>  9       100         9  2017     7     8
+#> 10       100        10  2017     7     8
 #> # ... with 10,604 more rows
 ```
 
@@ -238,30 +238,28 @@ library(dplyr)
 ## calculate class percentage from class counts per polygon
 cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
-#> # A tibble: 20 x 4
+#> # A tibble: 18 x 4
 #> # Groups:   object_ [2]
 #>    object_     v count      v.pct
 #>      <int> <dbl> <int>      <dbl>
-#>  1       1     1     4 0.10526316
-#>  2       1     2     4 0.10526316
-#>  3       1     3     5 0.13157895
-#>  4       1     4     4 0.10526316
-#>  5       1     5     5 0.13157895
-#>  6       1     6     5 0.13157895
-#>  7       1     7     2 0.05263158
-#>  8       1     8     5 0.13157895
-#>  9       1     9     2 0.05263158
+#>  1       1     1     2 0.05263158
+#>  2       1     2     5 0.13157895
+#>  3       1     3     6 0.15789474
+#>  4       1     4     5 0.13157895
+#>  5       1     5     3 0.07894737
+#>  6       1     6     7 0.18421053
+#>  7       1     7     1 0.02631579
+#>  8       1     8     3 0.07894737
+#>  9       1     9     4 0.10526316
 #> 10       1    10     2 0.05263158
-#> 11       2     1     3 0.12000000
-#> 12       2     2     1 0.04000000
-#> 13       2     3     4 0.16000000
-#> 14       2     4     2 0.08000000
-#> 15       2     5     2 0.08000000
-#> 16       2     6     2 0.08000000
-#> 17       2     7     1 0.04000000
-#> 18       2     8     5 0.20000000
-#> 19       2     9     3 0.12000000
-#> 20       2    10     2 0.08000000
+#> 11       2     1     1 0.04000000
+#> 12       2     2     2 0.08000000
+#> 13       2     4     5 0.20000000
+#> 14       2     5     5 0.20000000
+#> 15       2     6     3 0.12000000
+#> 16       2     7     3 0.12000000
+#> 17       2     9     4 0.16000000
+#> 18       2    10     2 0.08000000
 
 ## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
