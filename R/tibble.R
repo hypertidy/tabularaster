@@ -1,6 +1,10 @@
-#' Convert a Raster to a tibble. 
+#' Convert a Raster to a data frame. 
 #'
-#' If the raster has only one layer, the slice index is not added. Use `dim = FALSE` to not include
+#' Generate a data frame version of any raster object. Use the arguments
+#' 'cell', 'dim', 'split_date' and 'value' to control the columns that
+#' are included in the output.
+#' 
+#' If the raster has only one layer, the slice index is not added. Use 'dim = FALSE' to not include
 #' the slice index value. 
 #'
 #' @param x a RasterLayer, RasterStack or RasterBrick
@@ -10,7 +14,7 @@
 #' @param value logical to return the values as a column or not
 #' @param ... unused
 #'
-#' @return a tibble
+#' @return a data frame ('tbl_df'/'tibble' form)
 #' @export
 #'
 #' @examples
@@ -32,7 +36,7 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
       e1 <- try(as.Date(dimindex), silent = TRUE)
       e2 <- try(as.POSIXct(dimindex, tz = "GMT"), silent = TRUE)
       if ((inherits(e1, "try-error") & inherits(e2, "try-error")) | any(is.na(range(e1)))) {
-        warning("cannot `split_date`, convert `getZ(x)` not convertible to a Date or POSIXct")
+        warning("cannot 'split_date', convert 'getZ(x)' not convertible to a Date or POSIXct")
         split_date <- FALSE
       }
     }

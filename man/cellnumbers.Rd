@@ -11,27 +11,42 @@ cellnumbers(x, query, ...)
 
 \item{query}{Spatial object or matrix of coordinates}
 
-\item{...}{arguments passed on to \code{raster::cellFromPolygon} for polygon input}
+\item{...}{arguments passed on to \link[raster:cellFromPolygon]{raster::cellFromPolygon} for polygon input}
 }
 \value{
 tbl_df data frame
 }
 \description{
-Currently only for single layer objects.
+Provide the 'cellnumbers' capability of \link[raster:extract]{raster::extract} and friends
+directly, returning a data frame of query-object identifiers 'object_'
+and the cell number.
 }
 \details{
-The dots argument can be used to set \code{weights=TRUE} for the polygon case, this is otherwise ignored.
+Raster data is inherently 2-dimensional, with a time or 'level' dimension
+treated like a layers of these 2D forms. The 'raster' package cell number
+is counted from 1 at the top-left, across the rows and down. This corresponds
+the the standard "raster graphics" convention used by 'GDAL' and the 'sp'
+package, and many other implementations. Note that this is different to the
+convention used by the \link[graphics:image]{graphics::image} function.
+
+Currently this function only operats as if the input is a single layer objects, it's not clear if adding
+an extra level of grouping for layers would be sensible.
+
+The dots argument can be used to set weights=TRUE for the polygon case, this is otherwise ignored.
 }
 \examples{
 library(raster)
-library(dplyr)
 r <- raster(volcano) \%>\% aggregate(fact = 4)
-cr <- cut(r,  pretty(values(r)))
-p <- raster::rasterToPolygons(cr, dissolve = TRUE)
-tt <- cellnumbers(cr, p)
-library(dplyr)
-tt \%>\% mutate(v = extract(r, cell_)) \%>\% 
-group_by(object_) \%>\% 
-summarize(mean(v)) 
-head(pretty(values(r)), -1)
+cellnumbers(r, rasterToContour(r, level = 120))
+#library(dplyr)
+
+#cr <- cut(r,  pretty(values(r)))
+#p <- raster::rasterToPolygons(cr, dissolve = TRUE)
+#p <- spex::qm_rasterToPolygons_sp(cr)
+#tt <- cellnumbers(cr, p)
+#library(dplyr)
+#tt \%>\% mutate(v = extract(r, cell_)) \%>\% 
+#group_by(object_) \%>\% 
+#summarize(mean(v)) 
+#head(pretty(values(r)), -1)
 }
