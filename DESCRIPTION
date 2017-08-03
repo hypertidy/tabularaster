@@ -15,12 +15,12 @@ Imports:
     methods, 
     raster,
     sp, 
-    spex (>= 0.3.0),
+    spex (>= 0.4.0),
     spbabel (>= 0.4.8),
     tibble, 
     viridis
 RoxygenNote: 6.0.1
 Suggests: covr, testthat,
     knitr,
-    rmarkdown
+    rmarkdown, sf, spdplyr
 VignetteBuilder: knitr

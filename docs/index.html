@@ -29,10 +29,31 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="/index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/abstraction-illustration/raster-abstraction.html">Raster Abstraction</a>
+    </li>
+    <li>
+      <a href="articles/cell-index-raster-abstraction.html">The raster cell abstraction</a>
+    </li>
+    <li>
+      <a href="articles/tabularaster-usage.html">Tabularaster</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">News</a>
@@ -54,8 +75,8 @@
     
     
 <div class="contents">
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<p><img src="https://travis-ci.org/hypertidy/tabularaster.svg?branch=master" alt="Travis-CI Build Status">](<a href="https://travis-ci.org/hypertidy/tabularaster" class="uri">https://travis-ci.org/hypertidy/tabularaster</a>) <a href="https://ci.appveyor.com/project/hypertidy/tabularaster"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://codecov.io/github/hypertidy/tabularaster?branch=master"><img src="https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg" alt="Coverage Status"></a></p>
 <div id="tabularaster" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#tabularaster" class="anchor"></a>tabularaster</h1></div>
@@ -75,424 +96,23 @@
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p>Tabularaster is currently only available from Github, and it’s early days so please use with caution. There are some things that I might need to change.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"hypertidy/tabularaster"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/tabularaster"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
-<p>Extract the cell numbers of raster <code>r</code> that are co-located with object <code>q</code>. (The argument names are <code>x</code> and <code>query</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(r, q)</code></pre></div>
-<p>In the above example, <code>r</code> is any <em>raster</em> object and <code>q</code> is another spatial object, used as a query. Cell numbers can be extracted from any raster object, any of a <code>raster::raster</code>, <code>raster::stack</code> or <code>raster::brick</code>. It’s not really relevant what that object contains, as only the <em>dimensions</em> (number of cells in x and y) and the <em>extent</em> (geographic range in x and y) determine the result. The <code>r</code> object can actually not contain any data - this is a very powerful but seemingly under-used feature of the <code>raster</code> package.</p>
-<p>The object <code>q</code> may be any of <code>sf</code>, <code>sp</code> layer types or a matrix of raw coordinates (x-y). (‘Exotic’ <code>sf</code> types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we’ll make it work.)</p>
-</div>
-<div id="simple-examples" class="section level1">
-<h1 class="hasAnchor">
-<a href="#simple-examples" class="anchor"></a>Simple examples</h1>
-<p>In straightforward usage, <code>cellnumbers</code> returns a tibble with <code>object_</code> to identify the spatial object by number, and <code>cell_</code> which is specific to the raster object, a function of its <code>extent</code>, <code>dim</code>ensions and <code>projection</code> (crs - coordinate reference system).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
-<span class="co">#&gt; Loading required package: sp</span>
-<span class="kw">library</span>(tabularaster)
-(r &lt;-<span class="st"> </span><span class="kw">raster</span>(volcano))
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 87, 61, 5307  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 0.01639344, 0.01149425  (x, y)</span>
-<span class="co">#&gt; extent      : 0, 1, 0, 1  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : NA </span>
-<span class="co">#&gt; data source : in memory</span>
-<span class="co">#&gt; names       : layer </span>
-<span class="co">#&gt; values      : 94, 195  (min, max)</span>
-(cell &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(r, <span class="kw">cbind</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: NA</span>
-<span class="co">#&gt; # A tibble: 1 x 2</span>
-<span class="co">#&gt;   object_ cell_</span>
-<span class="co">#&gt;     &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1       1  2654</span></code></pre></div>
-<p>This cell number query can be then be used to drive other raster functions, like <code>extract</code> and <code>xyFromCell</code> and many others.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xyFromCell</span>(r, cell$cell_)
-<span class="co">#&gt;        x   y</span>
-<span class="co">#&gt; [1,] 0.5 0.5</span>
-
-
-raster::<span class="kw">extract</span>(r, cell$cell_)
-<span class="co">#&gt;     </span>
-<span class="co">#&gt; 161</span></code></pre></div>
-<p>This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It’s also very useful for using <code>dplyr</code> to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects.</p>
-<div id="as-tibble" class="section level2">
-<h2 class="hasAnchor">
-<a href="#as-tibble" class="anchor"></a>as tibble</h2>
-<p>There is an <code>as_tibble</code> method with options for cell, dimension, and date.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:raster':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, select, union</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(r)
-<span class="co">#&gt; # A tibble: 5,307 x 2</span>
-<span class="co">#&gt;    cellvalue cellindex</span>
-<span class="co">#&gt;        &lt;dbl&gt;     &lt;int&gt;</span>
-<span class="co">#&gt;  1       100         1</span>
-<span class="co">#&gt;  2       100         2</span>
-<span class="co">#&gt;  3       101         3</span>
-<span class="co">#&gt;  4       101         4</span>
-<span class="co">#&gt;  5       101         5</span>
-<span class="co">#&gt;  6       101         6</span>
-<span class="co">#&gt;  7       101         7</span>
-<span class="co">#&gt;  8       100         8</span>
-<span class="co">#&gt;  9       100         9</span>
-<span class="co">#&gt; 10       100        10</span>
-<span class="co">#&gt; # ... with 5,297 more rows</span>
-b &lt;-<span class="st"> </span><span class="kw">brick</span>(r, r*<span class="dv">2</span>)
-<span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(b)
-<span class="co">#&gt; # A tibble: 10,614 x 3</span>
-<span class="co">#&gt;    cellvalue cellindex dimindex</span>
-<span class="co">#&gt;        &lt;dbl&gt;     &lt;int&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1       100         1        1</span>
-<span class="co">#&gt;  2       100         2        1</span>
-<span class="co">#&gt;  3       101         3        1</span>
-<span class="co">#&gt;  4       101         4        1</span>
-<span class="co">#&gt;  5       101         5        1</span>
-<span class="co">#&gt;  6       101         6        1</span>
-<span class="co">#&gt;  7       101         7        1</span>
-<span class="co">#&gt;  8       100         8        1</span>
-<span class="co">#&gt;  9       100         9        1</span>
-<span class="co">#&gt; 10       100        10        1</span>
-<span class="co">#&gt; # ... with 10,604 more rows</span>
-<span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(b, <span class="dt">cell =</span> <span class="ot">FALSE</span>) %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(dimindex)) ## leave out the cell index
-<span class="co">#&gt; # A tibble: 10,614 x 2</span>
-<span class="co">#&gt;    cellvalue dimindex</span>
-<span class="co">#&gt;        &lt;dbl&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1       200        2</span>
-<span class="co">#&gt;  2       200        2</span>
-<span class="co">#&gt;  3       202        2</span>
-<span class="co">#&gt;  4       202        2</span>
-<span class="co">#&gt;  5       202        2</span>
-<span class="co">#&gt;  6       202        2</span>
-<span class="co">#&gt;  7       202        2</span>
-<span class="co">#&gt;  8       200        2</span>
-<span class="co">#&gt;  9       200        2</span>
-<span class="co">#&gt; 10       200        2</span>
-<span class="co">#&gt; # ... with 10,604 more rows</span></code></pre></div>
-<p>The date or date-time is used as the dimension index if present.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">btime &lt;-<span class="st"> </span><span class="kw">setZ</span>(b, <span class="kw">Sys.time</span>() +<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">10</span>))
-<span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(btime) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dimindex) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>())
-<span class="co">#&gt; # A tibble: 2 x 2</span>
-<span class="co">#&gt;              dimindex     n</span>
-<span class="co">#&gt;                &lt;dttm&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1 2017-06-14 23:18:57  5307</span>
-<span class="co">#&gt; 2 2017-06-14 23:19:06  5307</span>
-
-<span class="kw"><a href="reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; # A tibble: 10,614 x 5</span>
-<span class="co">#&gt;    cellvalue cellindex  year month   day</span>
-<span class="co">#&gt;        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt;  1       100         1  2017     6    14</span>
-<span class="co">#&gt;  2       100         2  2017     6    14</span>
-<span class="co">#&gt;  3       101         3  2017     6    14</span>
-<span class="co">#&gt;  4       101         4  2017     6    14</span>
-<span class="co">#&gt;  5       101         5  2017     6    14</span>
-<span class="co">#&gt;  6       101         6  2017     6    14</span>
-<span class="co">#&gt;  7       101         7  2017     6    14</span>
-<span class="co">#&gt;  8       100         8  2017     6    14</span>
-<span class="co">#&gt;  9       100         9  2017     6    14</span>
-<span class="co">#&gt; 10       100        10  2017     6    14</span>
-<span class="co">#&gt; # ... with 10,604 more rows</span></code></pre></div>
-</div>
-</div>
-<div id="warnings" class="section level1">
-<h1 class="hasAnchor">
-<a href="#warnings" class="anchor"></a>Warnings</h1>
-<ol style="list-style-type: decimal">
-<li>I tend to end up using <code>tidyr::extract</code> and <code>raster::extract</code>, <code>dplyr::select</code> and <code>raster::select</code> as I always use these packages together.</li>
-<li>
-<code>cellnumbers</code> doesn’t currently reproject the second argument <code>query</code>, even when would make sense to do so like <code>extract</code> does. This is purely to reduce the required dependencies.</li>
-<li>There’s no formal link between the cell number values and the raster object itself. I use this “loose coupling” so extensively that I have developed habits that tend to make it pretty robust. Please use with caution, you can easily get incorrect answers by asking a different raster a question based on the wrong cell numbers.</li>
-</ol>
-<p>If you find that things don’t work, first check if it’s a namespace problem, there are a few function name overlaps in the <code>tidyverse</code> and <code>raster</code>, and in R generally. There is no way to fix this properly atm.</p>
-<p>Tabularaster doesn’t reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I’d like a light-weight reprojection engine in order to do this, and <code>proj4</code> is a candidate that I’ve explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need.</p>
-<p>Ultimately the cell index vector should probably be a formal class, with knowledge of its extent and grain. I’d love this to be formalized, but I seem to not have the design expertise required to get the system right. It’s something that <code>ggplot2</code> needs, but there aren’t any existing examples in R anywhere as far as I can tell. The <a href="https://github.com/edzer/stars">stars project</a> is a good place to see what else is happening in this space in R. Other examples are the unfinshed <code>tbl_cube</code> in <code>dplyr</code>, the R6 objects in <code>velox</code>, and the mesh indexing used by packages <code>rgl</code>, <code>Vcg</code>, <code>icosa</code>, <code>dggridR</code>, <code>deldir</code>, <code>geometry</code>, <code>RTriangle</code>, <code>TBA</code>, (and there are many others).</p>
-<p>If you are interested in these issues please get in touch, use the <a href="https://github.com/hypertidy/tabularaster/issues">Issues tab</a> or <a href="https://github.com/r-spatial/discuss">discuss at r-spatial</a>, get on <a href="https://twitter.com/hashtag/rstats">twitter #rstats</a> or contact me directly.</p>
-</div>
-<div id="applied-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#applied-example" class="anchor"></a>Applied example</h1>
-<p>This example uses extracted data per polygon and uses base R to <code>lapply</code> across the list of values extracted per polygon. Here we show a more <code>dplyrish</code> version after extracting the cell numbers with <code>tabularaster</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
-## https://gis.stackexchange.com/questions/102870/step-by-step-how-do-i-extract-raster-values-from-polygon-overlay-with-q-gis-or
-
-<span class="kw">library</span>(raster)
-
-<span class="co"># Create integer class raster</span>
-r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">ncol=</span><span class="dv">36</span>, <span class="dt">nrow=</span><span class="dv">18</span>)
-r[] &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">runif</span>(<span class="kw">ncell</span>(r),<span class="dv">1</span>,<span class="dv">10</span>),<span class="dt">digits=</span><span class="dv">0</span>)
-
-<span class="co"># Create two polygons</span>
-cds1 &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(-<span class="dv">180</span>,-<span class="dv">20</span>), <span class="kw">c</span>(-<span class="dv">160</span>,<span class="dv">5</span>), <span class="kw">c</span>(-<span class="dv">60</span>, <span class="dv">0</span>), <span class="kw">c</span>(-<span class="dv">160</span>,-<span class="dv">60</span>), <span class="kw">c</span>(-<span class="dv">180</span>,-<span class="dv">20</span>))
-cds2 &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">80</span>,<span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">60</span>), <span class="kw">c</span>(<span class="dv">120</span>,<span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">120</span>,-<span class="dv">55</span>), <span class="kw">c</span>(<span class="dv">80</span>,<span class="dv">0</span>))
-polys &lt;-<span class="st"> </span><span class="kw">SpatialPolygonsDataFrame</span>(<span class="kw">SpatialPolygons</span>(<span class="kw">list</span>(<span class="kw">Polygons</span>(<span class="kw">list</span>(<span class="kw">Polygon</span>(cds1)), <span class="dv">1</span>), 
-                                                       <span class="kw">Polygons</span>(<span class="kw">list</span>(<span class="kw">Polygon</span>(cds2)), <span class="dv">2</span>))),<span class="kw">data.frame</span>(<span class="dt">ID=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)))
-
-## do extraction in abstract terms
-(cn &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(r, polys))
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0</span>
-<span class="co">#&gt; query: NA</span>
-<span class="co">#&gt; # A tibble: 63 x 2</span>
-<span class="co">#&gt;    object_ cell_</span>
-<span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1   326</span>
-<span class="co">#&gt;  2       1   327</span>
-<span class="co">#&gt;  3       1   328</span>
-<span class="co">#&gt;  4       1   329</span>
-<span class="co">#&gt;  5       1   330</span>
-<span class="co">#&gt;  6       1   331</span>
-<span class="co">#&gt;  7       1   332</span>
-<span class="co">#&gt;  8       1   333</span>
-<span class="co">#&gt;  9       1   334</span>
-<span class="co">#&gt; 10       1   335</span>
-<span class="co">#&gt; # ... with 53 more rows</span>
-
-<span class="kw">library</span>(dplyr)
-## now perform extraction for real
-## and pipe into grouping by polygon (object_) and value, and
-## calculate class percentage from class counts per polygon
-cn %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">v =</span> raster::<span class="kw">extract</span>(r, cell_)) %&gt;%<span class="st"> </span><span class="kw">group_by</span>(object_, v) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">v.pct =</span> count /<span class="st"> </span><span class="kw">sum</span>(count)) 
-<span class="co">#&gt; # A tibble: 20 x 4</span>
-<span class="co">#&gt; # Groups:   object_ [2]</span>
-<span class="co">#&gt;    object_     v count      v.pct</span>
-<span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1     1     3 0.07894737</span>
-<span class="co">#&gt;  2       1     2     5 0.13157895</span>
-<span class="co">#&gt;  3       1     3     2 0.05263158</span>
-<span class="co">#&gt;  4       1     4     5 0.13157895</span>
-<span class="co">#&gt;  5       1     5     6 0.15789474</span>
-<span class="co">#&gt;  6       1     6     7 0.18421053</span>
-<span class="co">#&gt;  7       1     7     3 0.07894737</span>
-<span class="co">#&gt;  8       1     8     4 0.10526316</span>
-<span class="co">#&gt;  9       1     9     2 0.05263158</span>
-<span class="co">#&gt; 10       1    10     1 0.02631579</span>
-<span class="co">#&gt; 11       2     1     1 0.04000000</span>
-<span class="co">#&gt; 12       2     2     1 0.04000000</span>
-<span class="co">#&gt; 13       2     3     2 0.08000000</span>
-<span class="co">#&gt; 14       2     4     1 0.04000000</span>
-<span class="co">#&gt; 15       2     5     5 0.20000000</span>
-<span class="co">#&gt; 16       2     6     2 0.08000000</span>
-<span class="co">#&gt; 17       2     7     6 0.24000000</span>
-<span class="co">#&gt; 18       2     8     1 0.04000000</span>
-<span class="co">#&gt; 19       2     9     3 0.12000000</span>
-<span class="co">#&gt; 20       2    10     3 0.12000000</span>
-
-## here is the traditional code used in the stackoverflow example
-<span class="co"># Extract raster values to polygons                             </span>
-<span class="co">#( v &lt;- extract(r, polys) )</span>
-<span class="co"># Get class counts for each polygon</span>
-<span class="co">#v.counts &lt;- lapply(v,table)</span>
-<span class="co"># Calculate class percentages for each polygon</span>
-<span class="co">#( v.pct &lt;- lapply(v.counts, FUN=function(x){ x / sum(x) } ) )</span></code></pre></div>
-</div>
-<div id="extract-cell-numbers" class="section level1">
-<h1 class="hasAnchor">
-<a href="#extract-cell-numbers" class="anchor"></a>Extract cell numbers</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
-<span class="kw">data</span>(<span class="st">"ghrsst"</span>)  ## a RasterLayer
-<span class="kw">data</span>(<span class="st">"sst_regions"</span>) ## a polygon layer, contiguous with ghrsst
-
-gcells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(ghrsst, sst_regions) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">object_ =</span> <span class="kw">as.integer</span>(object_))
-
-result &lt;-<span class="st"> </span>gcells %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">sst =</span> raster::<span class="kw">extract</span>(ghrsst, cell_)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(object_) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">summarize_at</span>(<span class="kw">vars</span>(sst), <span class="kw">funs</span>(<span class="kw">mean</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">sd</span>(., <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), length))
-
-<span class="kw">library</span>(spdplyr)
-sst_regions &lt;-<span class="st"> </span>sst_regions %&gt;%<span class="st"> </span><span class="kw">inner_join</span>(result, <span class="kw">c</span>(<span class="st">"ghrsst"</span> =<span class="st"> "object_"</span>))
-
-<span class="kw">plot</span>(ghrsst, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">30</span>), <span class="dt">addfun =</span> function() <span class="kw">plot</span>(sst_regions, <span class="dt">add =</span> <span class="ot">TRUE</span>), 
-     <span class="dt">main =</span> <span class="st">"SST data with simple regional polygon layer"</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-9-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-<span class="co">#&gt; Linking to GEOS 3.5.1, GDAL 2.1.2, proj.4 4.9.3</span>
-<span class="kw">plot</span>(<span class="kw">st_as_sf</span>(sst_regions))</code></pre></div>
-<p><img src="README-unnamed-chunk-9-2.png" width="672"></p>
-</div>
-<div id="extract-cells-from-rasters" class="section level1">
-<h1 class="hasAnchor">
-<a href="#extract-cells-from-rasters" class="anchor"></a>Extract cells from rasters</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tabularaster)
-<span class="kw">library</span>(raster)
-<span class="kw">library</span>(dplyr)
-<span class="kw">data</span>(<span class="st">"rastercano"</span>)
-<span class="kw">data</span>(<span class="st">"polycano"</span>)
-cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(rastercano, polycano[<span class="dv">4</span>:<span class="dv">5</span>, ])
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: NA</span>
-
-
-<span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(rastercano, <span class="kw">as</span>(polycano[<span class="dv">4</span>:<span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>))
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: NA</span>
-<span class="co">#&gt; # A tibble: 235 x 2</span>
-<span class="co">#&gt;    object_ cell_</span>
-<span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1  1129</span>
-<span class="co">#&gt;  2       1  1190</span>
-<span class="co">#&gt;  3       1  1251</span>
-<span class="co">#&gt;  4       2     1</span>
-<span class="co">#&gt;  5       2     2</span>
-<span class="co">#&gt;  6       2     3</span>
-<span class="co">#&gt;  7       2     4</span>
-<span class="co">#&gt;  8       2     5</span>
-<span class="co">#&gt;  9       2     6</span>
-<span class="co">#&gt; 10       2     7</span>
-<span class="co">#&gt; # ... with 225 more rows</span>
-<span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(rastercano, <span class="kw">as</span>(<span class="kw">as</span>(polycano[<span class="dv">4</span>:<span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>), <span class="st">"SpatialPointsDataFrame"</span>))
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: NA</span>
-<span class="co">#&gt; # A tibble: 331 x 2</span>
-<span class="co">#&gt;    object_ cell_</span>
-<span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1  1129</span>
-<span class="co">#&gt;  2       1  1129</span>
-<span class="co">#&gt;  3       1  1251</span>
-<span class="co">#&gt;  4       1  1251</span>
-<span class="co">#&gt;  5       1  1129</span>
-<span class="co">#&gt;  6       1  1098</span>
-<span class="co">#&gt;  7       1  1098</span>
-<span class="co">#&gt;  8       1  1098</span>
-<span class="co">#&gt;  9       1  1098</span>
-<span class="co">#&gt; 10       1  1037</span>
-<span class="co">#&gt; # ... with 321 more rows</span></code></pre></div>
-<p>In the case of polygons, there’s an argument <code>weights</code> that can be used to get an approximate weighting for partial cell coverage.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly &lt;-<span class="st"> </span>sf::<span class="kw">st_sf</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">geometry =</span> sf::<span class="kw">st_sfc</span>(sf::<span class="kw">st_polygon</span>(<span class="kw">list</span>(
-  <span class="kw">cbind</span>(<span class="kw">c</span>(<span class="fl">0.57</span>, <span class="fl">0.55</span>, <span class="fl">0.19</span>, <span class="fl">0.43</span>, <span class="fl">0.82</span>, <span class="fl">0.57</span>), 
-        <span class="kw">c</span>(<span class="fl">0.22</span>, <span class="fl">0.24</span>, <span class="fl">0.46</span>, <span class="fl">0.77</span>, <span class="fl">0.56</span>, <span class="fl">0.22</span>))))))
-
-
-
-
-xweight &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(rastercano, poly, <span class="dt">weights =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: NA</span>
-
-dgrid &lt;-<span class="st"> </span><span class="kw">setValues</span>(rastercano, <span class="ot">NA_real_</span>)
-dgrid[xweight$cell_] &lt;-<span class="st"> </span>xweight$weight_
-<span class="kw">plot</span>(dgrid, <span class="dt">main =</span> <span class="st">"cell weights based on partial overlap"</span>, <span class="dt">col =</span> viridis::<span class="kw">viridis</span>(<span class="dv">9</span>), 
-     <span class="dt">addfun =</span> function() <span class="kw">polygon</span>(poly$geometry[[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)]]))</code></pre></div>
-<p><img src="README-unnamed-chunk-11-1.png" width="672"></p>
-</div>
-<div id="extract-values-or-cell-numbers-with-sf-object" class="section level1">
-<h1 class="hasAnchor">
-<a href="#extract-values-or-cell-numbers-with-sf-object" class="anchor"></a>Extract values or cell numbers with sf object</h1>
-<p>It’s an unfortunate symptom of fragmentation in the R spatial tools that two of the best and most highly used packages <code>raster</code> and <code>sf</code> have no formal way to be used together.</p>
-<p>Here we use the <code>extent</code> capability of <code>spex</code>, and the tabularaster tools <code>extract</code> and <code>cellnumbers</code> to build a raster from an <code>sf</code> layer.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)
-
-poly &lt;-<span class="st"> </span><span class="kw">read_sf</span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
-<span class="kw">library</span>(spex)
-<span class="kw">extent</span>(poly)
-<span class="co">#&gt; class       : Extent </span>
-<span class="co">#&gt; xmin        : -84.32385 </span>
-<span class="co">#&gt; xmax        : -75.45698 </span>
-<span class="co">#&gt; ymin        : 33.88199 </span>
-<span class="co">#&gt; ymax        : 36.58965</span>
-<span class="kw">spex</span>(poly)
-<span class="co">#&gt; Warning in if (class(x) == "character") {: the condition has length &gt; 1 and</span>
-<span class="co">#&gt; only the first element will be used</span>
-<span class="co">#&gt; Warning in if (class(x) != "CRS") {: the condition has length &gt; 1 and only</span>
-<span class="co">#&gt; the first element will be used</span>
-<span class="co">#&gt; class       : SpatialPolygonsDataFrame </span>
-<span class="co">#&gt; features    : 1 </span>
-<span class="co">#&gt; extent      : -84.32385, -75.45698, 33.88199, 36.58965  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : NA </span>
-<span class="co">#&gt; variables   : 1</span>
-<span class="co">#&gt; # A tibble: 1 x 1</span>
-<span class="co">#&gt;    poly</span>
-<span class="co">#&gt;   &lt;int&gt;</span>
-<span class="co">#&gt; 1     1</span>
-## we can't do this
-<span class="kw">try</span>(grid &lt;-<span class="st">  </span><span class="kw">raster</span>(poly))
-
-## but we can do 
-
-(grid &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">spex</span>(poly), <span class="dt">nrow =</span> <span class="dv">100</span>, <span class="dt">ncol =</span> <span class="dv">140</span>))
-<span class="co">#&gt; Warning in if (class(x) == "character") {: the condition has length &gt; 1 and</span>
-<span class="co">#&gt; only the first element will be used</span>
-
-<span class="co">#&gt; Warning in if (class(x) == "character") {: the condition has length &gt; 1 and</span>
-<span class="co">#&gt; only the first element will be used</span>
-<span class="co">#&gt; class       : RasterLayer </span>
-<span class="co">#&gt; dimensions  : 100, 140, 14000  (nrow, ncol, ncell)</span>
-<span class="co">#&gt; resolution  : 0.06333482, 0.02707657  (x, y)</span>
-<span class="co">#&gt; extent      : -84.32385, -75.45698, 33.88199, 36.58965  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : NA</span>
-
-## index the raster with the sf layer
-(cn &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(grid, poly))
-<span class="co">#&gt; Warning: projections not the same </span>
-<span class="co">#&gt;     x: NA</span>
-<span class="co">#&gt; query: +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat</span>
-<span class="co">#&gt; # A tibble: 7,233 x 2</span>
-<span class="co">#&gt;    object_ cell_</span>
-<span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       1    43</span>
-<span class="co">#&gt;  2       1    44</span>
-<span class="co">#&gt;  3       1    45</span>
-<span class="co">#&gt;  4       1    46</span>
-<span class="co">#&gt;  5       1   183</span>
-<span class="co">#&gt;  6       1   184</span>
-<span class="co">#&gt;  7       1   185</span>
-<span class="co">#&gt;  8       1   186</span>
-<span class="co">#&gt;  9       1   187</span>
-<span class="co">#&gt; 10       1   322</span>
-<span class="co">#&gt; # ... with 7,223 more rows</span>
-
-grid[cn$cell_] &lt;-<span class="st"> </span>cn$object_
-
-## we slasterized it (slow rasterize)
-<span class="kw">plot</span>(grid)</code></pre></div>
-<p><img src="README-unnamed-chunk-12-1.png" width="672"></p>
-<p>That’s nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).</p>
-<p>Now use <code>fasterize</code> to generate the grid, and use cellnumbers to extract.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fasterize it
-<span class="kw">library</span>(fasterize)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'fasterize'</span>
-<span class="co">#&gt; The following object is masked from 'package:graphics':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     plot</span>
-<span class="co">#poly$object_ &lt;- as.integer(seq_len(nrow(poly)))</span>
-fgrid &lt;-<span class="st"> </span><span class="kw">fasterize</span>(poly, grid, <span class="dt">field =</span> <span class="st">"AREA"</span>)
-scl &lt;-<span class="st"> </span>function(x) {rg &lt;-<span class="st"> </span><span class="kw">range</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>); (x   -<span class="st"> </span>rg[<span class="dv">1</span>])/<span class="kw">diff</span>(rg)}
-<span class="kw">plot</span>(<span class="kw">xyFromCell</span>(grid, cn$cell_), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.4</span>, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">26</span>)[<span class="kw">scl</span>(raster::<span class="kw">extract</span>(fgrid, cn$cell_)) *<span class="st"> </span><span class="dv">25</span> +<span class="st"> </span><span class="dv">1</span>])</code></pre></div>
-<p><img src="README-unnamed-chunk-13-1.png" width="672"></p>
+<p>See the vignette.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>License</h2>
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael D. Sumner <br><small class="roles"> Author, maintainer </small> </li>
-</ul>
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/hypertidy/tabularaster"><img src="https://travis-ci.org/hypertidy/tabularaster.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/hypertidy/tabularaster"><img src="https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/hypertidy/tabularaster?branch=master"><img src="https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
 

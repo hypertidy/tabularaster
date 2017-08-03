@@ -36,6 +36,7 @@ The dots argument can be used to set weights=TRUE for the polygon case, this is 
 }
 \examples{
 library(raster)
+library(dplyr)
 r <- raster(volcano) \%>\% aggregate(fact = 4)
 cellnumbers(r, rasterToContour(r, level = 120))
 #library(dplyr)

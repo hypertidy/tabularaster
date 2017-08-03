@@ -24,6 +24,7 @@
 #' @importFrom raster cellFromPolygon cellFromLine cellFromXY projection
 #' @examples
 #' library(raster)
+#' library(dplyr)
 #' r <- raster(volcano) %>% aggregate(fact = 4)
 #' cellnumbers(r, rasterToContour(r, level = 120))
 #' #library(dplyr)

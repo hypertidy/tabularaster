@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,31 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/abstraction-illustration/raster-abstraction.html">Raster Abstraction</a>
+    </li>
+    <li>
+      <a href="../articles/cell-index-raster-abstraction.html">The raster cell abstraction</a>
+    </li>
+    <li>
+      <a href="../articles/tabularaster-usage.html">Tabularaster</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -82,12 +104,31 @@
     
 
         
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Tabularaster includes these main functions.</p><table><tr><td>
+<code><a href='as_tibble.html'>as_tibble</a></code>
+<code><a href='as_tibble.html'>as_tibble</a></code> </td>
+<td> convert raster data to data frame form, with control over output and form of dimension/coordinate columns </td>
+</tr><tr><td>
+<code><a href='cellnumbers.html'>cellnumbers</a></code> </td>
+<td> extract a data frame of query identifiers and cell,pixel index numbers </td>
+</tr><tr><td>
+<code><a href='extentFromCells.html'>extentFromCells</a></code> </td>
+<td> build an Extent object from cell numbers </td>
+</tr><tr><td>
+<code><a href='index_extent.html'>index_extent</a></code> </td>
+<td> build an extent in row column form, as opposed to coordinate value form </td>
+</tr></table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
