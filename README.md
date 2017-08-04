@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)\](<https://travis-ci.org/hypertidy/tabularaster>) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/hypertidy/tabularaster.svg?branch=master)](https://travis-ci.org/hypertidy/tabularaster) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/tabularaster?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/tabularaster) [![Coverage Status](https://img.shields.io/codecov/c/github/hypertidy/tabularaster/master.svg)](https://codecov.io/github/hypertidy/tabularaster?branch=master)
 
 tabularaster
 ============
@@ -14,9 +14,9 @@ Tabularaster provides on a few simple functions.
 -   `as_tibble` - convert to data frame with options for value column and cell, dimension and date indexing
 -   `cellnumbers` - extract of cell index numbers as a simple data frame with "object ID" and "cell index"
 -   `extentFromCells` - create an extent from cell index numbers
--   `index_extent` - create an index extent, essentially extent(0, ncol(raster), 0, nrow(raster))
+-   `index_extent` - create an index extent, essentially `extent(0, ncol(raster), 0, nrow(raster))`
 
-All functions work with `sp Spatial` as well as \`sf simple features.
+All functions that work with `sp Spatial` also work with \`sf simple features.
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong.
 

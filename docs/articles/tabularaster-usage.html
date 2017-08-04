@@ -97,6 +97,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(r, q)</code></pre></div>
 <p>In the above example, <code>r</code> is any <em>raster</em> object and <code>q</code> is another spatial object, used as a query. Cell numbers can be extracted from any raster object, any of a <code><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster::raster</a></code>, <code><a href="http://www.rdocumentation.org/packages/raster/topics/stack">raster::stack</a></code> or <code><a href="http://www.rdocumentation.org/packages/raster/topics/brick">raster::brick</a></code>. It’s not really relevant what that object contains, as only the <em>dimensions</em> (number of cells in x and y) and the <em>extent</em> (geographic range in x and y) determine the result. The <code>r</code> object can actually not contain any data - this is a very powerful but seemingly under-used feature of the <code>raster</code> package.</p>
 <p>The object <code>q</code> may be any of <code>sf</code>, <code>sp</code> layer types or a matrix of raw coordinates (x-y). (‘Exotic’ <code>sf</code> types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we’ll make it work.)</p>
+<p>Tabularaster follows the basic principles of tidy data and <em>hypertidy data</em> and aspires to keep the software design out of your way and simply help to get the task done.</p>
 </div>
 <div id="simple-examples" class="section level1">
 <h1 class="hasAnchor">
@@ -198,8 +199,8 @@
 <pre><code>## # A tibble: 2 x 2
 ##              dimindex     n
 ##                &lt;dttm&gt; &lt;int&gt;
-## 1 2017-08-04 20:44:23  5307
-## 2 2017-08-04 20:44:32  5307</code></pre>
+## 1 2017-08-04 22:44:50  5307
+## 2 2017-08-04 22:44:59  5307</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
@@ -275,30 +276,29 @@ polys &lt;-<span class="st"> </span><span class="kw">SpatialPolygonsDataFrame</s
 ## calculate class percentage from class counts per polygon
 cn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">v =</span> raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, cell_)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(object_, v) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">count =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/n.html">n</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">v.pct =</span> count <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(count)) </code></pre></div>
-<pre><code>## # A tibble: 20 x 4
+<pre><code>## # A tibble: 19 x 4
 ## # Groups:   object_ [2]
 ##    object_     v count      v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-##  1       1     1     3 0.07894737
-##  2       1     2     3 0.07894737
-##  3       1     3     1 0.02631579
-##  4       1     4     4 0.10526316
+##  1       1     1     1 0.02631579
+##  2       1     2     8 0.21052632
+##  3       1     3     2 0.05263158
+##  4       1     4     3 0.07894737
 ##  5       1     5     5 0.13157895
-##  6       1     6     7 0.18421053
-##  7       1     7     3 0.07894737
-##  8       1     8     5 0.13157895
-##  9       1     9     6 0.15789474
-## 10       1    10     1 0.02631579
-## 11       2     1     3 0.12000000
-## 12       2     2     1 0.04000000
-## 13       2     3     3 0.12000000
-## 14       2     4     5 0.20000000
-## 15       2     5     2 0.08000000
-## 16       2     6     5 0.20000000
-## 17       2     7     1 0.04000000
-## 18       2     8     1 0.04000000
-## 19       2     9     2 0.08000000
-## 20       2    10     2 0.08000000</code></pre>
+##  6       1     6     4 0.10526316
+##  7       1     7     2 0.05263158
+##  8       1     8     6 0.15789474
+##  9       1     9     4 0.10526316
+## 10       1    10     3 0.07894737
+## 11       2     1     1 0.04000000
+## 12       2     2     4 0.16000000
+## 13       2     3     4 0.16000000
+## 14       2     4     1 0.04000000
+## 15       2     5     3 0.12000000
+## 16       2     7     3 0.12000000
+## 17       2     8     2 0.08000000
+## 18       2     9     5 0.20000000
+## 19       2    10     2 0.08000000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## here is the traditional code used in the stackoverflow example
 <span class="co"># Extract raster values to polygons                             </span>
 <span class="co">#( v &lt;- extract(r, polys) )</span>
@@ -406,54 +406,22 @@ dgrid[xweight<span class="op">$</span>cell_] &lt;-<span class="st"> </span>xweig
 
 poly &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_read">read_sf</a></span>(<span class="kw">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="dt">package=</span><span class="st">"sf"</span>))
 <span class="kw">library</span>(spex)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/extent">extent</a></span>(poly)</code></pre></div>
-<pre><code>## class       : Extent 
-## xmin        : -84.32385 
-## xmax        : -75.45698 
-## ymin        : 33.88199 
-## ymax        : 36.58965</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/spex">spex</a></span>(poly)</code></pre></div>
-<pre><code>## class       : SpatialPolygonsDataFrame 
-## features    : 1 
-## extent      : -84.32385, -75.45698, 33.88199, 36.58965  (xmin, xmax, ymin, ymax)
-## coord. ref. : +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat 
-## variables   : 1
-## # A tibble: 1 x 1
-##       p
-##   &lt;int&gt;
-## 1     1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## we can't do this
+<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/extent">extent</a></span>(poly)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/spex">spex</a></span>(poly)
+## we can't do this
 <span class="kw">try</span>(grid &lt;-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(poly))
 
 ## but we can do 
 
-(grid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/spex">spex</a></span>(poly), <span class="dt">nrow =</span> <span class="dv">100</span>, <span class="dt">ncol =</span> <span class="dv">140</span>))</code></pre></div>
-<pre><code>## class       : RasterLayer 
-## dimensions  : 100, 140, 14000  (nrow, ncol, ncell)
-## resolution  : 0.06333482, 0.02707657  (x, y)
-## extent      : -84.32385, -75.45698, 33.88199, 36.58965  (xmin, xmax, ymin, ymax)
-## coord. ref. : +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## index the raster with the sf layer
-(cn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(grid, poly))</code></pre></div>
-<pre><code>## # A tibble: 7,233 x 2
-##    object_ cell_
-##      &lt;int&gt; &lt;dbl&gt;
-##  1       1    43
-##  2       1    44
-##  3       1    45
-##  4       1    46
-##  5       1   183
-##  6       1   184
-##  7       1   185
-##  8       1   186
-##  9       1   187
-## 10       1   322
-## # ... with 7,223 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grid[cn<span class="op">$</span>cell_] &lt;-<span class="st"> </span>cn<span class="op">$</span>object_
+(grid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/spex">spex</a></span>(poly), <span class="dt">nrow =</span> <span class="dv">100</span>, <span class="dt">ncol =</span> <span class="dv">140</span>))
+
+## index the raster with the sf layer
+(cn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(grid, poly))
+
+grid[cn<span class="op">$</span>cell_] &lt;-<span class="st"> </span>cn<span class="op">$</span>object_
 
 ## we slasterized it (slow rasterize)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/plot">plot</a></span>(grid)</code></pre></div>
-<p><img src="tabularaster-usage_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>That’s nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).</p>
 <p>Now use <code>fasterize</code> to generate the grid, and use cellnumbers to extract.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fasterize it

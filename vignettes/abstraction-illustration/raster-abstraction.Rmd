@@ -92,7 +92,7 @@ print(rdata_local)
 We now have a copy of the sub-region we were after, and it's time to notice another key feature. The extent we cropped with is not the extent of the result, because the data itself has an underlying *grain* and *alignment* (here it's a grain/resolution of 0.25 in both directions, and cells are *aligned* to chunks at 0.25 spacing from 0. Alignment is just as important as resolution, since it could have have started aligned somewhere like 0.1, not necessarily matching the resolution in whole pieces relative to 0). 
 
 
-We can see the difference if we crop with snap = "out". It's still not the same extent we asked for, but it's more inclusive (and I wish it was the default). Note that we cannot crop a raster to an exact extent if it's not already *aligned*, but that's the nature of gridded data. We would have to remodel and restructure the data to get a new grain and alighnment, and that's a perfectly valid workflow but it's a relatively big commitment since it modifies the data and commits us to a new structure, so it involves interpretation in all aspects of the work. 
+We can see the difference if we crop with snap = "out". It's still not the same extent we asked for, but it's more inclusive (and I wish it was the default). Note that we cannot crop a raster to an exact extent if it's not already *aligned*, but that's the nature of gridded data. We would have to remodel and restructure the data to get a new grain and alignment, and that's a perfectly valid workflow but it's a relatively big commitment since it modifies the data and commits us to a new structure, so it involves interpretation in all aspects of the work. 
 
 
 
