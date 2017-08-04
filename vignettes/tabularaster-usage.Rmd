@@ -204,7 +204,7 @@ highly used packages `raster` and `sf` have no formal way to be used together.
 
 Here we use the `extent` capability of `spex`, and the tabularaster tools `extract` and `cellnumbers` to build a raster from an `sf` layer. 
 
-```{r}
+```{r, eval=FALSE}
 library(sf)
 
 poly <- read_sf(system.file("shape/nc.shp", package="sf"))
