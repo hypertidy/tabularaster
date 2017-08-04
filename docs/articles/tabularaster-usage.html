@@ -198,8 +198,8 @@
 <pre><code>## # A tibble: 2 x 2
 ##              dimindex     n
 ##                &lt;dttm&gt; &lt;int&gt;
-## 1 2017-08-04 00:12:39  5307
-## 2 2017-08-04 00:12:48  5307</code></pre>
+## 1 2017-08-04 20:44:23  5307
+## 2 2017-08-04 20:44:32  5307</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
@@ -279,24 +279,24 @@ cn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a hr
 ## # Groups:   object_ [2]
 ##    object_     v count      v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-##  1       1     1     1 0.02631579
-##  2       1     2     4 0.10526316
-##  3       1     3     5 0.13157895
-##  4       1     4     2 0.05263158
-##  5       1     5     3 0.07894737
-##  6       1     6     6 0.15789474
-##  7       1     7     6 0.15789474
-##  8       1     8     6 0.15789474
-##  9       1     9     3 0.07894737
-## 10       1    10     2 0.05263158
+##  1       1     1     3 0.07894737
+##  2       1     2     3 0.07894737
+##  3       1     3     1 0.02631579
+##  4       1     4     4 0.10526316
+##  5       1     5     5 0.13157895
+##  6       1     6     7 0.18421053
+##  7       1     7     3 0.07894737
+##  8       1     8     5 0.13157895
+##  9       1     9     6 0.15789474
+## 10       1    10     1 0.02631579
 ## 11       2     1     3 0.12000000
-## 12       2     2     3 0.12000000
+## 12       2     2     1 0.04000000
 ## 13       2     3     3 0.12000000
-## 14       2     4     1 0.04000000
-## 15       2     5     1 0.04000000
-## 16       2     6     2 0.08000000
-## 17       2     7     6 0.24000000
-## 18       2     8     2 0.08000000
+## 14       2     4     5 0.20000000
+## 15       2     5     2 0.08000000
+## 16       2     6     5 0.20000000
+## 17       2     7     1 0.04000000
+## 18       2     8     1 0.04000000
 ## 19       2     9     2 0.08000000
 ## 20       2    10     2 0.08000000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## here is the traditional code used in the stackoverflow example
@@ -457,17 +457,11 @@ poly &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumen
 <p>That’s nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g. for time series extraction where we need to visit each time step iteratively. (Raster is already index-optimized for multi-layers raster objects).</p>
 <p>Now use <code>fasterize</code> to generate the grid, and use cellnumbers to extract.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## fasterize it
-<span class="kw">library</span>(fasterize)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'fasterize'</code></pre>
-<pre><code>## The following object is masked from 'package:graphics':
-## 
-##     plot</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#poly$object_ &lt;- as.integer(seq_len(nrow(poly)))</span>
+<span class="kw">library</span>(fasterize)
+<span class="co">#poly$object_ &lt;- as.integer(seq_len(nrow(poly)))</span>
 fgrid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/fasterize/topics/fasterize">fasterize</a></span>(poly, grid, <span class="dt">field =</span> <span class="st">"AREA"</span>)
 scl &lt;-<span class="st"> </span><span class="cf">function</span>(x) {rg &lt;-<span class="st"> </span><span class="kw">range</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>); (x   <span class="op">-</span><span class="st"> </span>rg[<span class="dv">1</span>])<span class="op">/</span><span class="kw">diff</span>(rg)}
 <span class="kw"><a href="http://www.rdocumentation.org/packages/fasterize/topics/plot">plot</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/xyFromCell">xyFromCell</a></span>(grid, cn<span class="op">$</span>cell_), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.4</span>, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">26</span>)[<span class="kw">scl</span>(raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(fgrid, cn<span class="op">$</span>cell_)) <span class="op">*</span><span class="st"> </span><span class="dv">25</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</code></pre></div>
-<p><img src="tabularaster-usage_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 </div>
   </div>

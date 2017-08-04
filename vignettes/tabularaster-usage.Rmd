@@ -35,6 +35,7 @@ contains, as only the *dimensions* (number of cells in x and y) and the *extent*
 
 The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
 
+Tabularaster follows the basic principles of tidy data and *hypertidy data* and aspires to keep the software design out of your way and simply help to get the task done. 
 
 # Simple examples
 

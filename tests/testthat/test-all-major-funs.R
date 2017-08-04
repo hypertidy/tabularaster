@@ -45,6 +45,8 @@ mp <- structure(list(a = 1:2, geometry = structure(list(structure(c(0,
                                                                                                                                                                                                                                                                                                    "ymin", "xmax", "ymax")))), .Names = c("a", "geometry"), row.names = 1:2, class = c("sf", 
                                                                                                                                                                                                                                                                                                                                                                                        "data.frame"), sf_column = "geometry", agr = structure(NA_integer_, class = "factor", .Label = c("constant", 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "aggregate", "identity"), .Names = "a"))
+
+
 r2 <- setExtent(raster(volcano), extent(-2, 10, -5, 14))
 
 test_that("extract of sf works", {

@@ -24,17 +24,20 @@ drive data extraction and summary tools using its consistent cell-index and comp
 
 Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query. 
 
-Tabularaster provides: 
+Tabularaster provides on a few simple functions. 
 
-- extraction of cells as a simple data frame with "object ID" and "cell index"
-- `as_tibble` for raster data, with options for value column and cell, dimension and date indexing
-- workers to bring `sf` support to  `raster`
+* `as_tibble` - convert to data frame with options for value column and cell, dimension and date indexing
+* `cellnumbers` - extract of cell index numbers as a simple data frame with "object ID" and "cell index"
+* `extentFromCells` - create an extent from cell index numbers
+* `index_extent` - create an index extent, essentially extent(0, ncol(raster), 0, nrow(raster))
+
+All functions work with `sp Spatial` as well as `sf simple features. 
 
 There is some overlap with `quadmesh` and `spex` while I figure out where things belong. 
 
 # Installation
 
-Tabularaster is currently only available from Github, and it's early days so please use with caution. There are some things that I might need to change. 
+Install from CRAN, or get the development version from Github. 
 
 ```{r, eval=FALSE}
 devtools::install_github("hypertidy/tabularaster")

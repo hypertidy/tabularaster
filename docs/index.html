@@ -82,20 +82,24 @@
 <a href="#tabularaster" class="anchor"></a>tabularaster</h1></div>
 <p>The <code>raster</code> package is extremely powerful in the R ecosystem for spatial data. It can be used very efficiently to drive data extraction and summary tools using its consistent cell-index and comprehensive helper functions for converting between cell values and less abstract raster grid properties.</p>
 <p>Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query.</p>
-<p>Tabularaster provides:</p>
+<p>Tabularaster provides on a few simple functions.</p>
 <ul>
-<li>extraction of cells as a simple data frame with “object ID” and “cell index”</li>
 <li>
-<code>as_tibble</code> for raster data, with options for value column and cell, dimension and date indexing</li>
-<li>workers to bring <code>sf</code> support to <code>raster</code>
-</li>
+<code>as_tibble</code> - convert to data frame with options for value column and cell, dimension and date indexing</li>
+<li>
+<code>cellnumbers</code> - extract of cell index numbers as a simple data frame with “object ID” and “cell index”</li>
+<li>
+<code>extentFromCells</code> - create an extent from cell index numbers</li>
+<li>
+<code>index_extent</code> - create an index extent, essentially extent(0, ncol(raster), 0, nrow(raster))</li>
 </ul>
+<p>All functions work with <code>sp Spatial</code> as well as `sf simple features.</p>
 <p>There is some overlap with <code>quadmesh</code> and <code>spex</code> while I figure out where things belong.</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
-<p>Tabularaster is currently only available from Github, and it’s early days so please use with caution. There are some things that I might need to change.</p>
+<p>Install from CRAN, or get the development version from Github.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"hypertidy/tabularaster"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level1">

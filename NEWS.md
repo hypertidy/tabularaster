@@ -1,5 +1,7 @@
 # tabularaster dev
 
+* bufext made defunct
+
 * added index extent functions `index_extent` and `cellsFromExtent`
 
 * removed decimate function
