@@ -156,8 +156,8 @@ sst_regions <- sst_regions %>% inner_join(result, c("ghrsst" = "object_"))
 
 plot(ghrsst, col = bpy.colors(30), addfun = function() plot(sst_regions, add = TRUE), 
      main = "SST data with simple regional polygon layer")
-library(sf)
-plot(st_as_sf(sst_regions))
+#library(sf)
+plot(sst_regions)
 ```
 
 # Extract cells from rasters 
@@ -180,7 +180,7 @@ In the case of polygons, there's an argument `weights` that can be used to get a
 partial cell coverage. 
 
 
-```{r}
+```{r eval = FALSE}
 poly <- sf::st_sf(a = 1, geometry = sf::st_sfc(sf::st_polygon(list(
   cbind(c(0.57, 0.55, 0.19, 0.43, 0.82, 0.57), 
         c(0.22, 0.24, 0.46, 0.77, 0.56, 0.22))))))
