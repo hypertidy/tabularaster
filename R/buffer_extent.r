@@ -1,8 +1,8 @@
-#' Deprected tabularaster function 
+#' Defunct tabularaster function 
 #'
 #' Ensure a raster extent aligns to whole parts.
 #' 
-#' This function is deprecated, please use `spex::buffer_extent`. 
+#' This function is defunct, please use `spex::buffer_extent`. 
 #' @param e1 input \code{\link[raster]{extent}}
 #' @param e2 grain size
 #' @examples

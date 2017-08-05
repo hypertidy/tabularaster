@@ -2,7 +2,7 @@
 % Please edit documentation in R/buffer_extent.r
 \name{bufext}
 \alias{bufext}
-\title{Deprected tabularaster function}
+\title{Defunct tabularaster function}
 \usage{
 bufext(e1, e2)
 }
@@ -15,7 +15,7 @@ bufext(e1, e2)
 Ensure a raster extent aligns to whole parts.
 }
 \details{
-This function is deprecated, please use \code{spex::buffer_extent}.
+This function is defunct, please use \code{spex::buffer_extent}.
 }
 \examples{
 library(spex)
