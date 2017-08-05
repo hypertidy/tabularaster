@@ -5,10 +5,13 @@ Version: 0.3.0
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
-Description: Facilities to work with vector and raster data in efficient repeatable and systematic workflows. Missing functionality in existing
- packages is included here to allow extraction from raster data with 'simple features' and 'Spatial' types and to make extraction consistent and 
- straightforward. Extract cell numbers from raster data and  return the cells, values and weights as a data frame rather than as lists of 
- matrices or vectors. The functions here allow spatial data to be used without special handling for the format currently in use. 
+Description: Facilities to work with vector and raster data in efficient 
+ repeatable and systematic work flow. Missing functionality in existing packages 
+ is included here to allow extraction from raster data with 'simple features' and 
+ 'Spatial' types and to make extraction consistent and straightforward. Extract cell 
+ numbers from raster data and  return the cells, values and weights as a data frame 
+ rather than as lists of matrices or vectors. The functions here allow spatial data 
+ to be used without special handling for the format currently in use. 
 License: GPL-3
 LazyData: TRUE
 Depends: R (>= 3.2.5)

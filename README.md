@@ -32,4 +32,25 @@ devtools::install_github("hypertidy/tabularaster")
 Usage
 =====
 
-See the vignette.
+Basic usage is to extract the cell numbers from an object, where object is a a matrix of points, a `Spatial` object or a `simple features sf` object.
+
+``` r
+cells <- cellnumbers(raster, object)
+```
+
+The value in this approach is not for getting cell numbers per se, but for using those downstream. The cell number is an index into the raster that means the geometric hard work is done, so we can apply the index for subsequent extractions, grouping aggregations, or for determining the coordinates or other structure summaries of where the cell belongs.
+
+E.g.
+
+``` r
+
+## summarize by object grouping
+cells %>% mutate(value= extract(raster, cell_)) %>% group_by(object_) %>% summarize(mean(value))
+
+## summarize by cell grouping
+cells %>% mutate(value= extract(raster, cell_)) %>% group_by(cell_) %>% summarize(mean(value))
+```
+
+The utility of this is very much dependent on individual workflow, so this in its own right is not very exciting. `Tabularaster` simply provides an easier way to create your tools.
+
+See the vignettes for more.

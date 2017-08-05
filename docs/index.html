@@ -106,7 +106,18 @@
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
-<p>See the vignette.</p>
+<p>Basic usage is to extract the cell numbers from an object, where object is a a matrix of points, a <code>Spatial</code> object or a <code>simple features sf</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cells &lt;-<span class="st"> </span><span class="kw"><a href="reference/cellnumbers.html">cellnumbers</a></span>(raster, object)</code></pre></div>
+<p>The value in this approach is not for getting cell numbers per se, but for using those downstream. The cell number is an index into the raster that means the geometric hard work is done, so we can apply the index for subsequent extractions, grouping aggregations, or for determining the coordinates or other structure summaries of where the cell belongs.</p>
+<p>E.g.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+## summarize by object grouping
+cells <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">value=</span> <span class="kw">extract</span>(raster, cell_)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(object_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))
+
+## summarize by cell grouping
+cells <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">value=</span> <span class="kw">extract</span>(raster, cell_)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(cell_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">mean</span>(value))</code></pre></div>
+<p>The utility of this is very much dependent on individual workflow, so this in its own right is not very exciting. <code>Tabularaster</code> simply provides an easier way to create your tools.</p>
+<p>See the vignettes for more.</p>
 </div>
 </div>
   </div>
