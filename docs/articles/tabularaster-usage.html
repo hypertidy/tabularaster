@@ -45,10 +45,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/abstraction-illustration/raster-abstraction.html">Raster Abstraction</a>
+      <a href="../articles/cell-index-raster-abstraction.html">The raster functions for cell abstraction</a>
     </li>
     <li>
-      <a href="../articles/cell-index-raster-abstraction.html">The raster cell abstraction</a>
+      <a href="../articles/raster-abstraction.html">Raster Abstraction</a>
     </li>
     <li>
       <a href="../articles/tabularaster-usage.html">Tabularaster</a>
@@ -74,7 +74,7 @@
       <h1>Tabularaster</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2017-08-04</h4>
+            <h4 class="date">2017-08-05</h4>
           </div>
 
     
@@ -199,22 +199,22 @@
 <pre><code>## # A tibble: 2 x 2
 ##              dimindex     n
 ##                &lt;dttm&gt; &lt;int&gt;
-## 1 2017-08-04 22:44:50  5307
-## 2 2017-08-04 22:44:59  5307</code></pre>
+## 1 2017-08-05 13:47:36  5307
+## 2 2017-08-05 13:47:45  5307</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
 ##        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1       100         1  2017     8     4
-##  2       100         2  2017     8     4
-##  3       101         3  2017     8     4
-##  4       101         4  2017     8     4
-##  5       101         5  2017     8     4
-##  6       101         6  2017     8     4
-##  7       101         7  2017     8     4
-##  8       100         8  2017     8     4
-##  9       100         9  2017     8     4
-## 10       100        10  2017     8     4
+##  1       100         1  2017     8     5
+##  2       100         2  2017     8     5
+##  3       101         3  2017     8     5
+##  4       101         4  2017     8     5
+##  5       101         5  2017     8     5
+##  6       101         6  2017     8     5
+##  7       101         7  2017     8     5
+##  8       100         8  2017     8     5
+##  9       100         9  2017     8     5
+## 10       100        10  2017     8     5
 ## # ... with 10,604 more rows</code></pre>
 </div>
 </div>
@@ -276,29 +276,30 @@ polys &lt;-<span class="st"> </span><span class="kw">SpatialPolygonsDataFrame</s
 ## calculate class percentage from class counts per polygon
 cn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">v =</span> raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(r, cell_)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(object_, v) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">count =</span> <span class="kw"><a href="http://dplyr.tidyverse.org/reference/n.html">n</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">v.pct =</span> count <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(count)) </code></pre></div>
-<pre><code>## # A tibble: 19 x 4
+<pre><code>## # A tibble: 20 x 4
 ## # Groups:   object_ [2]
 ##    object_     v count      v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-##  1       1     1     1 0.02631579
-##  2       1     2     8 0.21052632
-##  3       1     3     2 0.05263158
-##  4       1     4     3 0.07894737
-##  5       1     5     5 0.13157895
-##  6       1     6     4 0.10526316
-##  7       1     7     2 0.05263158
-##  8       1     8     6 0.15789474
-##  9       1     9     4 0.10526316
+##  1       1     1     3 0.07894737
+##  2       1     2     3 0.07894737
+##  3       1     3     7 0.18421053
+##  4       1     4     4 0.10526316
+##  5       1     5     2 0.05263158
+##  6       1     6     5 0.13157895
+##  7       1     7     6 0.15789474
+##  8       1     8     2 0.05263158
+##  9       1     9     3 0.07894737
 ## 10       1    10     3 0.07894737
-## 11       2     1     1 0.04000000
-## 12       2     2     4 0.16000000
-## 13       2     3     4 0.16000000
-## 14       2     4     1 0.04000000
-## 15       2     5     3 0.12000000
-## 16       2     7     3 0.12000000
-## 17       2     8     2 0.08000000
-## 18       2     9     5 0.20000000
-## 19       2    10     2 0.08000000</code></pre>
+## 11       2     1     2 0.08000000
+## 12       2     2     3 0.12000000
+## 13       2     3     1 0.04000000
+## 14       2     4     2 0.08000000
+## 15       2     5     5 0.20000000
+## 16       2     6     4 0.16000000
+## 17       2     7     2 0.08000000
+## 18       2     8     2 0.08000000
+## 19       2     9     3 0.12000000
+## 20       2    10     1 0.04000000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## here is the traditional code used in the stackoverflow example
 <span class="co"># Extract raster values to polygons                             </span>
 <span class="co">#( v &lt;- extract(r, polys) )</span>
@@ -326,9 +327,8 @@ sst_regions &lt;-<span class="st"> </span>sst_regions <span class="op">%&gt;%</s
 <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(ghrsst, <span class="dt">col =</span> <span class="kw">bpy.colors</span>(<span class="dv">30</span>), <span class="dt">addfun =</span> <span class="cf">function</span>() <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(sst_regions, <span class="dt">add =</span> <span class="ot">TRUE</span>), 
      <span class="dt">main =</span> <span class="st">"SST data with simple regional polygon layer"</span>)</code></pre></div>
 <p><img src="tabularaster-usage_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sf)</code></pre></div>
-<pre><code>## Linking to GEOS 3.5.1, GDAL 2.2.1, proj.4 4.9.3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/plot">plot</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(sst_regions))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(sf)</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(sst_regions)</code></pre></div>
 <p><img src="tabularaster-usage_files/figure-html/unnamed-chunk-7-2.png" width="672"></p>
 </div>
 <div id="extract-cells-from-rasters" class="section level1">
@@ -387,15 +387,12 @@ cells &lt;-<span class="st"> </span><span class="kw"><a href="../reference/celln
 
 
 
-xweight &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, poly, <span class="dt">weights =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## Warning: projections not the same 
-##     x: NA
-## query: NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dgrid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/setValues">setValues</a></span>(rastercano, <span class="ot">NA_real_</span>)
+xweight &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, poly, <span class="dt">weights =</span> <span class="ot">TRUE</span>)
+
+dgrid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/setValues">setValues</a></span>(rastercano, <span class="ot">NA_real_</span>)
 dgrid[xweight<span class="op">$</span>cell_] &lt;-<span class="st"> </span>xweight<span class="op">$</span>weight_
 <span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(dgrid, <span class="dt">main =</span> <span class="st">"cell weights based on partial overlap"</span>, <span class="dt">col =</span> viridis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="dv">9</span>), 
      <span class="dt">addfun =</span> <span class="cf">function</span>() <span class="kw">polygon</span>(poly<span class="op">$</span>geometry[[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)]]))</code></pre></div>
-<p><img src="tabularaster-usage_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="extract-values-or-cell-numbers-with-sf-object" class="section level1">
 <h1 class="hasAnchor">

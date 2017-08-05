@@ -11,20 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Raster's cell-based index abstraction
 
-TODO: include some of this old crusty https://gis.stackexchange.com/a/43760/1204
-
 What is a raster? 
 
 Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? (Let's not get stuck here - the fact is that *it depends*). 
 
 What a raster is depends a lot on on what you are doing with the data, and what you need from it. All and none of these descriptions might make sense, but I want to completely put that topic aside so it doesn't get in our way. 
 
-The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that very few people really grasp this
-distinction, and I contend that much benefit in efficiency of computation and understanding is missed because of this. 
+The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that grasping this distinction is not really a priority for most users or developers but I contend that much benefit in efficiency of computation and understanding is missed because of it. The high-level tools avoid users needing to know these details, but in doing so have wrapped up the lower levels too tightly.  
 
 This document aims to explain why that abstraction is very useful, and worth the effort to separate it from the specific workflows enabled by the raster package. 
 
-Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. The possibilities for what a raster is and what it can be is not a finished story. 
+Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. The possibilities for what a raster is and what it can be is not a finished story.  The earliest versions of what a "raster" is had nothing to do with the `raster` or `sp` packages, pre-date the support in `grid` of `rasterImage` (used heavily by `ggplot2` and `raster`) - this early support is the `graphics::image` function` which ironically enough actually drew very many little rectangular polygons in a slow but efficient way. 
 
 
 ## Illustration
@@ -102,9 +99,15 @@ crop(rdata, ex, snap = "out")
 
 
 
+TODO: include some of this https://gis.stackexchange.com/a/43760/1204
+
+
+
 ## Obtaining the illustrated files
 
 ```{r,eval=FALSE}
 ## Option 1: direct ftp download
-## Option 2. raadsync setup
+## Option 2. bowerbird setup
 ```
+
+

@@ -1,10 +1,10 @@
 ---
-title: "The raster cell abstraction"
+title: "The raster functions for cell abstraction"
 author: "Michael Sumner"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Raster Cell Abstraction}
+  %\VignetteIndexEntry{Raster Abstraction Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

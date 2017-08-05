@@ -8,8 +8,8 @@
 <title>Raster Abstraction • tabularaster</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
-<script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -24,18 +24,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../index.html">tabularaster</a>
+      <a class="navbar-brand" href="../index.html">tabularaster</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../..//index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -45,18 +45,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../../articles/abstraction-illustration/raster-abstraction.html">Raster Abstraction</a>
+      <a href="../articles/cell-index-raster-abstraction.html">The raster functions for cell abstraction</a>
     </li>
     <li>
-      <a href="../../articles/cell-index-raster-abstraction.html">The raster cell abstraction</a>
+      <a href="../articles/raster-abstraction.html">Raster Abstraction</a>
     </li>
     <li>
-      <a href="../../articles/tabularaster-usage.html">Tabularaster</a>
+      <a href="../articles/tabularaster-usage.html">Tabularaster</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../../news/index.html">News</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -83,13 +83,12 @@
 <div id="rasters-cell-based-index-abstraction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rasters-cell-based-index-abstraction" class="anchor"></a>Raster’s cell-based index abstraction</h2>
-<p>TODO: include some of this old crusty <a href="https://gis.stackexchange.com/a/43760/1204" class="uri">https://gis.stackexchange.com/a/43760/1204</a></p>
 <p>What is a raster?</p>
 <p>Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? (Let’s not get stuck here - the fact is that <em>it depends</em>).</p>
 <p>What a raster is depends a lot on on what you are doing with the data, and what you need from it. All and none of these descriptions might make sense, but I want to completely put that topic aside so it doesn’t get in our way.</p>
-<p>The raster package in R has a very strong <em>cell-based index abstraction</em> that is very useful for dealing with <em>gridded data</em>. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that very few people really grasp this distinction, and I contend that much benefit in efficiency of computation and understanding is missed because of this.</p>
+<p>The raster package in R has a very strong <em>cell-based index abstraction</em> that is very useful for dealing with <em>gridded data</em>. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that grasping this distinction is not really a priority for most users or developers but I contend that much benefit in efficiency of computation and understanding is missed because of it. The high-level tools avoid users needing to know these details, but in doing so have wrapped up the lower levels too tightly.</p>
 <p>This document aims to explain why that abstraction is very useful, and worth the effort to separate it from the specific workflows enabled by the raster package.</p>
-<p>Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. The possibilities for what a raster is and what it can be is not a finished story.</p>
+<p>Rasters are used in many places in R, and their support has been very good from the earliest versions of R, though there have been many somewhat obscure improvements in how they can be handled, and the topic is now very much obscured by the complicated history of their existence in R, and their use in very many packages in different ways. The possibilities for what a raster is and what it can be is not a finished story. The earliest versions of what a “raster” is had nothing to do with the <code>raster</code> or <code>sp</code> packages, pre-date the support in <code>grid</code> of <code>rasterImage</code> (used heavily by <code>ggplot2</code> and <code>raster</code>) - this early support is the <code><a href="http://www.rdocumentation.org/packages/graphics/topics/image">graphics::image</a></code> function` which ironically enough actually drew very many little rectangular polygons in a slow but efficient way.</p>
 </div>
 <div id="illustration" class="section level2">
 <h2 class="hasAnchor">
@@ -168,12 +167,13 @@ ex &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumenta
 ## names       : Daily.sea.surface.temperature 
 ## values      : 6.41, 19.04  (min, max)
 ## time        : 2017-05-25</code></pre>
+<p>TODO: include some of this <a href="https://gis.stackexchange.com/a/43760/1204" class="uri">https://gis.stackexchange.com/a/43760/1204</a></p>
 </div>
 <div id="obtaining-the-illustrated-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#obtaining-the-illustrated-files" class="anchor"></a>Obtaining the illustrated files</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Option 1: direct ftp download
-## Option 2. raadsync setup</code></pre></div>
+## Option 2. bowerbird setup</code></pre></div>
 </div>
 </div>
   </div>
