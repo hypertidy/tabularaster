@@ -32,6 +32,16 @@ NULL
 NULL
 
 
+
+#' Optimally interpolated SST in near-native form.
+#'
+#' See data-raw/oisst.R in the source repository.  The file was
+#' avhrr-only-v2.20170729.nc, its extent -180, 180, -90, 90 with
+#' dimensions 1440x720 in the usual raster configuration. 
+#' @format A data frame of sst values created from OISST data.
+#' @name oisst
+NULL
+
 #' The raster volcano.
 #'
 #' See data-raw/rastercano.r in the source repository.
