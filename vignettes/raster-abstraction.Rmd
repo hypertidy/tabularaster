@@ -2,7 +2,11 @@
 title: "Raster Abstraction"
 author: "Michael Sumner"
 date: "24/06/2017"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Raster Abstraction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
