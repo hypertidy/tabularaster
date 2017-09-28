@@ -2,7 +2,10 @@
 title: "Raster Abstraction"
 author: "Michael Sumner"
 date: "24/06/2017"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    fig_width: 8
+    fig_height: 8
 vignette: >
   %\VignetteIndexEntry{The Raster Abstraction}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,9 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 What is a raster? 
 
-Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? (Let's not get stuck here - the fact is that *it depends*). 
+Is it an image, a surface, a matrix, an array, a map, pixellated coverage, a discretization of the plane, a georeferenced grid? Which of these is most accurate? 
 
-What a raster is depends a lot on on what you are doing with the data, and what you need from it. All and none of these descriptions might make sense, but I want to completely put that topic aside so it doesn't get in our way. 
+What a raster is depends a lot on on what you are doing with the data, and what you need from it. All of these descriptions might make sense. 
 
 The raster package in R has a very strong *cell-based index abstraction* that is very useful for dealing with *gridded data*. This is extremely powerful, but in its current form is not easily separated from the very powerful high-level functionality of the raster package. I believe that grasping this distinction is not really a priority for most users or developers but I contend that much benefit in efficiency of computation and understanding is missed because of it. The high-level tools avoid users needing to know these details, but in doing so have wrapped up the lower levels too tightly.  
 
@@ -36,7 +39,6 @@ Here is a set of files containing ocean surface temperature (SST). This won't wo
 
 ```{r}
 files <- raadtools::sstfiles()$file[13051:13062]
-root <- getOption("raadfiles.default.data.directory")
 
 print(basename(files))
 ```
@@ -49,7 +51,7 @@ I've chosen two cases to illustrate, one with a single *extent* and another of t
 
 ```{r}
 library(raster)
-readAll(raster(file.path(root, files[1])))
+readAll(raster(files[1]))
 ```
 
 In this case the interpretation of the underlying grid logic is sound, though in many cases this process needs some investigation and slight re-interpretation (to account for cell-centre vs. cell-edge alignment, incomplete coordinate reference system CRS or other incomplete or inaccurate interpretations.) There's no way to automate every possible case, these tools exist in a complex environment and not every situation can be handled without human oversight. Other options might need to restructure the data into *Atlantic view* with longitudes in -180, 180 but this *Pacific view* with longitudes 0, 360 is fairly common, and sometimes required, and neither case is inherently better or worse. 
@@ -73,7 +75,7 @@ We use this extent to conveniently hone in on just a small region of the global 
 This is very nice, but note how the extent we asked for is not applied to the data we end up seeing in the plot. 
 
 ```{r}
-rdata <- raster(file.path(root, files[1]))
+rdata <- raster(files[1])
 
 plot(ex)  ## the extent sets the plot context first
 plot(rdata, add = TRUE)
@@ -101,10 +103,74 @@ We can see the difference if we crop with snap = "out". It's still not the same 
 crop(rdata, ex, snap = "out")
 ```
 
+I needed to be explicit about exact alignment for extents, and so wrote a *positive outward buffer* function to ensure the input extent is widened and aligned to a particular step size (from zero).  Now see that our originally arbitrary extent does align exactly with the resulting extent from the SST data set - this is exactly what `snap = "out"` does internally, in the context of a particular grid being used. 
+
+```{r}
+print(ex)
+library(spex)
+
+print(spex::buffer_extent(ex, 0.25))
+```
+
+## Index extent
+
+Another useful conversion is to deal with the grid in purely index space, though this can be confusing when the
+grid is referenced from the "top-down".  Here the index_extent function provides a new extent object that details where in the grid the *geographic extent* (the second argument) lies.
+
+```{r}
+ind_ext <- tabularaster::index_extent(rdata, ex)
+```
 
 
-TODO: include some of this https://gis.stackexchange.com/a/43760/1204
+We might use this very explicitly with
 
+```{r}
+rawmat <- t(as.matrix(rdata)[nrow(rdata):1, ])
+image(seq(0, nrow(rawmat)), seq(0, ncol(rawmat)), rawmat, useRaster = TRUE)
+plot(ind_ext, add = TRUE)
+
+```
+
+
+That gives us a way to convert "geographic queries" into the "raw index" queries required by the data structure, and this
+is more or less what `raster::crop` must do internally, and similar logic is used by `tidync` and GDAL itself. 
+
+We should now see that we can extract that exact region of data without having to do any of the maths ourselves. (The math isn't "hard", it's just very easy to get it wrong and/or get confused, mostly because of the orientation of the grid - see how this grid is Pacific-centred, and also that we had to transpose and flip it in order to make an image correctly). 
+
+
+
+The NetCDF library expects queries to come in the form of **start** and **count** values, which we can generate from the index extent. 
+
+```{r}
+start <- c(xmin(ind_ext), ymin(ind_ext))
+count <- c(xmax(ind_ext) - xmin(ind_ext), 
+           ymax(ind_ext) - ymin(ind_ext))
+
+nccon <- ncdf4::nc_open(files[1])
+## this won't work, because there are two degenerate dimensions - one is unlimited "time" and the
+## other is a singleton to record that this is only "surface" values
+#winmat <- ncdf4::ncvar_get(nccon, "sst", start = start, count = count)
+winmat <- ncdf4::ncvar_get(nccon, "sst", start = c(start, 1, 1), count = c(count, 1, 1))
+
+image(winmat)
+```
+
+Notice how this plot is mapped into the interval 0, 1 for x and y, though above 
+we recorded where in the overall parent grid we belonged. These things conspire to make all of this quite confusing. 
+
+* raster is top-down, NetCDF is bottom-up
+* we have two coordinate systems, index and geographic 
+* image puts everything into 0, 1 (this technically is a third coord system)
+
+There is a further exploration of these confusing relationships here: 
+
+https://hypertidy.github.io/ffraster/articles/dimension-order.html
+
+
+
+## The abstraction
+
+The abstraction is that so much of what we work with here has absolutely nothing to do with the underlying data. We used physical observation "the temperature at the surface of the ocean" but apart from the scale bar in the single plot above we have only seen the *relative* relationship of this quantity in our figures. 
 
 
 ## Obtaining the illustrated files
