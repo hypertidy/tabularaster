@@ -1,4 +1,4 @@
-# dev
+# 0.4.0
 
 * add `xy` argument to `as_tibble`
 

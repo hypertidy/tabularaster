@@ -8,5 +8,5 @@
 ^docs$
 ^codecov\.yml$
 ^cran-comments\.md$
-^vignettes\abstraction-illustration$
-^inst\vignettes_todo\rsconnect
+^vignettes/abstraction-illustration$
+^inst/vignettes_todo$
