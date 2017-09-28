@@ -6,7 +6,7 @@
 \title{Convert a Raster to a data frame.}
 \usage{
 \method{as_tibble}{BasicRaster}(x, cell = TRUE, dim = nlayers(x) > 1L,
-  value = TRUE, split_date = FALSE, ...)
+  value = TRUE, split_date = FALSE, xy = FALSE, ...)
 }
 \arguments{
 \item{x}{a RasterLayer, RasterStack or RasterBrick}
@@ -18,6 +18,8 @@
 \item{value}{logical to return the values as a column or not}
 
 \item{split_date}{logical to split date into components}
+
+\item{xy}{logical to include the x and y centre coordinate of each cell}
 
 \item{...}{unused}
 }

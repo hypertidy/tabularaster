@@ -12,6 +12,7 @@
 #' @param dim logical to include slice index 
 #' @param split_date logical to split date into components
 #' @param value logical to return the values as a column or not
+#' @param xy logical to include the x and y centre coordinate of each cell
 #' @param ... unused
 #'
 #' @return a data frame ('tbl_df'/'tibble' form)
@@ -27,7 +28,7 @@
 #' @importFrom dplyr bind_cols mutate
 #' @importFrom raster getZ nlayers values ncell
 #' @name as_tibble
-as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value = TRUE, split_date = FALSE, ...) {
+as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value = TRUE, split_date = FALSE, xy = FALSE,  ...) {
   dimindex <- raster::getZ(x)
   
   if (is.null(dimindex)) {
@@ -41,9 +42,10 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
       }
     }
   } 
+  
   cellvalue <- cellindex <-  NULL
-  if (value) cellvalue <- as.vector(values(x))
-  if (cell) cellindex <-  rep(seq(raster::ncell(x)), raster::nlayers(x))
+  if (value) cellvalue <- as.vector(raster::values(x))
+  cellindex <-  rep(seq(raster::ncell(x)), raster::nlayers(x))
   d <- dplyr::bind_cols(cellvalue = cellvalue, cellindex = cellindex)
   if (dim) {
     dimindex <- rep(dimindex, each = ncell(x))
@@ -56,6 +58,13 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
       d[["dimindex"]] <- dimindex
     }
   }
+  if (xy) {
+    xy <- sp::coordinates(x)
+    colnames(xy) <- c("x", "y")
+    if (nlayers(x) > 1) xy <- xy[rep(seq_len(ncell(x)), nlayers(x)), ]
+    d <- dplyr::bind_cols(d, tibble::as_tibble(xy))
+  }
+  if (!cell) d[["cellindex"]] <- NULL
   d
 }
 

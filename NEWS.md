@@ -1,5 +1,9 @@
 # dev
 
+* add `xy` argument to `as_tibble`
+
+* fix missing vignette knitr reference
+
 * new oisst data set
 
 # tabularaster 0.3.0
