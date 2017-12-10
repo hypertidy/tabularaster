@@ -242,3 +242,41 @@ fgrid <- fasterize(poly, grid, field = "AREA")
 scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
 plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
 ```
+
+Use velox instead
+
+```{r,eval=FALSE}
+library(spex)
+library(raster)
+library(tabularaster)
+## but we can do 
+(grid <- raster(spex(sst_regions), res = 0.2))
+system.time({
+library(velox)
+vx <- velox(setValues(grid, 0))
+vx$rasterize(sf::st_as_sf(sst_regions), field = "ghrsst")
+
+library(dplyr)
+res1 <- as_tibble(vx$as.RasterLayer()) %>% 
+  #rename(object_ = cellvalue) %>% 
+  filter(!is.na(cellvalue))
+})
+
+
+system.time({
+  res2 <- as_tibble(rasterize(sst_regions, grid, field = sst_regions$ghrsst))
+})
+
+vcellnumbers <- function(x, query, ...) {
+  query$object_ <- seq_len(nrow(query))
+  query <- sf::st_as_sf(query)
+  x <- setValues(x[[1]], 1)
+  vx <- velox(x)
+  vx$rasterize(query, field = "object_")
+  vx$as.RasterLayer() %>%   
+    as_tibble(na.rm = FALSE) %>% 
+    dplyr::rename(object_ = cellvalue, cell_ = cellindex)
+}
+vcellnumbers(grid, sst_regions)
+cellnumbers(grid, sst_regions)
+```
