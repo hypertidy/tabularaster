@@ -1,4 +1,8 @@
-# 0.4.0
+# tabularaster dev
+
+* Now import `spatstat` for faster line rasterization. 
+
+# tabularaster 0.4.0
 
 * add `xy` argument to `as_tibble`
 

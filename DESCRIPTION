@@ -21,6 +21,7 @@ Imports:
     methods, 
     raster,
     sp, 
+    spatstat,
     spex (>= 0.4.0),
     spbabel (>= 0.4.8),
     tibble, 

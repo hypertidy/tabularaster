@@ -52,6 +52,10 @@ cellnumbers.default <- function(x, query, ...) {
       return(line_cellnumbers(query, x))
     }
   }
+  
+  if (inherits(query, "SpatialLines")) {
+    return(line_cellnumbers(query, x))
+  }
   ## TODO rebuild as Spatial collection
   ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
   if (inherits(query, "sf")) {
@@ -67,10 +71,7 @@ cellnumbers.default <- function(x, query, ...) {
   if (inherits(query, "SpatialPolygons")) {
     a <- cellFromPolygon(x, query, ...)
   }
-  if (inherits(query, "SpatialLines")) {
-    a <- cellFromLine(x, query)
-  }
-  
+
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     a <- list(cellFromXY(x, query))
   }
@@ -89,34 +90,32 @@ cellnumbers.default <- function(x, query, ...) {
 }
 
 
+psp_i <- function(x, i = 1) {
+  g <- rep(seq_len(nrow(x$geometry)), x$geometry$nrow)
+  coord <- x$coord
+  idx <- which(g == i) 
+  segment <- x$segment[x$segment$.vx0 %in% idx & x$segment$.vx1 %in% idx, ]
+  spatstat::psp(x0 = coord$x_[segment$.vx0],
+                y0 = coord$y_[segment$.vx0],  
+                x1 = coord$x_[segment$.vx1], 
+                y1 = coord$y_[segment$.vx1], 
+                window = spatstat::owin(range(coord$x_), range(coord$y_)))
+}
+#' @importFrom spatstat owin as.owin
+as.owin.BasicRaster <- function(W, ...) {
+  msk <- matrix(TRUE, nrow(W), ncol(W))
+  spatstat::owin(c(xmin(W), xmax(W)), c(ymin(W), ymax(W)), mask = msk)
+}
+pix <- function(psp, ras) {
+  spatstat::pixellate(psp, as.owin(ras), weights = 1)   
+}
+
 
 line_cellnumbers <- function(ln, r) {
-  library(silicore)
-  library(silicate)
-  library(spatstat)
-  
-  x <- SC0(ln)
+
+  x <- vertex_edge_path(ln)
   
   
-  psp_i <- function(x, i = 1) {
-    g <- rep(seq_len(nrow(x$geometry)), x$geometry$nrow)
-    coord <- x$coord
-    idx <- which(g == i) 
-    segment <- x$segment[x$segment$.vx0 %in% idx & x$segment$.vx1 %in% idx, ]
-    spatstat::psp(x0 = coord$x_[segment$.vx0],
-                  y0 = coord$y_[segment$.vx0],  
-                  x1 = coord$x_[segment$.vx1], 
-                  y1 = coord$y_[segment$.vx1], 
-                  window = spatstat::owin(range(coord$x_), range(coord$y_)))
-  }
-  
-  as.owin.BasicRaster <- function(W, ...) {
-    msk <- matrix(TRUE, nrow(W), ncol(W))
-    owin(c(xmin(W), xmax(W)), c(ymin(W), ymax(W)), mask = msk)
-  }
-  pix <- function(psp, ras) {
-    spatstat::pixellate(psp, as.owin(ras), weights = 1)   
-  }
   
   im <- setValues(r, 0)
   l <- vector("list", nrow(x$geometry))
