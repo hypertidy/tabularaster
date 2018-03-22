@@ -11,8 +11,8 @@ polysaas.BasicRaster <- function(x, ...) {
 #' @name polysaas
 #' @export
 polysaas.default <- function(xylim, grain = NULL,  crs = NULL) {
-  discretization <- raster(xylim, res = grain, crs = crs)
-  structure(discretization = discretization, class = "polysaas")
+  discr <- raster(xylim, res = grain, crs = crs)
+  structure(discretization = discr, class = "polysaas")
 }
 
 #' @name slice
