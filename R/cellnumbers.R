@@ -38,7 +38,20 @@
 #' #group_by(object_) %>% 
 #' #summarize(mean(v)) 
 #' #head(pretty(values(r)), -1)
+#' @export
 cellnumbers <- function(x, query, ...) {
+  UseMethod("cellnumbers")
+}
+#' @name cellnumbers
+#' @export
+cellnumbers.default <- function(x, query, ...) {
+  
+  if (inherits(query, "sf")) {
+    g <- query[[attr(query, "sf_column")]]
+    if (inherits(g, "sfc_LINESTRING") || inherits(g, "sfc_MULTILINESTRING")) {
+      return(line_cellnumbers(query, x))
+    }
+  }
   ## TODO rebuild as Spatial collection
   ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
   if (inherits(query, "sf")) {
@@ -75,6 +88,46 @@ cellnumbers <- function(x, query, ...) {
 
 }
 
+
+
+line_cellnumbers <- function(ln, r) {
+  library(silicore)
+  library(silicate)
+  library(spatstat)
+  
+  x <- SC0(ln)
+  
+  
+  psp_i <- function(x, i = 1) {
+    g <- rep(seq_len(nrow(x$geometry)), x$geometry$nrow)
+    coord <- x$coord
+    idx <- which(g == i) 
+    segment <- x$segment[x$segment$.vx0 %in% idx & x$segment$.vx1 %in% idx, ]
+    spatstat::psp(x0 = coord$x_[segment$.vx0],
+                  y0 = coord$y_[segment$.vx0],  
+                  x1 = coord$x_[segment$.vx1], 
+                  y1 = coord$y_[segment$.vx1], 
+                  window = spatstat::owin(range(coord$x_), range(coord$y_)))
+  }
+  
+  as.owin.BasicRaster <- function(W, ...) {
+    msk <- matrix(TRUE, nrow(W), ncol(W))
+    owin(c(xmin(W), xmax(W)), c(ymin(W), ymax(W)), mask = msk)
+  }
+  pix <- function(psp, ras) {
+    spatstat::pixellate(psp, as.owin(ras), weights = 1)   
+  }
+  
+  im <- setValues(r, 0)
+  l <- vector("list", nrow(x$geometry))
+  for (i in seq_along(l)) {
+    im <- (raster(pix(psp_i(x, i = i), r)) > 0)
+    l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0), weight = 1L)    
+  }
+  
+  
+  dplyr::bind_rows(l)
+}
 
 ## general extract?
 

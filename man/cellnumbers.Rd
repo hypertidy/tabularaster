@@ -2,9 +2,13 @@
 % Please edit documentation in R/cellnumbers.R
 \name{cellnumbers}
 \alias{cellnumbers}
+\alias{cellnumbers}
+\alias{cellnumbers.default}
 \title{Extract cell numbers from a Raster object.}
 \usage{
 cellnumbers(x, query, ...)
+
+\method{cellnumbers}{default}(x, query, ...)
 }
 \arguments{
 \item{x}{Raster object}
