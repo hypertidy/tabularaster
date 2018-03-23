@@ -1,3 +1,14 @@
+fast_extract <- function(x, y, ...) {
+  ## BEWARE no extract options are respected
+  raster::extract(x, sfpoly_cells(x, y))
+}
+
+sfpoly_cells <- function(rast, sfpoly) {
+  ## BEWARE, could be a big-data, this is not
+  ## sparsely specified, so it's wasteful on memory, but fast (if you have the mem)
+  which(!is.na(fasterize::fasterize(sfpoly, rast)[]))
+}
+
 #' Extract cell numbers from a Raster object.
 #'
 #' Provide the 'cellnumbers' capability of [raster::extract] and friends
@@ -50,6 +61,14 @@ cellnumbers.default <- function(x, query, ...) {
     g <- query[[attr(query, "sf_column")]]
     if (inherits(g, "sfc_LINESTRING") || inherits(g, "sfc_MULTILINESTRING")) {
       return(line_cellnumbers(query, x))
+    }
+    
+    if (inherits(g, "sfc_POLYGON") || inherits(g, "sfc_MULTIPOLYGON")) {
+      query$polygon <- seq_len(nrow(query))
+      rast <- fasterize::fasterize(query, x, field = "polygon")
+      v <- values(rast)
+      ok <- !is.na(v)
+      return(tibble::tibble(object_ = v[ok], cell_ = which(ok)))
     }
   }
   
