@@ -4,11 +4,23 @@
 \alias{cellnumbers}
 \alias{cellnumbers}
 \alias{cellnumbers.default}
+\alias{cellnumbers}
+\alias{cellnumbers.SpatialLines}
+\alias{cellnumbers}
+\alias{cellnumbers.sfc}
+\alias{cellnumbers}
+\alias{cellnumbers.sf}
 \title{Extract cell numbers from a Raster object.}
 \usage{
 cellnumbers(x, query, ...)
 
 \method{cellnumbers}{default}(x, query, ...)
+
+\method{cellnumbers}{SpatialLines}(x, query, ...)
+
+\method{cellnumbers}{sfc}(x, query, ...)
+
+\method{cellnumbers}{sf}(x, query, ...)
 }
 \arguments{
 \item{x}{Raster object}

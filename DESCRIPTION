@@ -1,7 +1,7 @@
 Package: tabularaster
 Type: Package
 Title: Tidy Tools for 'Raster' Data
-Version: 0.4.0
+Version: 0.4.0.9000
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
@@ -16,16 +16,20 @@ License: GPL-3
 LazyData: TRUE
 Depends: R (>= 3.2.5)
 Roxygen: list(markdown = TRUE)
-Imports:
+Imports: 
     dplyr,
-    methods, 
+    methods,
     raster,
-    sp, 
+    sp,
     spatstat,
     spex (>= 0.4.0),
     spbabel (>= 0.4.8),
-    tibble, 
-    viridis
+    tibble,
+    viridis,
+    gibble,
+    fasterize,
+    magrittr,
+    rlang
 RoxygenNote: 6.0.1
 Suggests: covr, testthat,
     knitr,

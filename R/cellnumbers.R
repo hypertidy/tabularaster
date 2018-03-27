@@ -51,33 +51,13 @@ sfpoly_cells <- function(rast, sfpoly) {
 #' #head(pretty(values(r)), -1)
 #' @export
 cellnumbers <- function(x, query, ...) {
-  UseMethod("cellnumbers")
+  UseMethod("cellnumbers", object = query)
 }
 #' @name cellnumbers
 #' @export
 cellnumbers.default <- function(x, query, ...) {
-  
   if (inherits(query, "sf")) {
-    g <- query[[attr(query, "sf_column")]]
-    if (inherits(g, "sfc_LINESTRING") || inherits(g, "sfc_MULTILINESTRING")) {
-      return(line_cellnumbers(query, x))
-    }
-    
-    if (inherits(g, "sfc_POLYGON") || inherits(g, "sfc_MULTIPOLYGON")) {
-      query$polygon <- seq_len(nrow(query))
-      rast <- fasterize::fasterize(query, x, field = "polygon")
-      v <- values(rast)
-      ok <- !is.na(v)
-      return(tibble::tibble(object_ = v[ok], cell_ = which(ok)))
-    }
-  }
-  
-  if (inherits(query, "SpatialLines")) {
-    return(line_cellnumbers(query, x))
-  }
-  ## TODO rebuild as Spatial collection
-  ## if (inherits(query, "sf")) query <- sf::as(query, "Spatial")
-  if (inherits(query, "sf")) {
+    ## we need this for points, mpoints
     tab <- as.data.frame(query)
     if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
     map <- spbabel::sptable(query)
@@ -88,24 +68,51 @@ cellnumbers.default <- function(x, query, ...) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }
   if (inherits(query, "SpatialPolygons")) {
+    warning("cellnumbers is very slow for SpatialPolygons, consider conversion to sf", immediate. = TRUE)
     a <- cellFromPolygon(x, query, ...)
   }
-
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     a <- list(cellFromXY(x, query))
   }
   if (inherits(query, "SpatialMultiPoints")) {
-    #ind <- dplyr::bind_rows(lapply(query@coords, tibble::as_tibble), .id = "feature")
     a <- lapply(query@coords, function(xymat) cellFromXY(x, xymat))
-    ## yikes the old [unique(id)] trick to avoid split lexo sorting
-    #a <- split(cellFromXY(x, as.matrix(ind[, -1])), ind$feature)[unique(ind$feature)]
   }
   d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "object_")
   d[["object_"]] <- as.integer(d[["object_"]])
   if (ncol(d) == 2L) names(d) <- c("object_", "cell_")
   if (ncol(d) == 3L) names(d) <- c("object_", "cell_", "weight_")
   d
-
+  
+}
+#' @name cellnumbers
+#' @export
+cellnumbers.SpatialLines <- function(x, query, ...) {
+  line_cellnumbers(query, x)
+}
+#' @name cellnumbers
+#' @export
+cellnumbers.sfc <- function(x,  query, ...) {
+  sf1 <- data.frame(geometry = query)
+  cellnumbers(structure(sf1, sf_column = "geometry", agr = NULL, class = c("sf", "data.frame")))
+}
+#' @name cellnumbers
+#' @export
+cellnumbers.sf <- function(x, query, ...) {
+  g <- query[[attr(query, "sf_column")]]
+  if (inherits(g, "sfc_GEOMETRY")) stop("GEOMETRY and GEOMETRYCOLLECTION not supported")
+  if (inherits(g, "sfc_LINESTRING") || inherits(g, "sfc_MULTILINESTRING")) {
+    return(line_cellnumbers(query, x))
+  }
+  
+  if (inherits(g, "sfc_POLYGON") || inherits(g, "sfc_MULTIPOLYGON")) {
+    query$polygon <- seq_len(nrow(query))
+    rast <- fasterize::fasterize(query, x, field = "polygon")
+    v <- values(rast)
+    ok <- !is.na(v)
+    return(tibble::tibble(object_ = v[ok], cell_ = which(ok)))
+  }
+  cellnumbers.default(x, query)  ## needed for points to pass through
+  #   stop(sprintf("%x not supported", class(x)))
 }
 
 
@@ -131,45 +138,12 @@ pix <- function(psp, ras) {
 
 
 line_cellnumbers <- function(ln, r) {
-
   x <- vertex_edge_path(ln)
-  
-  
-  
   im <- setValues(r, 0)
   l <- vector("list", nrow(x$geometry))
   for (i in seq_along(l)) {
     im <- (raster(pix(psp_i(x, i = i), r)) > 0)
     l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0), weight = 1L)    
   }
-  
-  
   dplyr::bind_rows(l)
 }
-
-## general extract?
-
-# args <- list(...)
-# args$cellnumbers <- TRUE
-# if (inherits(x, "RasterLayer")) x <- brick(x)
-# args$x <- x
-# a <- do.call(raster::extract, args)
-#
-#
-
-## doesn't seem to make any difference
-# @rdname cellnumbers
-# @export
-#' pcellnumbers <- function(x, p) {
-#'   if (inherits(x, "RasterLayer")) x <- brick(x)
-#'   a <- raster::cellFromPolygon(x, p)
-#'   dplyr::bind_rows(lapply(a, mat2d_f), .id = "i_")
-#' }
-#'
-# #' @rdname cellnumbers
-# #' @export
-#' pwcellnumbers <- function(x, p) {
-#'   if (inherits(x, "RasterLayer")) x <- brick(x)
-#'   a <- raster::cellFromPolygon(x, p, weights = TRUE)
-#'   dplyr::bind_rows(lapply(a, mat2d_f), .id = "i_")
-#' }

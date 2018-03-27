@@ -1,6 +1,7 @@
 # tabularaster dev
 
-* Now applying `fasterize` for sf polygon objects, and `spatstat` for sf line objects for very significant speed ups. 
+* Now applying `fasterize` for sf polygon objects, and `spatstat` for sf line objects for 
+ very significant speed ups. 
 
 * Now import `spatstat` for faster line rasterization. 
 

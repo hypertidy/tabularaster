@@ -1,24 +1,23 @@
+#' @importFrom dplyr row_number n
+#' @importFrom rlang .data
 vertex_edge_path <- function(x) {
   ## until we have silicate
-  coord0 <- spbabel::sptable(x) %>% dplyr::transmute(x_, y_)
+  coord0 <- spbabel::sptable(x) %>% dplyr::transmute(.data$x_, .data$y_)
   ## anything path-based has a gibble (sp, sf, trip at least)
   ## which is just a row-per path with nrow, and object, subobject, path classifiers
-  gmap <- gibble::gibble(x) %>% dplyr::mutate(path = row_number())
+  gmap <- gibble::gibble(x) 
+  gmap$path <- seq_len(nrow(gmap))
   coord <- coord0 %>% dplyr::mutate(path = as.integer(factor(rep(path_paste(gmap), gmap$nrow))), 
-                                    vertex = row_number()) %>%  dplyr::group_by(path) 
+                                    vertex = row_number()) %>%  dplyr::group_by(.data$path) 
   
-  segs <- coord %>% select(path, vertex)  %>% 
-    dplyr::mutate(.vx0 = vertex,   ## specify in segment terms 
-                  .vx1 = vertex + 1L) %>% 
-    dplyr::group_by(path)
+  segs <- coord %>% dplyr::select(.data$path, .data$vertex)  %>% 
+    dplyr::mutate(.vx0 = .data$vertex,   ## specify in segment terms 
+                  .vx1 = .data$vertex + 1L) 
   
-  #if (all(grepl("poly", gmap$type, ignore.case = TRUE))) {
   segs <- dplyr::slice(segs, -n()) ## don't know why I thought this was poly-only?
-  ## but TODO is check we aren't getting a degenerate final segment in closing
-  ## polygon rings?
-  #}
+  
   segs <- segs %>% dplyr::ungroup() %>% 
-    dplyr::transmute(.vx0, .vx1)
+    dplyr::transmute(.data$.vx0, .data$.vx1)
   
   
 list(
