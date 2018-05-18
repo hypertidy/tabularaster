@@ -5,7 +5,7 @@ library(raster)
 library(dplyr)
 data("rastercano")
 data("polycano")
-cells <- cellnumbers(rastercano, polycano[4:5, ])
+#cells <- cellnumbers(rastercano, polycano[4:5, ])
 
 
 

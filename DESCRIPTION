@@ -1,7 +1,7 @@
 Package: tabularaster
 Type: Package
 Title: Tidy Tools for 'Raster' Data
-Version: 0.4.0.9000
+Version: 0.5.0
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
@@ -31,9 +31,13 @@ Imports:
     magrittr,
     rlang
 RoxygenNote: 6.0.1
-Suggests: covr, testthat,
+Suggests: 
+    covr, 
+    testthat,
     knitr,
-    rmarkdown, sf, spdplyr
+    rmarkdown, 
+    sf,
+    spdplyr
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/tabularaster
 BugReports: https://github.com/hypertidy/tabularaster/issues

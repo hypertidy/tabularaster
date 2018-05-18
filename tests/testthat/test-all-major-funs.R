@@ -12,9 +12,7 @@ test_that("cellnumber extraction is available", {
   expect_that(nrow(tib), equals(917L))
 })
 
-test_that("decimate is not available", {
-   expect_warning(decimate(r, 10), "deprecated")
-})
+
 
 library(spex)
 library(raster)

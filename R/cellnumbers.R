@@ -130,7 +130,7 @@ psp_i <- function(x, i = 1) {
 #' @importFrom spatstat owin as.owin
 as.owin.BasicRaster <- function(W, ...) {
   msk <- matrix(TRUE, nrow(W), ncol(W))
-  spatstat::owin(c(xmin(W), xmax(W)), c(ymin(W), ymax(W)), mask = msk)
+  spatstat::owin(c(raster::xmin(W), raster::xmax(W)), c(raster::ymin(W), raster::ymax(W)), mask = msk)
 }
 pix <- function(psp, ras) {
   spatstat::pixellate(psp, as.owin(ras), weights = 1)   

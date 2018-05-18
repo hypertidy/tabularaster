@@ -10,6 +10,8 @@
 #'  \code{\link{extentFromCells}} \tab build an Extent object from cell numbers \cr
 #'  \code{\link{index_extent}} \tab build an extent in row column form, as opposed to coordinate value form \cr
 #'  }
+#' @importFrom raster extentFromCells
+#' @export extentFromCells
 NULL
 
 #' Sea surface temperature data. 
