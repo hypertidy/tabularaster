@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Sharkcano, the shark and the volcano. — sharkcano" />
+
+<meta property="og:description" content="This is just a free image off the internetz.
+The image was read in and all non-essential items dropped. The dimensions in raster::raster terms is stored in
+attr(sharkcano, "rasterdim")." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +58,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">tabularaster</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">tabularaster</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -71,21 +86,24 @@
       <a href="../articles/cell-index-raster-abstraction.html">The raster functions for cell abstraction</a>
     </li>
     <li>
-      <a href="../articles/raster-abstraction.html">Raster Abstraction</a>
-    </li>
-    <li>
       <a href="../articles/tabularaster-usage.html">Tabularaster</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hypertidy/tabularaster">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -93,17 +111,21 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sharkcano, the shark and the volcano.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hypertidy/tabularaster/blob/master/R/tabularaster-package.r'><code>R/tabularaster-package.r</code></a></small>
+    <div class="hidden name"><code>sharkcano.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This is just a free image off the internetz.
 The image was read in and all non-essential items dropped. The dimensions in <code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster::raster</a></code> terms is stored in
 <code>attr(sharkcano, "rasterdim")</code>.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -153,11 +175,14 @@ Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennyb
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

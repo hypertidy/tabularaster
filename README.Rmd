@@ -22,16 +22,14 @@ knitr::opts_chunk$set(
 
 # tabularaster
 
-The `raster` package is extremely powerful in the R ecosystem for spatial data. It can be used very efficiently to 
-drive data extraction and summary tools using its consistent cell-index and comprehensive helper functions for converting between cell values and less abstract raster grid properties. 
+The `raster` package is extremely powerful for spatial data. It provides very efficient data extraction and summary tools via consistent cell-index and comprehensive set of functions for working with grids, cells and their values. 
 
-Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query. 
+Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query, while `tabularaster::cellnumbers` instead returns a data frame of identifiers and cell numbers. 
 
-Tabularaster provides on a few simple functions. 
+Tabularaster provides these functions. 
 
 * `as_tibble` - convert to data frame with options for value column and cell, dimension and date indexing
 * `cellnumbers` - extract of cell index numbers as a simple data frame with "object ID" and "cell index"
-* `extentFromCells` - create an extent from cell index numbers
 * `index_extent` - create an index extent, essentially `extent(0, ncol(raster), 0, nrow(raster))`
 
 All functions that work with `sp Spatial` also work with `sf simple features. 
@@ -40,12 +38,18 @@ There is some overlap with `quadmesh` and `spex` while I figure out where things
 
 # Installation
 
-Install from CRAN, or get the development version from Github. 
+Install from CRAN, 
+
+
+```{r, eval=FALSE}
+install.packages("tabularaster")
+```
+
+or get the development version from Github. 
 
 ```{r, eval=FALSE}
 devtools::install_github("hypertidy/tabularaster")
 ```
-
 
 # Usage
 
