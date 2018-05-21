@@ -10,9 +10,9 @@ extent.sf <- function(x, ...) {
 # #' @exportMethod extent sf
 # setMethod(f = "extent", signature = "sf", definition = extent.sf)
 
-
+#' @importFrom raster extent
 spex.sf <- function(x, crs, ...) {
-  spex(extent(x), attr(x[[attr(x, "sf_column")]], "crs")$proj4string)
+  spex(raster::extent(x), attr(x[[attr(x, "sf_column")]], "crs")$proj4string)
 }
 
 

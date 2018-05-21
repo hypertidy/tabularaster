@@ -14,7 +14,7 @@ Tabularaster includes these main functions.
 \code{\link{as_tibble}}
 \code{\link{as_tibble}} \tab convert raster data to data frame form, with control over output and form of dimension/coordinate columns \cr
 \code{\link{cellnumbers}} \tab extract a data frame of query identifiers and cell,pixel index numbers \cr
-\code{\link{extentFromCells}} \tab (now incorporated into raster itself)
+\code{\link{extentFromCells}} \tab (now incorporated into raster itself) \cr
 \code{\link{index_extent}} \tab build an extent in row column form, as opposed to coordinate value form \cr
 }
 }
