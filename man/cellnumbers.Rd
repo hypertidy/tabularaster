@@ -27,7 +27,7 @@ cellnumbers(x, query, ...)
 
 \item{query}{Spatial object or matrix of coordinates}
 
-\item{...}{arguments passed on to \link[raster:cellFromPolygon]{raster::cellFromPolygon} for polygon input}
+\item{...}{unused}
 }
 \value{
 tbl_df data frame
@@ -45,10 +45,8 @@ the the standard "raster graphics" convention used by 'GDAL' and the 'sp'
 package, and many other implementations. Note that this is different to the
 convention used by the \link[graphics:image]{graphics::image} function.
 
-Currently this function only operats as if the input is a single layer objects, it's not clear if adding
+Currently this function only operates as if the input is a single layer objects, it's not clear if adding
 an extra level of grouping for layers would be sensible.
-
-The dots argument can be used to set weights=TRUE for the polygon case, this is otherwise ignored.
 }
 \examples{
 library(raster)

@@ -22,12 +22,11 @@ sfpoly_cells <- function(rast, sfpoly) {
 #' package, and many other implementations. Note that this is different to the
 #' convention used by the [graphics::image] function. 
 #' 
-#' Currently this function only operats as if the input is a single layer objects, it's not clear if adding
+#' Currently this function only operates as if the input is a single layer objects, it's not clear if adding
 #' an extra level of grouping for layers would be sensible.   
 #' 
-#' The dots argument can be used to set weights=TRUE for the polygon case, this is otherwise ignored. 
 #' @param x Raster object
-#' @param ... arguments passed on to [raster::cellFromPolygon] for polygon input
+#' @param ... unused
 #' @param query Spatial object or matrix of coordinates
 #' @return tbl_df data frame
 #' @export
@@ -68,8 +67,8 @@ cellnumbers.default <- function(x, query, ...) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }
   if (inherits(query, "SpatialPolygons")) {
-    warning("cellnumbers is very slow for SpatialPolygons, consider conversion to sf", immediate. = TRUE)
-    a <- cellFromPolygon(x, query, ...)
+    warning("cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'", immediate. = TRUE)
+    a <- cellFromPolygon(x, query)
   }
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     a <- list(cellFromXY(x, query))
@@ -143,7 +142,7 @@ line_cellnumbers <- function(ln, r) {
   l <- vector("list", nrow(x$geometry))
   for (i in seq_along(l)) {
     im <- (raster(pix(psp_i(x, i = i), r)) > 0)
-    l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0), weight = 1L)    
+    l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0))    
   }
   dplyr::bind_rows(l)
 }
