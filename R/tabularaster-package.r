@@ -14,7 +14,10 @@ NULL
 
 #' Re-exports from raster
 #' 
-#' These functions are imported and then re-exported. 
+#' These functions are imported and then re-exported.
+#' 
+#' See \code{raster::\link[raster]{extentFromCells}} for details.
+#' @name raster-exports 
 #' @importFrom raster extentFromCells
 #' @export extentFromCells
 NULL
