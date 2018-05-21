@@ -2,6 +2,7 @@
 % Please edit documentation in R/tabularaster-package.r
 \name{raster-exports}
 \alias{raster-exports}
+\alias{extentFromCells}
 \title{Re-exports from raster}
 \description{
 These functions are imported and then re-exported.

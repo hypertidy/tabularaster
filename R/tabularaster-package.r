@@ -18,6 +18,7 @@ NULL
 #' 
 #' See \code{raster::\link[raster]{extentFromCells}} for details.
 #' @name raster-exports 
+#' @aliases extentFromCells 
 #' @importFrom raster extentFromCells
 #' @export extentFromCells
 NULL
