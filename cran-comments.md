@@ -1,6 +1,6 @@
 ## Test environments
-* Travis ubuntu 16.04 (devel and release)
-* local ubuntu 16.04, R 3.5.0
+* Travis ubuntu 16.04 (release)
+* local ubuntu 16.04, release
 * win-builder (devel and release)
 
 ## R CMD check results
