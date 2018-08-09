@@ -1,13 +1,3 @@
-fast_extract <- function(x, y, ...) {
-  ## BEWARE no extract options are respected
-  raster::extract(x, sfpoly_cells(x, y))
-}
-
-sfpoly_cells <- function(rast, sfpoly) {
-  ## BEWARE, could be a big-data, this is not
-  ## sparsely specified, so it's wasteful on memory, but fast (if you have the mem)
-  which(!is.na(fasterize::fasterize(sfpoly, rast)[]))
-}
 
 #' Extract cell numbers from a Raster object.
 #'
@@ -72,6 +62,7 @@ cellnumbers.default <- function(x, query, ...) {
     a <- cellFromPolygon(x, query)
   }
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
+    if (is.matrix(query)) stopifnot(ncol(query) >= 2)
     a <- list(cellFromXY(x, query))
   }
   if (inherits(query, "SpatialMultiPoints")) {
@@ -93,8 +84,8 @@ cellnumbers.SpatialLines <- function(x, query, ...) {
 #' @name cellnumbers
 #' @export
 cellnumbers.sfc <- function(x,  query, ...) {
-  sf1 <- data.frame(geometry = query)
-  cellnumbers(structure(sf1, sf_column = "geometry", agr = NULL, class = c("sf", "data.frame")))
+   sf1 <- data.frame(geometry = query)
+   cellnumbers(x, structure(sf1, sf_column = "geometry", agr = NULL, class = c("sf", "data.frame")))
 }
 #' @name cellnumbers
 #' @export
