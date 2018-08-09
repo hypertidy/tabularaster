@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,6 +34,7 @@
 
 <meta property="og:description" content="Tabular tools for raster, tidy tools for raster." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0</span>
       </span>
     </div>
 
@@ -129,9 +132,11 @@
     <p>Tabularaster includes these main functions.</p><table class='table'>
 <tr><td><code><a href='as_tibble.html'>as_tibble</a></code>
 <code><a href='as_tibble.html'>as_tibble</a></code></td><td>convert raster data to data frame form, with control over output and form of dimension/coordinate columns</td></tr>
-<tr><td><code>cellnumbers</code></td><td>extract a data frame of query identifiers and cell,pixel index numbers</td></tr>
-<tr><td><code>extentFromCells</code></td><td>(now incorporated into raster itself)</td></tr>
+<tr><td><code><a href='cellnumbers.html'>cellnumbers</a></code></td><td>extract a data frame of query identifiers and cell,pixel index numbers</td></tr>
+<tr><td><code><a href='raster-exports.html'>extentFromCells</a></code></td><td>(now incorporated into raster itself)</td></tr>
 <tr><td><code><a href='index_extent.html'>index_extent</a></code></td><td>build an extent in row column form, as opposed to coordinate value form</td></tr>
+<tr><td></td><td><code><a href='as_tibble.html'>as_tibble</a></code>
+<code><a href='as_tibble.html'>as_tibble</a></code></td></tr>
 </table>
     
 

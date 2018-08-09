@@ -21,14 +21,17 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
 <meta property="og:title" content="Changelog" />
+
 
 
 <!-- mathjax -->
@@ -55,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0</span>
       </span>
     </div>
 
@@ -113,6 +116,17 @@
       <small>Source: <a href='https://github.com/hypertidy/tabularaster/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tabularaster-0-6-0" class="section level1">
+<h1 class="page-header">
+<a href="#tabularaster-0-6-0" class="anchor"></a>tabularaster 0.6.0<small> Unreleased </small>
+</h1>
+<ul>
+<li><p>Function <code>cellnumbers</code> now provides only basic cell lookup, the weights and other options available in raster functions are ignored.</p></li>
+<li><p>Function <code>extentFromCells</code> is now imported from raster and re-exported.</p></li>
+<li><p>Now applying <code>fasterize</code> for sf polygon objects, and <code>spatstat</code> for sf line objects for very significant speed ups.</p></li>
+<li><p>Now import <code>spatstat</code> for faster line rasterization.</p></li>
+</ul>
+</div>
     <div id="tabularaster-0-4-0" class="section level1">
 <h1 class="page-header">
 <a href="#tabularaster-0-4-0" class="anchor"></a>tabularaster 0.4.0<small> 2017-12-10 </small>
@@ -158,6 +172,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#tabularaster-0-6-0">0.6.0</a></li>
         <li><a href="#tabularaster-0-4-0">0.4.0</a></li>
         <li><a href="#tabularaster-0-3-0">0.3.0</a></li>
         <li><a href="#tidyraster-0-2-0">0.2.0</a></li>

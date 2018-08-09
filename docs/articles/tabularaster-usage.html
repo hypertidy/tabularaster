@@ -8,8 +8,8 @@
 <title>Tabularaster • tabularaster</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Tabularaster">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Tabularaster">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1>Tabularaster</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2018-05-22</h4>
+            <h4 class="date">2018-08-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hypertidy/tabularaster/blob/master/vignettes/tabularaster-usage.Rmd"><code>vignettes/tabularaster-usage.Rmd</code></a></small>
       <div class="hidden name"><code>tabularaster-usage.Rmd</code></div>
@@ -108,7 +108,7 @@
 </li>
 </ul>
 <p>Extract the cell numbers of raster <code>r</code> that are co-located with object <code>q</code>. (The argument names are <code>x</code> and <code>query</code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">cellnumbers</span>(r, q)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(r, q)</a></code></pre></div>
 <p>In the above example, <code>r</code> is any <em>raster</em> object and <code>q</code> is another spatial object, used as a query. Cell numbers can be extracted from any raster object, any of a <code><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster::raster</a></code>, <code><a href="http://www.rdocumentation.org/packages/raster/topics/stack">raster::stack</a></code> or <code><a href="http://www.rdocumentation.org/packages/raster/topics/brick">raster::brick</a></code>. It’s not really relevant what that object contains, as only the <em>dimensions</em> (number of cells in x and y) and the <em>extent</em> (geographic range in x and y) determine the result. The <code>r</code> object can actually not contain any data - this is a very powerful but seemingly under-used feature of the <code>raster</code> package.</p>
 <p>The object <code>q</code> may be any of <code>sf</code>, <code>sp</code> layer types or a matrix of raw coordinates (x-y). (‘Exotic’ <code>sf</code> types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we’ll make it work.)</p>
 <p>Tabularaster follows the basic principles of tidy data and <em>hypertidy data</em> and aspires to keep the software design out of your way and simply help to get the task done.</p>
@@ -129,7 +129,7 @@
 ## data source : in memory
 ## names       : layer 
 ## values      : 94, 195  (min, max)</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">(cell &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(r, <span class="kw">cbind</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">(cell &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(r, <span class="kw">cbind</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))</a></code></pre></div>
 <pre><code>## Warning: projections not the same 
 ##     x: NA
 ## query: NA</code></pre>
@@ -213,22 +213,22 @@
 <pre><code>## # A tibble: 2 x 2
 ##   dimindex                n
 ##   &lt;dttm&gt;              &lt;int&gt;
-## 1 2018-05-22 05:53:52  5307
-## 2 2018-05-22 05:54:01  5307</code></pre>
+## 1 2018-08-09 16:34:16  5307
+## 2 2018-08-09 16:34:25  5307</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="../reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
 ##        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1       100         1  2018     5    22
-##  2       100         2  2018     5    22
-##  3       101         3  2018     5    22
-##  4       101         4  2018     5    22
-##  5       101         5  2018     5    22
-##  6       101         6  2018     5    22
-##  7       101         7  2018     5    22
-##  8       100         8  2018     5    22
-##  9       100         9  2018     5    22
-## 10       100        10  2018     5    22
+##  1       100         1  2018     8     9
+##  2       100         2  2018     8     9
+##  3       101         3  2018     8     9
+##  4       101         4  2018     8     9
+##  5       101         5  2018     8     9
+##  6       101         6  2018     8     9
+##  7       101         7  2018     8     9
+##  8       100         8  2018     8     9
+##  9       100         9  2018     8     9
+## 10       100        10  2018     8     9
 ## # ... with 10,604 more rows</code></pre>
 </div>
 </div>
@@ -266,7 +266,7 @@
 <a class="sourceLine" id="cb28-14" data-line-number="14">                                                       <span class="kw">Polygons</span>(<span class="kw">list</span>(<span class="kw">Polygon</span>(cds2)), <span class="dv">2</span>))),<span class="kw">data.frame</span>(<span class="dt">ID=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)))</a>
 <a class="sourceLine" id="cb28-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb28-16" data-line-number="16">## do extraction in abstract terms</a>
-<a class="sourceLine" id="cb28-17" data-line-number="17">(cn &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(r, polys))</a></code></pre></div>
+<a class="sourceLine" id="cb28-17" data-line-number="17">(cn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(r, polys))</a></code></pre></div>
 <pre><code>## Warning: projections not the same 
 ##     x: +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0
 ## query: NA</code></pre>
@@ -296,24 +296,24 @@
 ## # Groups:   object_ [2]
 ##    object_     v count  v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-##  1       1     1     1 0.0263
-##  2       1     2     6 0.158 
-##  3       1     3     2 0.0526
-##  4       1     4     3 0.0789
-##  5       1     5     4 0.105 
+##  1       1     1     2 0.0526
+##  2       1     2     9 0.237 
+##  3       1     3     3 0.0789
+##  4       1     4     1 0.0263
+##  5       1     5     3 0.0789
 ##  6       1     6     7 0.184 
-##  7       1     7     8 0.211 
-##  8       1     8     5 0.132 
-##  9       1    10     2 0.0526
+##  7       1     7     3 0.0789
+##  8       1     8     6 0.158 
+##  9       1     9     4 0.105 
 ## 10       2     1     4 0.16  
 ## 11       2     2     3 0.12  
-## 12       2     3     4 0.16  
-## 13       2     4     2 0.08  
-## 14       2     5     3 0.12  
-## 15       2     6     2 0.08  
-## 16       2     7     1 0.04  
-## 17       2     8     2 0.08  
-## 18       2     9     4 0.16</code></pre>
+## 12       2     3     2 0.08  
+## 13       2     4     3 0.12  
+## 14       2     5     5 0.2   
+## 15       2     6     1 0.04  
+## 16       2     8     3 0.12  
+## 17       2     9     3 0.12  
+## 18       2    10     1 0.04</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">## here is the traditional code used in the stackoverflow example</a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co"># Extract raster values to polygons                             </span></a>
 <a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co">#( v &lt;- extract(r, polys) )</span></a>
@@ -329,7 +329,7 @@
 <a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"ghrsst"</span>)  ## a RasterLayer</a>
 <a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">data</span>(<span class="st">"sst_regions"</span>) ## a polygon layer, contiguous with ghrsst</a>
 <a class="sourceLine" id="cb35-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5">gcells &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(ghrsst, sst_regions) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">object_ =</span> <span class="kw">as.integer</span>(object_))</a></code></pre></div>
+<a class="sourceLine" id="cb35-5" data-line-number="5">gcells &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(ghrsst, sst_regions) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">object_ =</span> <span class="kw">as.integer</span>(object_))</a></code></pre></div>
 <pre><code>## Warning in cellnumbers.default(ghrsst, sst_regions): cellnumbers is very
 ## slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">result &lt;-<span class="st"> </span>gcells <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">sst =</span> raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extract">extract</a></span>(ghrsst, cell_)) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -354,13 +354,13 @@
 <a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">library</span>(dplyr)</a>
 <a class="sourceLine" id="cb39-4" data-line-number="4"><span class="kw">data</span>(<span class="st">"rastercano"</span>)</a>
 <a class="sourceLine" id="cb39-5" data-line-number="5"><span class="kw">data</span>(<span class="st">"polycano"</span>)</a>
-<a class="sourceLine" id="cb39-6" data-line-number="6">cells &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(rastercano, polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ])</a></code></pre></div>
+<a class="sourceLine" id="cb39-6" data-line-number="6">cells &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ])</a></code></pre></div>
 <pre><code>## Warning: projections not the same 
 ##     x: NA
 ## query: NA</code></pre>
 <pre><code>## Warning in cellnumbers.default(rastercano, polycano[4:5, ]): cellnumbers is
 ## very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">cellnumbers</span>(rastercano, <span class="kw">as</span>(polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, <span class="kw">as</span>(polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 305 x 2
 ##    object_ cell_
 ##      &lt;int&gt; &lt;int&gt;
@@ -375,7 +375,7 @@
 ##  9       3     1
 ## 10       3     2
 ## # ... with 295 more rows</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">cellnumbers</span>(rastercano, <span class="kw">as</span>(<span class="kw">as</span>(polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>), <span class="st">"SpatialPointsDataFrame"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, <span class="kw">as</span>(<span class="kw">as</span>(polycano[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>), <span class="st">"SpatialPointsDataFrame"</span>))</a></code></pre></div>
 <pre><code>## Warning: projections not the same 
 ##     x: NA
 ## query: NA</code></pre>
@@ -401,7 +401,7 @@
 <a class="sourceLine" id="cb47-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb47-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb47-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb47-8" data-line-number="8">xweight &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(rastercano, poly, <span class="dt">weights =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb47-8" data-line-number="8">xweight &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(rastercano, poly, <span class="dt">weights =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb47-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb47-10" data-line-number="10">dgrid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/setValues">setValues</a></span>(rastercano, <span class="ot">NA_real_</span>)</a>
 <a class="sourceLine" id="cb47-11" data-line-number="11">dgrid[xweight<span class="op">$</span>cell_] &lt;-<span class="st"> </span>xweight<span class="op">$</span>weight_</a>
@@ -427,7 +427,7 @@
 <a class="sourceLine" id="cb48-12" data-line-number="12">(grid &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/spex/topics/spex">spex</a></span>(poly), <span class="dt">nrow =</span> <span class="dv">100</span>, <span class="dt">ncol =</span> <span class="dv">140</span>))</a>
 <a class="sourceLine" id="cb48-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb48-14" data-line-number="14">## index the raster with the sf layer</a>
-<a class="sourceLine" id="cb48-15" data-line-number="15">(cn &lt;-<span class="st"> </span><span class="kw">cellnumbers</span>(grid, poly))</a>
+<a class="sourceLine" id="cb48-15" data-line-number="15">(cn &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(grid, poly))</a>
 <a class="sourceLine" id="cb48-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb48-17" data-line-number="17">grid[cn<span class="op">$</span>cell_] &lt;-<span class="st"> </span>cn<span class="op">$</span>object_</a>
 <a class="sourceLine" id="cb48-18" data-line-number="18"></a>
@@ -474,7 +474,7 @@
 <a class="sourceLine" id="cb50-30" data-line-number="30"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">object_ =</span> cellvalue, <span class="dt">cell_ =</span> cellindex)</a>
 <a class="sourceLine" id="cb50-31" data-line-number="31">}</a>
 <a class="sourceLine" id="cb50-32" data-line-number="32"><span class="kw">vcellnumbers</span>(grid, sst_regions)</a>
-<a class="sourceLine" id="cb50-33" data-line-number="33"><span class="kw">cellnumbers</span>(grid, sst_regions)</a></code></pre></div>
+<a class="sourceLine" id="cb50-33" data-line-number="33"><span class="kw"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(grid, sst_regions)</a></code></pre></div>
 </div>
   </div>
 
