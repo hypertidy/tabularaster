@@ -55,6 +55,7 @@ cellnumbers <- function(x, query, ...) {
 #' @name cellnumbers
 #' @export
 cellnumbers.default <- function(x, query, ...) {
+  a <- NULL ## allow a basic check for not understanding "query"
   if (inherits(query, "sf")) {
     ## we need this for points, mpoints
     tab <- as.data.frame(query)
@@ -76,6 +77,7 @@ cellnumbers.default <- function(x, query, ...) {
   if (inherits(query, "SpatialMultiPoints")) {
     a <- lapply(query@coords, function(xymat) cellFromXY(x, xymat))
   }
+  if (is.null(a)) stop(sprintf("no method for 'query' of type %s", class(query)[1L]))
   d <- dplyr::bind_rows(lapply(a, mat2d_f), .id = "object_")
   d[["object_"]] <- as.integer(d[["object_"]])
   if (ncol(d) == 2L) names(d) <- c("object_", "cell_")
