@@ -2,13 +2,9 @@
 % Please edit documentation in R/cellnumbers.R
 \name{cellnumbers}
 \alias{cellnumbers}
-\alias{cellnumbers}
 \alias{cellnumbers.default}
-\alias{cellnumbers}
 \alias{cellnumbers.SpatialLines}
-\alias{cellnumbers}
 \alias{cellnumbers.sfc}
-\alias{cellnumbers}
 \alias{cellnumbers.sf}
 \title{Extract cell numbers from a Raster object.}
 \usage{
