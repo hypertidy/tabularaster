@@ -21,13 +21,11 @@ Imports:
     fasterize,
     gibble,
     magrittr,
-    methods,
     raster,
     rlang,
     silicate,
     spatstat,
-    tibble,
-    viridis
+    tibble
 RoxygenNote: 7.1.0
 Encoding: UTF-8
 Suggests: 

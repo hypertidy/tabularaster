@@ -18,7 +18,7 @@ details.
 }
 \examples{
 library(raster)
-plot(ghrsst, col = viridis::viridis(100))
+plot(ghrsst, col = hcl.colors(12, "YlOrRd", rev = TRUE))
 plot(sst_regions, add = TRUE, col = NA)
 ## cellnumbers(ghrsst, sst_regions) 
 }

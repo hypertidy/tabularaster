@@ -4,8 +4,6 @@ print(readghrsst("2017-04-28"))
 sink(NULL)
 
 ghrsst <- readghrsst("2017-04-28", xylim = extent(140, 180, -65, -30))
-#ghrsst <- aggregate(ghrsst, fact = 32)
-#ghrsst <- focal(sst1, matrix(1, 3, 3), fun = median, na.rm = TRUE)
 ghrsst <- aggregate(ghrsst, fun = median, fact = 8, na.rm = FALSE)
 ghrsst <- ghrsst - 273.15
 
