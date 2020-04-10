@@ -3,7 +3,9 @@
 \name{oisst}
 \alias{oisst}
 \title{Optimally interpolated SST in near-native form.}
-\format{A data frame of sst values created from OISST data.}
+\format{
+A data frame of sst values created from OISST data.
+}
 \description{
 See data-raw/oisst.R in the source repository.  The file was
 avhrr-only-v2.20170729.nc, its extent -180, 180, -90, 90 with

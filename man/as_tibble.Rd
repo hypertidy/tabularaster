@@ -5,8 +5,15 @@
 \alias{as_tibble.BasicRaster}
 \title{Convert a Raster to a data frame.}
 \usage{
-\method{as_tibble}{BasicRaster}(x, cell = TRUE, dim = nlayers(x) > 1L,
-  value = TRUE, split_date = FALSE, xy = FALSE, ...)
+\method{as_tibble}{BasicRaster}(
+  x,
+  cell = TRUE,
+  dim = nlayers(x) > 1L,
+  value = TRUE,
+  split_date = FALSE,
+  xy = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a RasterLayer, RasterStack or RasterBrick}

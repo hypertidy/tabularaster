@@ -11,13 +11,10 @@
 #' library(raster)
 #' plot(decimate(raster(volcano)))
 #' contour(raster(volcano), add = TRUE)
-#' export
-#' @importFrom raster raster res res<- setValues extract brick
-#' @importFrom sp coordinates
-#' @noRd
-#' @keywords internal
+#' @export
+#' @importFrom raster raster res res<- setValues extract brick xyFromCell ncell
 decimate <- function(x, dec = 10) {
-  .Deprecated()
+  #.Deprecated()
   r <- raster(x); res(r) <- res(x) * dec
-  setValues(r, extract(brick(x), coordinates(r)))
+  setValues(r, extract(brick(x), xyFromCell(r, seq_len(ncell(r)))))
 }

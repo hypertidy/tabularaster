@@ -84,7 +84,7 @@ cellnumbers.SpatialLines <- function(x, query, ...) {
 #' @name cellnumbers
 #' @export
 cellnumbers.sfc <- function(x,  query, ...) {
-   sf1 <- data.frame(geometry = query)
+   sf1 <- tibble::tibble(geometry = query)
    cellnumbers(x, structure(sf1, sf_column = "geometry", agr = NULL, class = c("sf", "data.frame")))
 }
 #' @name cellnumbers

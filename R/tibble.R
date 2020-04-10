@@ -59,7 +59,7 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
     }
   }
   if (xy) {
-    xy <- sp::coordinates(x)
+    xy <- raster::xyFromCell(x, seq_len(raster::ncell(x)))
     colnames(xy) <- c("x", "y")
     if (nlayers(x) > 1) xy <- xy[rep(seq_len(ncell(x)), nlayers(x)), ]
     d <- dplyr::bind_cols(d, tibble::as_tibble(xy))

@@ -3,7 +3,9 @@
 \name{polycano}
 \alias{polycano}
 \title{The raster volcano as polygons.}
-\format{A \code{sp::SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.}
+\format{
+A \code{sp::SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.
+}
 \description{
 See data-raw/rastercano.r in the source repository.
 }

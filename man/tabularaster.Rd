@@ -3,11 +3,7 @@
 \docType{package}
 \name{tabularaster}
 \alias{tabularaster}
-\alias{tabularaster-package}
 \title{Tabular tools for raster, tidy tools for raster.}
-\description{
-Tabular tools for raster, tidy tools for raster.
-}
 \details{
 Tabularaster includes these main functions.
 \tabular{ll}{

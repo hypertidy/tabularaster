@@ -4,7 +4,9 @@
 \alias{ghrsst}
 \alias{sst_regions}
 \title{Sea surface temperature data.}
-\format{A raster created GHRSST data and raster smoothing.}
+\format{
+A raster created GHRSST data and raster smoothing.
+}
 \description{
 A smoothed subset of GHRSST.
 }

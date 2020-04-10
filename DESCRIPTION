@@ -30,7 +30,7 @@ Imports:
     fasterize,
     magrittr,
     rlang
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.0
 Suggests: 
     covr, 
     testthat,

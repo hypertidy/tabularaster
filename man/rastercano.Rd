@@ -3,7 +3,9 @@
 \name{rastercano}
 \alias{rastercano}
 \title{The raster volcano.}
-\format{A raster created from the \code{\link[datasets]{volcano}} data.}
+\format{
+A raster created from the \code{\link[datasets]{volcano}} data.
+}
 \description{
 See data-raw/rastercano.r in the source repository.
 }
