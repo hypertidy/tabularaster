@@ -54,11 +54,7 @@ cellnumbers.default <- function(x, query, ...) {
                   cell_ = raster::cellFromXY(x, as.matrix(silicate::sc_coord(query)[c("x_" , "y_")])))
     return(tab)
                   
-#    if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
- #   map <- spbabel::sptable(query)
-#    crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
-#    query <- spbabel::sp(map, tab, crs)
-  }
+ }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }

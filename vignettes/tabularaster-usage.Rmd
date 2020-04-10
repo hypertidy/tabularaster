@@ -18,22 +18,35 @@ Tabularaster provides some more helpers for working with cells and tries to fill
 
 Tabularaster provides: 
 
-- extraction of cells as a simple data frame with "object ID" and "cell index"
-- `as_tibble` for raster data, with options for value column and cell, dimension and date indexing
-- workers to bring `sf` support to  `raster`
+- `cellnumbers()`:  extraction of cells as a simple data frame with "object ID" and "cell index"
+- `as_tibble()`:  for raster data, with options for value column and cell, dimension and date indexing
+- `decimate()`: fast resolution-reduction without care
+- `index_extent()`: build an index extent, basically a raster Extent in row/column form
 
+The raster function `extentFromCells()` started life in tabularaster. 
 
-Extract the cell numbers of raster `r` that are co-located with object `q`.  (The argument names are `x` and `query`). 
+There were some sf-features in early versions of tabularaster, but the raster
+package now supports that format (despite there being absolutely zero community
+development between the two worlds).
+
+## Examples
+
+Extract the cell numbers of raster `r` that are co-located with object `q`.
+(The argument names are `x` and `query`).
 
 ```{r, eval=FALSE}
 cellnumbers(r, q)
 ```
 
-In the above example, `r` is any *raster* object and `q` is another spatial object, used as a query. Cell numbers can be extracted 
-from any raster object, any of a `raster::raster`, `raster::stack` or `raster::brick`. It's not really relevant what that object
-contains, as only the *dimensions* (number of cells in x and y) and the *extent* (geographic range in x and y) determine the result. The `r` object can actually not contain any data - this is a very powerful but seemingly under-used feature of the `raster` package. 
+In the above example, `r` is any *raster* object and `q` is another spatial
+object, used as a query. Cell numbers can be extracted from any raster object,
+any of a `raster::raster`, `raster::stack` or `raster::brick`. It's not really
+relevant what that object contains, as only the *dimensions* (number of cells in
+x and y) and the *extent* (geographic range in x and y) determine the result.
+The `r` object can actually not contain any data - this is a very powerful but
+seemingly under-used feature of the `raster` package.
 
-The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). ('Exotic' `sf` types like GEOMETRYCOLLECTION or POLYHEDRALSURFACE, and mixed-topology layers are not yet supported - let me know if you really need this and we'll make it work.)
+The object `q` may be any of `sf`, `sp` layer types or a matrix of raw coordinates (x-y). 
 
 Tabularaster follows the basic principles of tidy data and *hypertidy data* and aspires to keep the software design out of your way and simply help to get the task done. 
 
@@ -53,11 +66,13 @@ This cell number query can be then be used to drive other raster functions, like
 ```{r}
 xyFromCell(r, cell$cell_)
 
-
 raster::extract(r, cell$cell_)
 ```
 
-This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It's also very useful for using `dplyr` to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects. 
+This is an extremely efficient way to drive extractions from raster objects, for
+performing the same query from multiple layers at different times. It's also
+very useful for using `dplyr` to derive summaries, rather than juggling lists of
+extracted values, or different parts of raster objects.
 
 ## as tibble
 
@@ -88,18 +103,32 @@ as_tibble(btime, split_date = TRUE)
 2. `cellnumbers` doesn't currently reproject the second argument `query`, even when would make sense to do so like `extract` does. This is purely to reduce the required dependencies. 
 3. There's no formal link between the cell number values and the raster object itself. I use this "loose coupling" so extensively that I have developed habits that tend to make it pretty robust. Please use with caution, you can easily get incorrect answers by asking a different raster a question based on the wrong cell numbers. 
 
-If you find that things don't work, first check if it's a namespace problem, there are a few function name overlaps in the `tidyverse` and `raster`, and in R generally. There is no way to fix this properly atm.
+If you find that things don't work, first check if it's a namespace problem,
+there are a few function name overlaps in the `tidyverse` and `raster`, and in R
+generally. There is no way to fix this properly atm.
 
-Tabularaster doesn't reproject on the fly, but it will tell you if the CRS (projection metadata) of the two objects is not the same, or if either or both are NA. I'd like a light-weight reprojection engine in order to do this, and `proj4` is a candidate that I've explored enough to use but a modern, trim PROJ.4 interface for R in its own package is something I think we need. 
+Tabularaster doesn't reproject on the fly, but might use the reproj package in future. 
 
-Ultimately the cell index vector should probably be a formal class, with knowledge of its extent and grain. I'd love this to be formalized, but I seem to not have the design expertise required to get the system right. It's something that `ggplot2` needs, but there aren't any existing examples in R anywhere as far as I can tell. The [stars project](https://github.com/edzer/stars)  is a good place to see what else is happening in this space in R. Other examples are the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`, `geometry`, `RTriangle`, `TBA`, (and there are many others). 
+Ultimately the cell index vector should probably be a formal class, with
+knowledge of its extent and grain. I'd love this to be formalized, but I seem to
+not have the design expertise required to get the system right. It's something
+that `ggplot2` needs, but there aren't any existing examples in R anywhere as
+far as I can tell. The [stars project](https://github.com/edzer/stars)  is a
+good place to see what else is happening in this space in R. Other examples are
+the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh
+indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`,
+`geometry`, `RTriangle`, `TBA`, (and there are many others).
 
-If you are interested in these issues please get in touch, use the [Issues tab](https://github.com/hypertidy/tabularaster/issues) or [discuss at  r-spatial](https://github.com/r-spatial/discuss), get on [twitter #rstats](https://twitter.com/hashtag/rstats) or contact me directly. 
+If you are interested in these issues please get in touch, use the [Issues
+tab](https://github.com/hypertidy/tabularaster/issues) or [discuss at
+r-spatial](https://github.com/r-spatial/discuss), get on [twitter
+#rstats](https://twitter.com/hashtag/rstats) or contact me directly.
 
 # Applied example
 
-This example uses extracted data per polygon and uses base R to `lapply` across the list of values
-extracted per polygon. Here we show a more `dplyrish` version after extracting the cell numbers with `tabularaster`. 
+This example uses extracted data per polygon and uses base R to lapply across
+the list of values extracted per polygon. Here we show a more dplyr-ish version
+after extracting the cell numbers with tabularaster.
 
 ```{r}
 library(tabularaster)
@@ -124,7 +153,10 @@ library(dplyr)
 ## now perform extraction for real
 ## and pipe into grouping by polygon (object_) and value, and
 ## calculate class percentage from class counts per polygon
-cn %>% mutate(v = raster::extract(r, cell_)) %>% group_by(object_, v) %>% summarize(count = n()) %>% 
+cn %>% 
+  mutate(v = raster::extract(r, cell_)) %>% 
+  group_by(object_, v) %>% 
+  summarize(count = n()) %>% 
   mutate(v.pct = count / sum(count)) 
 
 ## here is the traditional code used in the stackoverflow example
@@ -151,13 +183,7 @@ result <- gcells %>% mutate(sst = raster::extract(ghrsst, cell_)) %>%
   group_by(object_) %>% 
   summarize_at(vars(sst), funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE), length))
 
-library(spdplyr)
-sst_regions <- sst_regions %>% inner_join(result, c("ghrsst" = "object_"))
 
-plot(ghrsst, col = bpy.colors(30), addfun = function() plot(sst_regions, add = TRUE), 
-     main = "SST data with simple regional polygon layer")
-#library(sf)
-plot(sst_regions)
 ```
 
 # Extract cells from rasters 
@@ -175,108 +201,3 @@ cellnumbers(rastercano, as(polycano[4:5, ], "SpatialLinesDataFrame"))
 cellnumbers(rastercano, as(as(polycano[4:5, ], "SpatialLinesDataFrame"), "SpatialPointsDataFrame"))
 ```
 
-
-In the case of polygons, there's an argument `weights` that can be used to get an approximate weighting for
-partial cell coverage. 
-
-
-```{r eval = FALSE}
-poly <- sf::st_sf(a = 1, geometry = sf::st_sfc(sf::st_polygon(list(
-  cbind(c(0.57, 0.55, 0.19, 0.43, 0.82, 0.57), 
-        c(0.22, 0.24, 0.46, 0.77, 0.56, 0.22))))))
-
-
-
-
-xweight <- cellnumbers(rastercano, poly, weights = TRUE)
-
-dgrid <- setValues(rastercano, NA_real_)
-dgrid[xweight$cell_] <- xweight$weight_
-plot(dgrid, main = "cell weights based on partial overlap", col = viridis::viridis(9), 
-     addfun = function() polygon(poly$geometry[[c(1, 1)]]))
-
-```
-
-# Extract values or cell numbers with sf object
-
-It's an unfortunate symptom of fragmentation in the R spatial tools that two of the best and most
-highly used packages `raster` and `sf` have no formal way to be used together. 
-
-Here we use the `extent` capability of `spex`, and the tabularaster tools `extract` and `cellnumbers` to build a raster from an `sf` layer. 
-
-```{r, eval=FALSE}
-library(sf)
-
-poly <- read_sf(system.file("shape/nc.shp", package="sf"))
-library(spex)
-extent(poly)
-spex(poly)
-## we can't do this
-try(grid <-  raster(poly))
-
-## but we can do 
-
-(grid <- raster(spex(poly), nrow = 100, ncol = 140))
-
-## index the raster with the sf layer
-(cn <- cellnumbers(grid, poly))
-
-grid[cn$cell_] <- cn$object_
-
-## we slasterized it (slow rasterize)
-plot(grid)
-
-
-```
-
-That's nice, since we can actually use extract with the cell numbers, rather than the sf object. This is preferable for repeated use of the extraction, e.g.  for time series extraction where we need to visit
-each time step iteratively. (Raster is already index-optimized for multi-layers raster objects). 
-
-Now use `fasterize` to generate the grid, and use cellnumbers to extract. 
-
-```{r, eval=FALSE}
-## fasterize it
-library(fasterize)
-#poly$object_ <- as.integer(seq_len(nrow(poly)))
-fgrid <- fasterize(poly, grid, field = "AREA")
-scl <- function(x) {rg <- range(x, na.rm = TRUE); (x   - rg[1])/diff(rg)}
-plot(xyFromCell(grid, cn$cell_), pch = 19, cex = 0.4, col = bpy.colors(26)[scl(raster::extract(fgrid, cn$cell_)) * 25 + 1])
-```
-
-Use velox instead
-
-```{r,eval=FALSE}
-library(spex)
-library(raster)
-library(tabularaster)
-## but we can do 
-(grid <- raster(spex(sst_regions), res = 0.2))
-system.time({
-library(velox)
-vx <- velox(setValues(grid, 0))
-vx$rasterize(sf::st_as_sf(sst_regions), field = "ghrsst")
-
-library(dplyr)
-res1 <- as_tibble(vx$as.RasterLayer()) %>% 
-  #rename(object_ = cellvalue) %>% 
-  filter(!is.na(cellvalue))
-})
-
-
-system.time({
-  res2 <- as_tibble(rasterize(sst_regions, grid, field = sst_regions$ghrsst))
-})
-
-vcellnumbers <- function(x, query, ...) {
-  query$object_ <- seq_len(nrow(query))
-  query <- sf::st_as_sf(query)
-  x <- setValues(x[[1]], 1)
-  vx <- velox(x)
-  vx$rasterize(query, field = "object_")
-  vx$as.RasterLayer() %>%   
-    as_tibble(na.rm = FALSE) %>% 
-    dplyr::rename(object_ = cellvalue, cell_ = cellindex)
-}
-vcellnumbers(grid, sst_regions)
-cellnumbers(grid, sst_regions)
-```

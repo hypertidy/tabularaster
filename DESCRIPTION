@@ -9,7 +9,7 @@ Description: Facilities to work with vector and raster data in efficient
  repeatable and systematic work flow. Missing functionality in existing packages 
  is included here to allow extraction from raster data with 'simple features' and 
  'Spatial' types and to make extraction consistent and straightforward. Extract cell 
- numbers from raster data and  return the cells, values and weights as a data frame 
+ numbers from raster data and  return the cells as a data frame 
  rather than as lists of matrices or vectors. The functions here allow spatial data 
  to be used without special handling for the format currently in use. 
 License: GPL-3
@@ -18,26 +18,23 @@ Depends: R (>= 3.2.5)
 Roxygen: list(markdown = TRUE)
 Imports: 
     dplyr,
+    fasterize,
+    gibble,
+    magrittr,
     methods,
     raster,
-    spatstat,
-    spbabel (>= 0.4.8),
-    tibble,
-    viridis,
-    gibble,
-    fasterize,
-    magrittr,
     rlang,
-    silicate
+    silicate,
+    spatstat,
+    tibble,
+    viridis
 RoxygenNote: 7.1.0
 Encoding: UTF-8
 Suggests: 
     covr, 
-    testthat,
     knitr,
-    rmarkdown, 
-    sf,
-    spdplyr
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/tabularaster
 BugReports: https://github.com/hypertidy/tabularaster/issues

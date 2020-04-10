@@ -16,6 +16,7 @@ The following functions in the `raster` package are designed to work with cell i
 * `[`
 * `adjacent`
 * `colFromCell`
+* `extentFromCells`
 * `rasterFromCells`
 * `rowColFromCell`	
 * `rowFromCell`
@@ -41,7 +42,7 @@ The following functions will return cell indexes.
 Others
 
 * `setValues` will work as `fun(r, vals, index)` only for `RasterLayerSparse`
+* `extent(Raster, r1, r2, c1, c2)` to crop an extent by row/column
 
-The sparse raster is a under-used feature and needs to be fleshed out. 
 
 
