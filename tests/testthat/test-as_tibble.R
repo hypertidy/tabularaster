@@ -2,6 +2,7 @@ library(testthat)
 context("as_tibble")
 library(tibble)
 library(tabularaster)
+library(raster)
 test_that("conversion to tibble from raster", {
    as_tibble(raster::raster(volcano)) %>% expect_s3_class("tbl_df") %>% expect_named(c("cellvalue", "cellindex"))
     expect_warning(  as_tibble(raster::raster(volcano), dim = TRUE, split_date = TRUE), "not convertible to a Date or POSIXct")

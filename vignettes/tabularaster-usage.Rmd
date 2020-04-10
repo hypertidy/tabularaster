@@ -74,7 +74,7 @@ as_tibble(b, cell = FALSE) %>% arrange(desc(dimindex)) ## leave out the cell ind
 The date or date-time is used as the dimension index if present. 
 
 ```{r}
-btime <- setZ(b, Sys.time() + c(1, 10))
+btime <- raster::setZ(b, Sys.time() + c(1, 10))
 as_tibble(btime) %>% group_by(dimindex) %>% summarize(n = n())
 
 as_tibble(btime, split_date = TRUE)

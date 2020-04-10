@@ -1,6 +1,6 @@
 library(raster)
 library(dplyr)
-library(spex)  ## devtools::install_github("mdsumner/spex")
+
 # repeater <- rep(seq_len(nrow(quakes)), 2)
 # qk_mx <- jitter(as.matrix(quakes[,2:1])[repeater, ], 135)
 # #qk_mx <- data.matrix(quakes[,2:1])
@@ -32,7 +32,7 @@ sfc <- structure(list(structure(cbind(1, 1), class = c("XY", "POINT", "sfg"))), 
 
 test_that("cell numbers for points works", {
   qk_mx <- as.matrix(quakes[,2:1])
-  hres_ras <- raster(spex::buffer_extent(extent(qk_mx), 1), res = 1, crs = "+init=epsg:4326")
+  hres_ras <- raster(extent(qk_mx) + 1, res = 1, crs = "+init=epsg:4326")
   raster_tib <- tibble(cell_ = cellFromXY(hres_ras, qk_mx))
   expect_warning(tabula_tib <- cellnumbers(hres_ras, qk_mx), "projections not the same")
   expect_identical(raster_tib$cell_, tabula_tib$cell_)

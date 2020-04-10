@@ -16,7 +16,8 @@ sst_regions <- sfdct::ct_triangulate(sf::st_as_sf(spex(ghrsst)), a = 100)
 library(sf)
 sst_regions <- as(st_cast(sst_regions), "Spatial")
 sst_regions$ghrsst <- seq(nrow(sst_regions))
-projection(ghrsst) <- projection(sst_regions)
-devtools::use_data(sst_regions, compress = "xz")
-devtools::use_data(ghrsst, compress = "xz")
+ghrsst@crs@projargs <- "+proj=longlat +datum=WGS84"
+sst_regions@proj4string@projargs <- "+proj=longlat +datum=WGS84"
+usethis::use_data(sst_regions, compress = "xz", overwrite = TRUE)
+usethis::use_data(ghrsst, compress = "xz", overwrite = TRUE)
 
