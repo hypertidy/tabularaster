@@ -2,6 +2,8 @@
 
 Fixes error on CRAN, simplifies the package. 
 
+Thank you. 
+
 
 ## Test environments
 
