@@ -1,8 +1,10 @@
 # tabularaster 0.6.0
 
+* Removed pointless griping about crs metadata strings. 
+
 * Now using silicate for the line-to-segments ops, removed spbabel imports. 
 
-* Remove old `bufext()` and unused spex import. 
+* Remove old `bufext()` and outdated spex import. 
 
 * Un-deprecate and re-export `decimate()`. 
 
