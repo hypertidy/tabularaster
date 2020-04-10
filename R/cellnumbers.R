@@ -114,17 +114,7 @@ cellnumbers.sf <- function(x, query, ...) {
 }
 
 
-psp_i <- function(x, i = 1) {
-  g <- rep(seq_len(nrow(x$geometry)), x$geometry$nrow)
-  coord <- x$coord
-  idx <- which(g == i) 
-  segment <- x$segment[x$segment$.vx0 %in% idx & x$segment$.vx1 %in% idx, ]
-  spatstat::psp(x0 = coord$x_[segment$.vx0],
-                y0 = coord$y_[segment$.vx0],  
-                x1 = coord$x_[segment$.vx1], 
-                y1 = coord$y_[segment$.vx1], 
-                window = spatstat::owin(range(coord$x_), range(coord$y_)))
-}
+
 #' @importFrom spatstat owin as.owin
 as.owin.BasicRaster <- function(W, ...) {
   msk <- matrix(TRUE, nrow(W), ncol(W))
@@ -149,14 +139,3 @@ line_cellnumbers <- function(x, r) {
   }
   dplyr::bind_rows(l)
 } 
-# .line_cellnumbers0 <- function(ln, r) {
-#   x <- vertex_edge_path(ln)
-#   im <- setValues(r, 0)
-#   l <- vector("list", nrow(silicate::sc_object(sc)))
-#   ow <- spatstat::owin(range(xy[,1], range(coord$y_)))
-#   for (i in seq_along(l)) {
-#     im <- (raster(pix(psp_i(x, i = i), r)) > 0)
-#     l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0))    
-#   }
-#   dplyr::bind_rows(l)
-# }

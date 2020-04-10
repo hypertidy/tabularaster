@@ -31,10 +31,10 @@ Imports:
 RoxygenNote: 7.1.0
 Encoding: UTF-8
 Suggests: 
-    covr, 
+    covr,
     knitr,
     rmarkdown,
-    testthat
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/tabularaster
 BugReports: https://github.com/hypertidy/tabularaster/issues

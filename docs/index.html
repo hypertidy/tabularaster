@@ -131,8 +131,10 @@
 <span id="cb4-4"><a href="#cb4-4"></a></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">## summarize by cell grouping</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a>cells <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">value=</span> <span class="kw">extract</span>(raster, cell_)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(cell_) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(value))</span></code></pre></div>
-<p>The utility of this is very much dependent on individual workflow, so this in its own right is not very exciting. <code>Tabularaster</code> simply provides an easier way to create your tools.</p>
+<p>The utility of this is very much dependent on individual workflow, so this in its own right is not very exciting: Tabularaster simply provides an easier way to create news tools when format vagaries aren’t your day job.</p>
 <p>See the vignettes for more.</p>
+<hr>
+<p>Please note that the ‘silicate’ project is released with a <a href="https://github.com/hypertidy/tabularaster/blob/master/CODE_OF_CONDUCT.md">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 
   </div>
@@ -153,6 +155,12 @@
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 <div class="developers">

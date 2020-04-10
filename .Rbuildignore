@@ -10,3 +10,4 @@
 ^cran-comments\.md$
 ^vignettes/abstraction-illustration$
 ^inst/vignettes_todo$
+^CODE_OF_CONDUCT\.md$
