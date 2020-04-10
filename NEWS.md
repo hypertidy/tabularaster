@@ -1,5 +1,7 @@
 # tabularaster 0.6.0
 
+* Remove old `bufext()` and unused spex import. 
+
 * Un-deprecate and re-export `decimate()`. 
 
 * Function `cellnumbers` now provides only basic cell lookup, the weights and other
