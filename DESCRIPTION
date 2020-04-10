@@ -32,7 +32,9 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    spelling
 VignetteBuilder: knitr
 URL: https://github.com/hypertidy/tabularaster
 BugReports: https://github.com/hypertidy/tabularaster/issues
+Language: en-US

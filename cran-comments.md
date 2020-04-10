@@ -1,6 +1,11 @@
+# tabularaster 0.6.0
+
+Fixes error on CRAN, simplifies the package. 
+
+
 ## Test environments
-* Travis ubuntu 16.04 (release)
-* local ubuntu 16.04, release
+
+* local ubuntu 18.04, release
 * win-builder (devel and release)
 
 ## R CMD check results
