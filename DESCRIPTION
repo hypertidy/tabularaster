@@ -27,7 +27,8 @@ Imports:
     gibble,
     fasterize,
     magrittr,
-    rlang
+    rlang,
+    silicate
 RoxygenNote: 7.1.0
 Suggests: 
     covr, 

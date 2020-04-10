@@ -48,11 +48,16 @@ cellnumbers.default <- function(x, query, ...) {
   a <- NULL ## allow a basic check for not understanding "query"
   if (inherits(query, "sf")) {
     ## we need this for points, mpoints
-    tab <- as.data.frame(query)
-    if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
-    map <- spbabel::sptable(query)
-    crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
-    query <- spbabel::sp(map, tab, crs)
+    pth <- silicate::sc_path(query)
+ 
+    tab <- tibble(object_ = rep(as.integer(factor(pth$object_)), pth$ncoords_), 
+                  cell_ = raster::cellFromXY(x, as.matrix(silicate::sc_coord(query)[c("x_" , "y_")])))
+    return(tab)
+                  
+#    if (attr(query, "sf_column") %in% names(tab)) tab[[attr(query, "sf_column")]] <- NULL
+ #   map <- spbabel::sptable(query)
+#    crs <- attr(query[[attr(query, "sf_column")]], "crs")$proj4string
+#    query <- spbabel::sp(map, tab, crs)
   }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
     warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
@@ -103,6 +108,7 @@ cellnumbers.sf <- function(x, query, ...) {
     ok <- !is.na(v)
     return(tibble::tibble(object_ = v[ok], cell_ = which(ok)))
   }
+
   cellnumbers.default(x, query)  ## needed for points to pass through
   #   stop(sprintf("%x not supported", class(x)))
 }
@@ -128,14 +134,29 @@ pix <- function(psp, ras) {
   spatstat::pixellate(psp, as.owin(ras), weights = 1)   
 }
 
-
-line_cellnumbers <- function(ln, r) {
-  x <- vertex_edge_path(ln)
-  im <- setValues(r, 0)
-  l <- vector("list", nrow(x$geometry))
+line_cellnumbers <- function(x, r) {
+  sc <- silicate::SC0(x)
+  xy <- as.matrix(silicate::sc_vertex(sc)[c("x_", "y_")])
+  l <- vector("list", nrow(silicate::sc_object(sc)))
+  ow <- spatstat::owin(range(xy[,1]), range(xy[,2]))
   for (i in seq_along(l)) {
-    im <- (raster(pix(psp_i(x, i = i), r)) > 0)
-    l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0))    
+    segs <- as.matrix(do.call(rbind, sc$object$topology_[i])[c(".vx0", ".vx1")])
+    pspii <- spatstat::psp(xy[segs[,1L],1L], xy[segs[,1L],2L], 
+                           xy[segs[,2L],1L], xy[segs[,2L],2L], window = ow)
+    
+      im <- (raster(pix(pspii, r)) > 0)
+    l[[i]] <- tibble(object_ = i, cell_ =   which(raster::values(im) > 0))    
   }
   dplyr::bind_rows(l)
-}
+} 
+# .line_cellnumbers0 <- function(ln, r) {
+#   x <- vertex_edge_path(ln)
+#   im <- setValues(r, 0)
+#   l <- vector("list", nrow(silicate::sc_object(sc)))
+#   ow <- spatstat::owin(range(xy[,1], range(coord$y_)))
+#   for (i in seq_along(l)) {
+#     im <- (raster(pix(psp_i(x, i = i), r)) > 0)
+#     l[[i]] <- tibble(object_ = i, cell_ =   which(values(im) > 0))    
+#   }
+#   dplyr::bind_rows(l)
+# }

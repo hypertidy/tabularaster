@@ -1,5 +1,7 @@
 # tabularaster 0.6.0
 
+* Now using silicate for the line-to-segments ops, removed spbabel imports. 
+
 * Remove old `bufext()` and unused spex import. 
 
 * Un-deprecate and re-export `decimate()`. 
