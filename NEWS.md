@@ -8,6 +8,8 @@
 
 * Un-deprecate and re-export `decimate()`. 
 
+# tabularaster 0.5.0
+
 * Function `cellnumbers` now provides only basic cell lookup, the weights and other
  options available in raster functions are ignored. 
  
