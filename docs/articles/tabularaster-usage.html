@@ -113,7 +113,7 @@
 <li>
 <code><a href="../reference/index_extent.html">index_extent()</a></code>: build an index extent, basically a raster Extent in row/column form</li>
 </ul>
-<p>The raster function <code><a href="../reference/raster-exports.html">extentFromCells()</a></code> started life in tabularaster.</p>
+<p>The raster function <code><a href="https://rdrr.io/pkg/raster/man/cellsFromExtent.html">extentFromCells()</a></code> started life in tabularaster.</p>
 <p>There were some sf-features in early versions of tabularaster, but the raster package now supports that format (despite there being absolutely zero community development between the two worlds).</p>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
@@ -227,8 +227,8 @@
 <pre><code>## # A tibble: 2 x 2
 ##   dimindex                n
 ##   &lt;dttm&gt;              &lt;int&gt;
-## 1 2020-04-10 22:27:01  5307
-## 2 2020-04-10 22:27:10  5307</code></pre>
+## 1 2020-04-10 23:42:28  5307
+## 2 2020-04-10 23:42:37  5307</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw"><a href="../reference/as_tibble.html">as_tibble</a></span>(btime, <span class="dt">split_date =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
@@ -309,29 +309,30 @@
 <span id="cb34-7"><a href="#cb34-7"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(object_, v) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb34-8"><a href="#cb34-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">count =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/n.html">n</a></span>()) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb34-9"><a href="#cb34-9"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">v.pct =</span> count <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(count)) </span></code></pre></div>
-<pre><code>## # A tibble: 19 x 4
+<pre><code>## # A tibble: 20 x 4
 ## # Groups:   object_ [2]
 ##    object_     v count  v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-##  1       1     1     6 0.158 
-##  2       1     2     3 0.0789
-##  3       1     3     6 0.158 
-##  4       1     4     1 0.0263
-##  5       1     5     6 0.158 
-##  6       1     6     3 0.0789
-##  7       1     7     7 0.184 
-##  8       1     8     3 0.0789
-##  9       1     9     1 0.0263
-## 10       1    10     2 0.0526
-## 11       2     1     1 0.04  
-## 12       2     2     4 0.16  
-## 13       2     3     4 0.16  
-## 14       2     4     3 0.12  
+##  1       1     1     1 0.0263
+##  2       1     2     2 0.0526
+##  3       1     3     5 0.132 
+##  4       1     4     6 0.158 
+##  5       1     5     3 0.0789
+##  6       1     6     7 0.184 
+##  7       1     7     1 0.0263
+##  8       1     8     4 0.105 
+##  9       1     9     6 0.158 
+## 10       1    10     3 0.0789
+## 11       2     1     2 0.08  
+## 12       2     2     2 0.08  
+## 13       2     3     2 0.08  
+## 14       2     4     6 0.24  
 ## 15       2     5     2 0.08  
-## 16       2     6     3 0.12  
-## 17       2     7     4 0.16  
-## 18       2     8     3 0.12  
-## 19       2     9     1 0.04</code></pre>
+## 16       2     6     2 0.08  
+## 17       2     7     5 0.2   
+## 18       2     8     2 0.08  
+## 19       2     9     1 0.04  
+## 20       2    10     1 0.04</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">## here is the traditional code used in the stackoverflow example</span></span>
 <span id="cb36-2"><a href="#cb36-2"></a><span class="co"># Extract raster values to polygons                             </span></span>
 <span id="cb36-3"><a href="#cb36-3"></a><span class="co">#( v &lt;- extract(r, polys) )</span></span>

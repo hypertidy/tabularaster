@@ -1,12 +1,5 @@
 
 
-# extentFromCells <- function(x, cells) {
-#   dx_r <- res(x)[1] * c(-1, 1) * 0.5
-#   dy_r <- res(x)[2] * c(-1, 1) * 0.5
-#   raster::extent(range(raster::xFromCell(x, cells)) + dx_r, range(raster::yFromCell(x, cells)) + dy_r)
-# }
-
-
 ## from angstroms
 set_indextent <- function (x) {
   raster::setExtent(x, raster::extent(0, ncol(x), 0, nrow(x)))

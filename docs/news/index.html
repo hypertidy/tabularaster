@@ -130,10 +130,18 @@
 <a href="#tabularaster-060" class="anchor"></a>tabularaster 0.6.0<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Removed pointless griping about crs metadata strings.</p></li>
+<li><p>Removed unnecessary issues with crs metadata strings.</p></li>
 <li><p>Now using silicate for the line-to-segments ops, removed spbabel imports.</p></li>
 <li><p>Remove old <code>bufext()</code> and outdated spex import.</p></li>
 <li><p>Un-deprecate and re-export <code><a href="../reference/decimate.html">decimate()</a></code>.</p></li>
+<li><p>Drop <code>extentFromCells()</code> export.</p></li>
+</ul>
+</div>
+    <div id="tabularaster-050" class="section level1">
+<h1 class="page-header">
+<a href="#tabularaster-050" class="anchor"></a>tabularaster 0.5.0<small> 2018-05-21 </small>
+</h1>
+<ul>
 <li><p>Function <code>cellnumbers</code> now provides only basic cell lookup, the weights and other options available in raster functions are ignored.</p></li>
 <li><p>Function <code>extentFromCells</code> is now imported from raster and re-exported.</p></li>
 <li><p>Now applying <code>fasterize</code> for sf polygon objects, and <code>spatstat</code> for sf line objects for very significant speed ups.</p></li>
@@ -186,6 +194,7 @@
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#tabularaster-060">0.6.0</a></li>
+        <li><a href="#tabularaster-050">0.5.0</a></li>
         <li><a href="#tabularaster-040">0.4.0</a></li>
         <li><a href="#tabularaster-030">0.3.0</a></li>
         <li><a href="#tidyraster-020">0.2.0</a></li>
