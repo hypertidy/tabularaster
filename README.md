@@ -7,6 +7,8 @@
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![R build
 status](https://github.com/hypertidy/tabularaster/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/tabularaster/actions)
+![test-coverage](https://github.com/hypertidy/tabularaster/workflows/test-coverage/badge.svg)
+![pkgdown](https://github.com/hypertidy/tabularaster/workflows/pkgdown/badge.svg)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/tabularaster)](https://cran.r-project.org/package=tabularaster)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/tabularaster)](http://www.r-pkg.org/pkg/tabularaster)
