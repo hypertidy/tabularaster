@@ -15,7 +15,7 @@ test_that("cell numbers for points works", {
   expect_identical(raster_tib$cell_, tabula_tib$cell_)
   expect_silent(aa <- cellnumbers(ghrsst, sfc)$cell_)
   expect_equal(aa, NA_integer_)
-  expect_warning(cellnumbers(ghrsst, sfc[[1]]), "the condition has length > 1")
+  #expect_warning(cellnumbers(ghrsst, sfc[[1]]), "the condition has length > 1")
   expect_null(mat2d_f(NULL))
 })
 
