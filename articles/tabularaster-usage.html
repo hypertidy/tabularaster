@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Tabularaster</h1>
                         <h4 class="author">Michael D. Sumner</h4>
             
-            <h4 class="date">2020-04-13</h4>
+            <h4 class="date">2020-05-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hypertidy/tabularaster/blob/master/vignettes/tabularaster-usage.Rmd"><code>vignettes/tabularaster-usage.Rmd</code></a></small>
       <div class="hidden name"><code>tabularaster-usage.Rmd</code></div>
@@ -131,11 +131,8 @@
 <p>In straightforward usage, <code>cellnumbers</code> returns a tibble with <code>object_</code> to identify the spatial object by number, and <code>cell_</code> which is specific to the raster object, a function of its <code>extent</code>, <code>dim</code>ensions and <code>projection</code> (crs - coordinate reference system).</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">raster</span>)</pre></body></html></div>
 <pre><code>## Loading required package: sp</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)</pre></body></html></div>
-<pre><code>## Registered S3 method overwritten by 'spatstat':
-##   method     from
-##   print.boxx cli</code></pre>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">(<span class="no">r</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="no">volcano</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
+(<span class="no">r</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="no">volcano</span>))</pre></body></html></div>
 <pre><code>## class      : RasterLayer 
 ## dimensions : 87, 61, 5307  (nrow, ncol, ncell)
 ## resolution : 0.01639344, 0.01149425  (x, y)
@@ -144,26 +141,33 @@
 ## source     : memory
 ## names      : layer 
 ## values     : 94, 195  (min, max)</code></pre>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">(<span class="no">cell</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">r</span>, <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))</pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r">(<span class="no">cell</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">r</span>, <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)))</pre></body></html></div>
+<pre><code>## Warning in if (class(x) == "character") {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<pre><code>## Warning in if (class(x) != "CRS") {: the condition has length &gt; 1 and only the
+## first element will be used</code></pre>
 <pre><code>## Warning: projections not the same 
 ##     x: NA
 ## query: NA</code></pre>
+<pre><code>## Registered S3 method overwritten by 'cli':
+##   method     from    
+##   print.boxx spatstat</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   object_ cell_
 ##     &lt;int&gt; &lt;dbl&gt;
 ## 1       1  2654</code></pre>
 <p>This cell number query can be then be used to drive other raster functions, like <code>extract</code> and <code>xyFromCell</code> and many others.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/raster/man/xyFromCell.html">xyFromCell</a></span>(<span class="no">r</span>, <span class="no">cell</span>$<span class="no">cell_</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/raster/man/xyFromCell.html">xyFromCell</a></span>(<span class="no">r</span>, <span class="no">cell</span>$<span class="no">cell_</span>)</pre></body></html></div>
 <pre><code>##        x   y
 ## [1,] 0.5 0.5</code></pre>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html">extract</a></span>(<span class="no">r</span>, <span class="no">cell</span>$<span class="no">cell_</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html">extract</a></span>(<span class="no">r</span>, <span class="no">cell</span>$<span class="no">cell_</span>)</pre></body></html></div>
 <pre><code>## [1] 161</code></pre>
 <p>This is an extremely efficient way to drive extractions from raster objects, for performing the same query from multiple layers at different times. It’s also very useful for using <code>dplyr</code> to derive summaries, rather than juggling lists of extracted values, or different parts of raster objects.</p>
 <div id="as-tibble" class="section level2">
 <h2 class="hasAnchor">
 <a href="#as-tibble" class="anchor"></a>as tibble</h2>
 <p>There is an <code>as_tibble</code> method with options for cell, dimension, and date.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)</pre></body></html></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:raster':
@@ -175,7 +179,7 @@
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">r</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">r</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 5,307 x 2
 ##    cellvalue cellindex
 ##        &lt;dbl&gt;     &lt;int&gt;
@@ -190,7 +194,7 @@
 ##  9       100         9
 ## 10       100        10
 ## # … with 5,297 more rows</code></pre>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html">brick</a></span>(<span class="no">r</span>, <span class="no">r</span>*<span class="fl">2</span>)
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html">brick</a></span>(<span class="no">r</span>, <span class="no">r</span>*<span class="fl">2</span>)
 <span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">b</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 10,614 x 3
 ##    cellvalue cellindex dimindex
@@ -206,7 +210,7 @@
 ##  9       100         9        1
 ## 10       100        10        1
 ## # … with 10,604 more rows</code></pre>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">b</span>, <span class="kw">cell</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">dimindex</span>)) <span class="co">## leave out the cell index</span></pre></body></html></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">b</span>, <span class="kw">cell</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">dimindex</span>)) <span class="co">## leave out the cell index</span></pre></body></html></div>
 <pre><code>## # A tibble: 10,614 x 2
 ##    cellvalue dimindex
 ##        &lt;dbl&gt;    &lt;int&gt;
@@ -222,27 +226,27 @@
 ## 10       200        2
 ## # … with 10,604 more rows</code></pre>
 <p>The date or date-time is used as the dimension index if present.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">btime</span> <span class="kw">&lt;-</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/zvalues.html">setZ</a></span>(<span class="no">b</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>() + <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">10</span>))
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">btime</span> <span class="kw">&lt;-</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/zvalues.html">setZ</a></span>(<span class="no">b</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span>() + <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">10</span>))
 <span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">btime</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">dimindex</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n.html">n</a></span>())</pre></body></html></div>
 <pre><code>## # A tibble: 2 x 2
 ##   dimindex                n
 ##   &lt;dttm&gt;              &lt;int&gt;
-## 1 2020-04-13 04:02:05  5307
-## 2 2020-04-13 04:02:14  5307</code></pre>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">btime</span>, <span class="kw">split_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+## 1 2020-05-03 21:22:34  5307
+## 2 2020-05-03 21:22:43  5307</code></pre>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span>(<span class="no">btime</span>, <span class="kw">split_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 10,614 x 5
 ##    cellvalue cellindex  year month   day
 ##        &lt;dbl&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1       100         1  2020     4    13
-##  2       100         2  2020     4    13
-##  3       101         3  2020     4    13
-##  4       101         4  2020     4    13
-##  5       101         5  2020     4    13
-##  6       101         6  2020     4    13
-##  7       101         7  2020     4    13
-##  8       100         8  2020     4    13
-##  9       100         9  2020     4    13
-## 10       100        10  2020     4    13
+##  1       100         1  2020     5     3
+##  2       100         2  2020     5     3
+##  3       101         3  2020     5     3
+##  4       101         4  2020     5     3
+##  5       101         5  2020     5     3
+##  6       101         6  2020     5     3
+##  7       101         7  2020     5     3
+##  8       100         8  2020     5     3
+##  9       100         9  2020     5     3
+## 10       100        10  2020     5     3
 ## # … with 10,604 more rows</code></pre>
 </div>
 </div>
@@ -250,7 +254,7 @@
 <h1 class="hasAnchor">
 <a href="#warnings" class="anchor"></a>Warnings</h1>
 <ol style="list-style-type: decimal">
-<li>I tend to end up using <code><a href="https://tidyr.tidyverse.org/reference/extract.html">tidyr::extract</a></code> and <code><a href="https://rdrr.io/pkg/raster/man/extract.html">raster::extract</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> and <code><a href="https://rdrr.io/pkg/raster/man/select.html">raster::select</a></code> as I always use these packages together.</li>
+<li>I tend to end up using <code>tidyr::extract</code> and <code><a href="https://rdrr.io/pkg/raster/man/extract.html">raster::extract</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> and <code><a href="https://rdrr.io/pkg/raster/man/select.html">raster::select</a></code> as I always use these packages together.</li>
 <li>
 <code>cellnumbers</code> doesn’t currently reproject the second argument <code>query</code>, even when would make sense to do so like <code>extract</code> does. This is purely to reduce the required dependencies.</li>
 <li>There’s no formal link between the cell number values and the raster object itself. I use this “loose coupling” so extensively that I have developed habits that tend to make it pretty robust. Please use with caution, you can easily get incorrect answers by asking a different raster a question based on the wrong cell numbers.</li>
@@ -264,7 +268,7 @@
 <h1 class="hasAnchor">
 <a href="#applied-example" class="anchor"></a>Applied example</h1>
 <p>This example uses extracted data per polygon and uses base R to lapply across the list of values extracted per polygon. Here we show a more dplyr-ish version after extracting the cell numbers with tabularaster.</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
 <span class="co">## https://gis.stackexchange.com/questions/102870/step-by-step-how-do-i-extract-raster-values-from-polygon-overlay-with-q-gis-or</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">raster</span>)
@@ -300,7 +304,7 @@
 ##  9       1   334
 ## 10       1   335
 ## # … with 53 more rows</code></pre>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 <span class="co">## now perform extraction for real</span>
 <span class="co">## and pipe into grouping by polygon (object_) and value, and</span>
 <span class="co">## calculate class percentage from class counts per polygon</span>
@@ -313,26 +317,26 @@
 ## # Groups:   object_ [2]
 ##    object_     v count  v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-##  1       1     2     5 0.132 
-##  2       1     3     5 0.132 
-##  3       1     4     4 0.105 
-##  4       1     5     4 0.105 
-##  5       1     6     2 0.0526
-##  6       1     7     5 0.132 
-##  7       1     8     5 0.132 
-##  8       1     9     7 0.184 
-##  9       1    10     1 0.0263
-## 10       2     1     2 0.08  
-## 11       2     2     5 0.2   
-## 12       2     3     2 0.08  
-## 13       2     4     4 0.16  
-## 14       2     5     1 0.04  
-## 15       2     6     2 0.08  
-## 16       2     7     3 0.12  
-## 17       2     8     4 0.16  
-## 18       2     9     1 0.04  
-## 19       2    10     1 0.04</code></pre>
-<div class="sourceCode" id="cb36"><html><body><pre class="r">## here is the traditional code used in the stackoverflow example
+##  1       1     1     1 0.0263
+##  2       1     2     4 0.105 
+##  3       1     3     4 0.105 
+##  4       1     4     8 0.211 
+##  5       1     5     4 0.105 
+##  6       1     6     3 0.0789
+##  7       1     7     2 0.0526
+##  8       1     8     7 0.184 
+##  9       1     9     4 0.105 
+## 10       1    10     1 0.0263
+## 11       2     1     2 0.08  
+## 12       2     2     4 0.16  
+## 13       2     3     2 0.08  
+## 14       2     4     2 0.08  
+## 15       2     5     5 0.2   
+## 16       2     6     2 0.08  
+## 17       2     7     3 0.12  
+## 18       2     8     3 0.12  
+## 19       2    10     2 0.08</code></pre>
+<div class="sourceCode" id="cb37"><html><body><pre class="r">## here is the traditional code used in the stackoverflow example
 # Extract raster values to polygons                             
 #( v &lt;- extract(r, polys) )
 # Get class counts for each polygon
@@ -343,14 +347,14 @@
 <div id="extract-cell-numbers" class="section level1">
 <h1 class="hasAnchor">
 <a href="#extract-cell-numbers" class="anchor"></a>Extract cell numbers</h1>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"ghrsst"</span>)  <span class="co">## a RasterLayer</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"sst_regions"</span>) <span class="co">## a polygon layer, contiguous with ghrsst</span>
 
 <span class="no">gcells</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">ghrsst</span>, <span class="no">sst_regions</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">object_</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">object_</span>))</pre></body></html></div>
 <pre><code>## Warning in cellnumbers.default(ghrsst, sst_regions): cellnumbers is very slow
 ## for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">result</span> <span class="kw">&lt;-</span> <span class="no">gcells</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">sst</span> <span class="kw">=</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html">extract</a></span>(<span class="no">ghrsst</span>, <span class="no">cell_</span>)) <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">result</span> <span class="kw">&lt;-</span> <span class="no">gcells</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">sst</span> <span class="kw">=</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html">extract</a></span>(<span class="no">ghrsst</span>, <span class="no">cell_</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">object_</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarize_at</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">sst</span>), <span class="fu"><a href="https://dplyr.tidyverse.org/reference/funs.html">funs</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">.</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>), <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">.</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>), <span class="no">length</span>))</pre></body></html></div>
 <pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
@@ -369,7 +373,7 @@
 <div id="extract-cells-from-rasters" class="section level1">
 <h1 class="hasAnchor">
 <a href="#extract-cells-from-rasters" class="anchor"></a>Extract cells from rasters</h1>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
+<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tabularaster</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">raster</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"rastercano"</span>)
@@ -380,7 +384,7 @@
 ## query: NA</code></pre>
 <pre><code>## Warning in cellnumbers.default(rastercano, polycano[4:5, ]): cellnumbers is very
 ## slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">rastercano</span>, <span class="fu">as</span>(<span class="no">polycano</span>[<span class="fl">4</span>:<span class="fl">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">rastercano</span>, <span class="fu">as</span>(<span class="no">polycano</span>[<span class="fl">4</span>:<span class="fl">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>))</pre></body></html></div>
 <pre><code>## # A tibble: 305 x 2
 ##    object_ cell_
 ##      &lt;int&gt; &lt;int&gt;
@@ -395,7 +399,7 @@
 ##  9       2     6
 ## 10       2     7
 ## # … with 295 more rows</code></pre>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">rastercano</span>, <span class="fu">as</span>(<span class="fu">as</span>(<span class="no">polycano</span>[<span class="fl">4</span>:<span class="fl">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>), <span class="st">"SpatialPointsDataFrame"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span>(<span class="no">rastercano</span>, <span class="fu">as</span>(<span class="fu">as</span>(<span class="no">polycano</span>[<span class="fl">4</span>:<span class="fl">5</span>, ], <span class="st">"SpatialLinesDataFrame"</span>), <span class="st">"SpatialPointsDataFrame"</span>))</pre></body></html></div>
 <pre><code>## Warning: projections not the same 
 ##     x: NA
 ## query: NA</code></pre>
