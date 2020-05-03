@@ -1,3 +1,7 @@
+# tabularaster dev
+
+* Fixed unnecessary test for warning contributed by R. Hijmans. 
+
 # tabularaster 0.6.0
 
 * Removed unnecessary issues with crs metadata strings. 
