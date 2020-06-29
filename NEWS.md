@@ -1,7 +1,5 @@
 # tabularaster 0.6.5
 
-* Fixed several problems from CRAN tests. 
-
 * Fixed unnecessary test for warning contributed by R. Hijmans. 
 
 # tabularaster 0.6.0

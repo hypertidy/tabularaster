@@ -1,6 +1,6 @@
 # tabularaster 0.6.5
 
-Fixes errors on CRAN. 
+Fixes errors on CRAN due to raster package update. 
 
 Thank you. 
 
