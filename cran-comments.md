@@ -1,6 +1,6 @@
-# tabularaster 0.6.0
+# tabularaster 0.6.5
 
-Fixes error on CRAN, simplifies the package. 
+Fixes errors on CRAN. 
 
 Thank you. 
 
@@ -13,6 +13,7 @@ Thank you.
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
+
 
 
 
