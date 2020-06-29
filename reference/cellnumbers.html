@@ -74,7 +74,7 @@ and the cell number." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.5</span>
       </span>
     </div>
 
@@ -139,19 +139,19 @@ directly, returning a data frame of query-object identifiers 'object_'
 and the cell number.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cellnumbers</span>(<span class='no'>x</span>, <span class='no'>query</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>cellnumbers</span>(<span class='kw'>x</span>, <span class='kw'>query</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>cellnumbers</span>(<span class='no'>x</span>, <span class='no'>query</span>, <span class='no'>...</span>)
+<span class='fu'>cellnumbers</span>(<span class='kw'>x</span>, <span class='kw'>query</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for SpatialLines</span>
-<span class='fu'>cellnumbers</span>(<span class='no'>x</span>, <span class='no'>query</span>, <span class='no'>...</span>)
+<span class='fu'>cellnumbers</span>(<span class='kw'>x</span>, <span class='kw'>query</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for sfc</span>
-<span class='fu'>cellnumbers</span>(<span class='no'>x</span>, <span class='no'>query</span>, <span class='no'>...</span>)
+<span class='fu'>cellnumbers</span>(<span class='kw'>x</span>, <span class='kw'>query</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for sf</span>
-<span class='fu'>cellnumbers</span>(<span class='no'>x</span>, <span class='no'>query</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>cellnumbers</span>(<span class='kw'>x</span>, <span class='kw'>query</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,15 +185,15 @@ convention used by the <a href='https://rdrr.io/r/graphics/image.html'>graphics:
 an extra level of grouping for layers would be sensible.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://rspatial.org/raster'>raster</a></span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:raster’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, select, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='no'>volcano</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/aggregate.html'>aggregate</a></span>(<span class='kw'>fact</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='fu'>cellnumbers</span>(<span class='no'>r</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='no'>r</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>120</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 64 x 2</span><span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='kw'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='kw'>volcano</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/aggregate.html'>aggregate</a></span>(fact = <span class='fl'>4</span>)
+<span class='fu'>cellnumbers</span>(<span class='kw'>r</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span>(<span class='kw'>r</span>, level = <span class='fl'>120</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 64 x 2</span><span>
 #&gt;    object_ cell_
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>       1     8
@@ -206,18 +206,17 @@ an extra level of grouping for layers would be sensible.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span>       1    24
 #&gt; </span><span style='color: #555555;'> 9</span><span>       1    27
 #&gt; </span><span style='color: #555555;'>10</span><span>       1    28
-#&gt; </span><span style='color: #555555;'># … with 54 more rows</span><span></div><div class='input'>#library(dplyr)
+#&gt; </span><span style='color: #555555;'># … with 54 more rows</span><span></div><div class='input'><span class='co'>#library(dplyr)</span>
 
-#cr &lt;- cut(r,  pretty(values(r)))
-#p &lt;- raster::rasterToPolygons(cr, dissolve = TRUE)
-#p &lt;- spex::qm_rasterToPolygons_sp(cr)
-#tt &lt;- cellnumbers(cr, p)
-#library(dplyr)
-#tt %&gt;% mutate(v = extract(r, cell_)) %&gt;% 
-#group_by(object_) %&gt;% 
-#summarize(mean(v)) 
-#head(pretty(values(r)), -1)
-</div></span></pre>
+<span class='co'>#cr &lt;- cut(r,  pretty(values(r)))</span>
+<span class='co'>#p &lt;- raster::rasterToPolygons(cr, dissolve = TRUE)</span>
+<span class='co'>#p &lt;- spex::qm_rasterToPolygons_sp(cr)</span>
+<span class='co'>#tt &lt;- cellnumbers(cr, p)</span>
+<span class='co'>#library(dplyr)</span>
+<span class='co'>#tt %&gt;% mutate(v = extract(r, cell_)) %&gt;% </span>
+<span class='co'>#group_by(object_) %&gt;% </span>
+<span class='co'>#summarize(mean(v)) </span>
+<span class='co'>#head(pretty(values(r)), -1)</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

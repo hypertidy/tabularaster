@@ -74,7 +74,7 @@ are included in the output." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.5</span>
       </span>
     </div>
 
@@ -141,13 +141,13 @@ are included in the output.</p>
 
     <pre class="usage"><span class='co'># S3 method for BasicRaster</span>
 <span class='fu'>as_tibble</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'>nlayers</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>1L</span>,
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>split_date</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  cell = <span class='fl'>TRUE</span>,
+  dim = <span class='fu'>nlayers</span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>1L</span>,
+  value = <span class='fl'>TRUE</span>,
+  split_date = <span class='fl'>FALSE</span>,
+  xy = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -192,11 +192,10 @@ are included in the output.</p>
 the slice index value.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>#library(tabularaster)
-#library(tibble)
-#as_tibble(raster::raster(volcano))
-#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>#library(tabularaster)</span>
+<span class='co'>#library(tibble)</span>
+<span class='co'>#as_tibble(raster::raster(volcano))</span>
+<span class='co'>#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

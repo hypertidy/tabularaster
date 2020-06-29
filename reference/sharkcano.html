@@ -74,7 +74,7 @@ attr(sharkcano, &quot;rasterdim&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.5</span>
       </span>
     </div>
 
@@ -155,10 +155,10 @@ http://www.freestockphotos.biz/stockphoto/16214
 Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennybc/free-photos</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>sharkcano</span>, <span class='st'>"rasterdim"</span>)
-<span class='no'>rastershark</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA_integer_</span>, <span class='no'>rd</span>[<span class='fl'>1</span>], <span class='no'>rd</span>[<span class='fl'>2</span>]))
-<span class='no'>rastershark</span>[<span class='no'>sharkcano</span>$<span class='no'>cell_</span>] <span class='kw'>&lt;-</span> <span class='no'>sharkcano</span>$<span class='no'>byte</span>  <span class='co'>## byte, heh</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://rspatial.org/raster'>raster</a></span>)
+<span class='kw'>rd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='kw'>sharkcano</span>, <span class='st'>"rasterdim"</span>)
+<span class='kw'>rastershark</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA_integer_</span>, <span class='kw'>rd</span>[<span class='fl'>1</span>], <span class='kw'>rd</span>[<span class='fl'>2</span>]))
+<span class='kw'>rastershark</span>[<span class='kw'>sharkcano</span><span class='op'>$</span><span class='kw'>cell_</span>] <span class='op'>&lt;-</span> <span class='kw'>sharkcano</span><span class='op'>$</span><span class='kw'>byte</span>  <span class='co'>## byte, heh</span>
 <span class='co'>## I present to you, Sharkcano!  (Just wait for the 3D version, Quadshark).</span>
 <span class='co'>#plot(rastercano)</span>
 <span class='co'>#contour(rastershark, add = TRUE, labels = FALSE)</span>
