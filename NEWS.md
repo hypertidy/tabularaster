@@ -1,3 +1,8 @@
+# tabularaster 0.6.6
+
+* Release to restore package on CRAN, archived when silicate was archived (for neglecting
+ conditional use of Suggests). 
+ 
 # tabularaster 0.6.5
 
 * Fixed unnecessary test for warning contributed by R. Hijmans. 

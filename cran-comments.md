@@ -1,9 +1,9 @@
-# tabularaster 0.6.5
+# tabularaster 0.6.6
 
-Fixes errors on CRAN due to raster package update. 
+New package (restoring after removal of 0.6.5 due to removal of {silicate} which is
+ a dependency of this package). 
 
 Thank you. 
-
 
 ## Test environments
 
