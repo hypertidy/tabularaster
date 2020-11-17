@@ -1,7 +1,7 @@
 # tabularaster 0.6.6
 
 New package (restoring after removal of 0.6.5 due to removal of {silicate} which is
- a dependency of this package). 
+ a dependency of this package and has now been restored). 
 
 Thank you. 
 
