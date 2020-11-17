@@ -74,19 +74,13 @@ are included in the output." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,15 +134,15 @@ are included in the output.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for BasicRaster</span>
-<span class='fu'>as_tibble</span>(
-  <span class='kw'>x</span>,
-  cell = <span class='fl'>TRUE</span>,
-  dim = <span class='fu'>nlayers</span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>1L</span>,
-  value = <span class='fl'>TRUE</span>,
-  split_date = <span class='fl'>FALSE</span>,
-  xy = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>as_tibble</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  cell <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dim <span class='op'>=</span> <span class='fu'>nlayers</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1L</span>,
+  value <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  split_date <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  xy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,7 +189,8 @@ the slice index value.</p>
     <pre class="examples"><div class='input'><span class='co'>#library(tabularaster)</span>
 <span class='co'>#library(tibble)</span>
 <span class='co'>#as_tibble(raster::raster(volcano))</span>
-<span class='co'>#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)</span></div></pre>
+<span class='co'>#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,7 +206,7 @@ the slice index value.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
