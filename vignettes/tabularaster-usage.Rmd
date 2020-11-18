@@ -113,7 +113,7 @@ Ultimately the cell index vector should probably be a formal class, with
 knowledge of its extent and grain. I'd love this to be formalized, but I seem to
 not have the design expertise required to get the system right. It's something
 that `ggplot2` needs, but there aren't any existing examples in R anywhere as
-far as I can tell. The [stars project](https://github.com/edzer/stars)  is a
+far as I can tell. The [stars project](https://github.com/r-spatial/stars)  is a
 good place to see what else is happening in this space in R. Other examples are
 the unfinshed `tbl_cube` in `dplyr`, the R6 objects in `velox`, and the mesh
 indexing used by packages `rgl`, `Vcg`, `icosa`, `dggridR`, `deldir`,
