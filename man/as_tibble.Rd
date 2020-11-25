@@ -31,7 +31,21 @@
 \item{...}{unused}
 }
 \value{
-a data frame ('tbl_df'/'tibble' form)
+a data frame (tibble) with columns:
+\itemize{
+\item \code{cellvalue} the actual value of the raster cell
+\item \code{cellindex} the index of the cell (numbered from 1 to ncell in the raster way).
+}
+
+Columns \code{cellindex} or \code{cellvalue} may be omitted if either or both of \code{cell} and/or \code{value} are \code{FALSE}, respectively
+
+Other columns might be included depending on the properties of the raster and
+the arguments to the function:
+\itemize{
+\item \code{year},\code{month},\code{day} if \code{split_date} is \code{TRUE}
+\item \code{x},\code{y} if \code{xy} is \code{TRUE}
+\item \code{dimindex} if the input has more than 1 layer and \code{dim} is \code{TRUE}.
+}
 }
 \description{
 Generate a data frame version of any raster object. Use the arguments
@@ -43,8 +57,8 @@ If the raster has only one layer, the slice index is not added. Use 'dim = FALSE
 the slice index value.
 }
 \examples{
-#library(tabularaster)
-#library(tibble)
-#as_tibble(raster::raster(volcano))
-#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+## basic data frame version of a basic raster
+as_tibble(raster::raster(volcano))
+
+as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 }

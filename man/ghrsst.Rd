@@ -17,8 +17,10 @@ details.
 \code{sst_regions} is a simple polygon region layer to sit over the SST data.
 }
 \examples{
+\donttest{
 library(raster)
 plot(ghrsst, col = hcl.colors(12, "YlOrRd", rev = TRUE))
 plot(sst_regions, add = TRUE, col = NA)
-## cellnumbers(ghrsst, sst_regions) 
+cellnumbers(ghrsst, sst_regions) 
+}
 }

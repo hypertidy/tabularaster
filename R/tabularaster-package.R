@@ -24,10 +24,12 @@ NULL
 #' 
 #' `sst_regions` is a simple polygon region layer to sit over the SST data.
 #' @examples 
+#' \donttest{
 #' library(raster)
 #' plot(ghrsst, col = hcl.colors(12, "YlOrRd", rev = TRUE))
 #' plot(sst_regions, add = TRUE, col = NA)
-#' ## cellnumbers(ghrsst, sst_regions) 
+#' cellnumbers(ghrsst, sst_regions) 
+#' }
 #' @format A raster created GHRSST data and raster smoothing.
 #' @name ghrsst
 #' @aliases sst_regions
@@ -79,11 +81,11 @@ NULL
 #' rastershark <- raster(matrix(NA_integer_, rd[1], rd[2]))
 #' rastershark[sharkcano$cell_] <- sharkcano$byte  ## byte, heh
 #' ## I present to you, Sharkcano!  (Just wait for the 3D version, Quadshark).
-#' #plot(rastercano)
-#' #contour(rastershark, add = TRUE, labels = FALSE)
-#' #plot(rastershark, col = "black")
+#' plot(rastercano)
+#' contour(rastershark, add = TRUE, labels = FALSE)
+#' plot(rastershark, col = "black")
 #' ## another way
-#' #plot(rastercano)
-#' #points(xyFromCell(rastershark, sharkcano$cell_), pch = ".")
+#' plot(rastercano)
+#' points(xyFromCell(rastershark, sharkcano$cell_), pch = ".")
 #' @name sharkcano
 NULL

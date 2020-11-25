@@ -15,14 +15,28 @@
 #' @param xy logical to include the x and y centre coordinate of each cell
 #' @param ... unused
 #'
-#' @return a data frame ('tbl_df'/'tibble' form)
+#' @return a data frame (tibble) with columns: 
+#' 
+#' * `cellvalue` the actual value of the raster cell
+#' * `cellindex` the index of the cell (numbered from 1 to ncell in the raster way). 
+#' 
+#' Columns `cellindex` or `cellvalue` may be omitted if either or both of `cell` and/or `value` are `FALSE`, respectively
+#' 
+#' Other columns might be included depending on the properties of the raster and
+#' the arguments to the function: 
+#' 
+#' * `year`,`month`,`day` if `split_date` is `TRUE`
+#' * `x`,`y` if `xy` is `TRUE`
+#' * `dimindex` if the input has more than 1 layer and `dim` is `TRUE`. 
+#' 
+#' 
 #' @export
 #'
 #' @examples
-#' #library(tabularaster)
-#' #library(tibble)
-#' #as_tibble(raster::raster(volcano))
-#' #as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+#' ## basic data frame version of a basic raster
+#' as_tibble(raster::raster(volcano))
+#' 
+#' as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
 #' @importFrom tibble as_tibble tibble
 #' @export as_tibble
 #' @importFrom dplyr bind_cols mutate
