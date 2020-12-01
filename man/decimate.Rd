@@ -18,7 +18,8 @@ raster layer
 Reduce the resolution of a \code{\link[raster]{raster}} by ruthless decimation.
 }
 \details{
-This is fast, it's just fast extraction with total impunity.
+This is fast, it's just fast extraction with no care taken for utility purposes when you need
+to reduce the detail.
 }
 \examples{
 library(raster)

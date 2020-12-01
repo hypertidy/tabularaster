@@ -9,3 +9,6 @@ A \code{sp::SpatialPolygonsDataFrame} with variables: \code{volcano_elevation}.
 \description{
 See data-raw/rastercano.r in the source repository.
 }
+\examples{
+exists("polycano")
+}

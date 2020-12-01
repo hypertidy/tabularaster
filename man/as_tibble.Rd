@@ -34,7 +34,7 @@
 a data frame (tibble) with columns:
 \itemize{
 \item \code{cellvalue} the actual value of the raster cell
-\item \code{cellindex} the index of the cell (numbered from 1 to ncell in the raster way).
+\item \code{cellindex} the index of the cell (numbered from 1 to \code{ncell()} in the raster way).
 }
 
 Columns \code{cellindex} or \code{cellvalue} may be omitted if either or both of \code{cell} and/or \code{value} are \code{FALSE}, respectively
@@ -60,5 +60,8 @@ the slice index value.
 ## basic data frame version of a basic raster
 as_tibble(raster::raster(volcano))
 
-as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)
+## data frame with time column since raster has that set
+r <- raster::raster(volcano)
+br <- raster::brick(r, r)
+as_tibble(raster::setZ(br, Sys.Date() + 1:2), cell = TRUE)
 }

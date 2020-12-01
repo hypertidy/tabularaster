@@ -44,6 +44,8 @@ NULL
 #' dimensions 1440x720 in the usual raster configuration. 
 #' @format A data frame of sst values created from OISST data.
 #' @name oisst
+#' @examples
+#' oisst
 NULL
 
 #' The raster volcano.
@@ -51,6 +53,8 @@ NULL
 #' See data-raw/rastercano.r in the source repository.
 #' @format A raster created from the \code{\link[datasets]{volcano}} data.
 #' @name rastercano
+#' @examples 
+#' plot(rastercano)
 NULL
 
 #' The raster volcano as polygons.
@@ -59,11 +63,13 @@ NULL
 #'
 #' @format A `sp::SpatialPolygonsDataFrame` with variables: \code{volcano_elevation}.
 #' @name polycano
+#' @examples 
+#' exists("polycano")
 NULL
 
 #' Sharkcano, the shark and the volcano.
 #'
-#' This is just a free image off the internetz.
+#' This is just a free image off the internet.
 #' The image was read in and all non-essential items dropped. The dimensions in `raster::raster` terms is stored in
 #'  \code{attr(sharkcano, "rasterdim")}.
 #' @references This is the small version from here, see script in data-raw/sharkcano.r 

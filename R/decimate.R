@@ -2,7 +2,8 @@
 #'
 #' Reduce the resolution of a \code{\link[raster]{raster}} by ruthless decimation.
 #'
-#' This is fast, it's just fast extraction with total impunity.
+#' This is fast, it's just fast extraction with no care taken for utility purposes when you need
+#' to reduce the detail.
 #' @param x raster object (single layer).
 #' @param dec decimation factor, raw multiplier for the resolution of the output
 #'

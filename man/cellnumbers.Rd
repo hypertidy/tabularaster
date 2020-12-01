@@ -26,7 +26,11 @@ cellnumbers(x, query, ...)
 \item{...}{unused}
 }
 \value{
-tbl_df data frame
+a data frame (tibble) with columns
+\itemize{
+\item \code{object_} - the object ID (what row is it from the spatial object)
+\item \code{cell_}   - the cell number of the raster
+}
 }
 \description{
 Provide the 'cellnumbers' capability of \link[raster:extract]{raster::extract} and friends

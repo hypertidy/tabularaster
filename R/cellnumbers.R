@@ -18,7 +18,11 @@
 #' @param x Raster object
 #' @param ... unused
 #' @param query Spatial object or matrix of coordinates
-#' @return tbl_df data frame
+#' @return a data frame (tibble) with columns
+#' 
+#' * `object_` - the object ID (what row is it from the spatial object)
+#' * `cell_`   - the cell number of the raster
+#' 
 #' @export
 #' @importFrom dplyr bind_rows
 #' @importFrom raster cellFromPolygon cellFromLine cellFromXY projection
@@ -55,10 +59,10 @@ cellnumbers.default <- function(x, query, ...) {
                   
  }
   if (is.na(projection(x)) || is.na(projection(query)) || projection(x) != projection(query)) {
-    warning(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
+    message(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }
   if (inherits(query, "SpatialPolygons")) {
-    warning("cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'", immediate. = TRUE)
+    message("cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'", immediate. = TRUE)
     a <- cellFromPolygon(x, query)
   }
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {

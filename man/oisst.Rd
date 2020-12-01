@@ -11,3 +11,6 @@ See data-raw/oisst.R in the source repository.  The file was
 avhrr-only-v2.20170729.nc, its extent -180, 180, -90, 90 with
 dimensions 1440x720 in the usual raster configuration.
 }
+\examples{
+oisst
+}

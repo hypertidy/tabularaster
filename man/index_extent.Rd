@@ -20,3 +20,10 @@ Extent in index space.
 \details{
 Convert a geographic extent into purely index space.
 }
+\examples{
+## the index extent is the rows/cols
+index_extent(raster(volcano), extent(0, 1, 0, 1))
+
+index_extent(raster(volcano), extent(0, 1, 0, .5))
+
+}

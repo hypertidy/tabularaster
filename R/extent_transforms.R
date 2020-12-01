@@ -16,7 +16,12 @@ set_indextent <- function (x) {
 #'
 #' @return  extent object
 #' @export
-#'
+#' @examples 
+#' ## the index extent is the rows/cols
+#' index_extent(raster(volcano), extent(0, 1, 0, 1))
+#' 
+#' index_extent(raster(volcano), extent(0, 1, 0, .5))
+#' 
 index_extent <- function(x, ex) {
   raster::extentFromCells(set_indextent(x), raster::cellsFromExtent(x, ex))
 }
