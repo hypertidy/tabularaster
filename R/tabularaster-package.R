@@ -54,6 +54,7 @@ NULL
 #' @format A raster created from the \code{\link[datasets]{volcano}} data.
 #' @name rastercano
 #' @examples 
+#' library(raster)
 #' plot(rastercano)
 NULL
 
