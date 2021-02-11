@@ -1,3 +1,11 @@
+# tabularaster 0.7.0
+
+Update to align to new spatstat 2.0.0. 
+
+Thank you. 
+
+
+
 # tabularaster 0.6.6
 
 Third submit, removed commented code - please see fix explanation for archival of this package below. 

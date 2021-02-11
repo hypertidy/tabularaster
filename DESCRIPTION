@@ -1,7 +1,7 @@
 Package: tabularaster
 Type: Package
 Title: Tidy Tools for 'Raster' Data
-Version: 0.6.6
+Version: 0.7.0
 Authors@R: c(
     person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
     )
@@ -22,7 +22,7 @@ Imports:
     magrittr,
     raster,
     silicate,
-    spatstat,
+    spatstat.geom,
     tibble
 RoxygenNote: 7.1.1
 Encoding: UTF-8

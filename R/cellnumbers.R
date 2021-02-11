@@ -118,23 +118,23 @@ cellnumbers.sf <- function(x, query, ...) {
 
 
 
-#' @importFrom spatstat owin as.owin
+#' @importFrom spatstat.geom owin as.owin pixellate
 as.owin.BasicRaster <- function(W, ...) {
   msk <- matrix(TRUE, nrow(W), ncol(W))
-  spatstat::owin(c(raster::xmin(W), raster::xmax(W)), c(raster::ymin(W), raster::ymax(W)), mask = msk)
+  spatstat.geom::owin(c(raster::xmin(W), raster::xmax(W)), c(raster::ymin(W), raster::ymax(W)), mask = msk)
 }
 pix <- function(psp, ras) {
-  spatstat::pixellate(psp, as.owin(ras), weights = 1)   
+  spatstat.geom::pixellate(psp, as.owin(ras), weights = 1)   
 }
 
 line_cellnumbers <- function(x, r) {
   sc <- silicate::SC0(x)
   xy <- as.matrix(silicate::sc_vertex(sc)[c("x_", "y_")])
   l <- vector("list", nrow(silicate::sc_object(sc)))
-  ow <- spatstat::owin(range(xy[,1]), range(xy[,2]))
+  ow <- spatstat.geom::owin(range(xy[,1]), range(xy[,2]))
   for (i in seq_along(l)) {
     segs <- as.matrix(do.call(rbind, sc$object$topology_[i])[c(".vx0", ".vx1")])
-    pspii <- spatstat::psp(xy[segs[,1L],1L], xy[segs[,1L],2L], 
+    pspii <- spatstat.geom::psp(xy[segs[,1L],1L], xy[segs[,1L],2L], 
                            xy[segs[,2L],1L], xy[segs[,2L],2L], window = ow)
     
       im <- (raster(pix(pspii, r)) > 0)
