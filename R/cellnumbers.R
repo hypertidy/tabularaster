@@ -62,12 +62,12 @@ cellnumbers.default <- function(x, query, ...) {
     message(sprintf("projections not the same \n    x: %s\nquery: %s", projection(x), projection(query)), call. = FALSE)
   }
   if (inherits(query, "SpatialPolygons")) {
-    message("cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'", immediate. = TRUE)
+    message("cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'")
     a <- cellFromPolygon(x, query)
   }
   if (is.matrix(query) | inherits(query, "SpatialPoints")) {
     if (is.matrix(query)) stopifnot(ncol(query) >= 2)
-    a <- list(cellFromXY(x, query))
+    a <- as.list(cellFromXY(x, query))
   }
   if (inherits(query, "SpatialMultiPoints")) {
     a <- lapply(query@coords, function(xymat) cellFromXY(x, xymat))
