@@ -53,7 +53,7 @@ cellnumbers.default <- function(x, query, ...) {
     ## we need this for points, mpoints
     pth <- silicate::sc_path(query)
  
-    tab <- tibble(object_ = rep(as.integer(factor(pth$object_)), pth$ncoords_), 
+    tab <- tibble(object_ = rep(as.integer(ordered(pth$object_, unique(pth$object_))), pth$ncoords_), 
                   cell_ = raster::cellFromXY(x, as.matrix(silicate::sc_coord(query)[c("x_" , "y_")])))
     return(tab)
                   
