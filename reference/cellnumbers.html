@@ -47,6 +47,8 @@ and the cell number." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -58,9 +60,15 @@ and the cell number." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +82,7 @@ and the cell number." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -105,7 +113,7 @@ and the cell number." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hypertidy/tabularaster/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -166,7 +174,11 @@ and the cell number.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tbl_df data frame</p>
+    <p>a data frame (tibble) with columns</p><ul>
+<li><p><code>object_</code> - the object ID (what row is it from the spatial object)</p></li>
+<li><p><code>cell_</code>   - the cell number of the raster</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Raster data is inherently 2-dimensional, with a time or 'level' dimension
@@ -190,33 +202,41 @@ an extra level of grouping for layers would be sensible.</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/aggregate.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='fu'>cellnumbers</span><span class='op'>(</span><span class='va'>r</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToContour.html'>rasterToContour</a></span><span class='op'>(</span><span class='va'>r</span>, level <span class='op'>=</span> <span class='fl'>120</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'cli':</span>
-#&gt; <span class='message'>  method     from    </span>
-#&gt; <span class='message'>  print.boxx spatstat</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 64 x 2</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 64 x 2</span><span>
 #&gt;    object_ cell_
-#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span>       1     8
-#&gt; </span><span style='color: #555555;'> 2</span><span>       1     9
-#&gt; </span><span style='color: #555555;'> 3</span><span>       1    10
-#&gt; </span><span style='color: #555555;'> 4</span><span>       1    11
-#&gt; </span><span style='color: #555555;'> 5</span><span>       1    21
-#&gt; </span><span style='color: #555555;'> 6</span><span>       1    22
-#&gt; </span><span style='color: #555555;'> 7</span><span>       1    23
-#&gt; </span><span style='color: #555555;'> 8</span><span>       1    24
-#&gt; </span><span style='color: #555555;'> 9</span><span>       1    27
-#&gt; </span><span style='color: #555555;'>10</span><span>       1    28
-#&gt; </span><span style='color: #555555;'># … with 54 more rows</span><span></div><div class='input'><span class='co'>#library(dplyr)</span>
+#&gt;      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>       1     8
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>       1     9
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>       1    10
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>       1    11
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>       1    21
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>       1    22
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>       1    23
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>       1    24
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>       1    27
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>       1    28
+#&gt; </span><span style='color: #949494;'># … with 54 more rows</span><span></div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 
-<span class='co'>#cr &lt;- cut(r,  pretty(values(r)))</span>
-<span class='co'>#p &lt;- raster::rasterToPolygons(cr, dissolve = TRUE)</span>
-<span class='co'>#p &lt;- spex::qm_rasterToPolygons_sp(cr)</span>
-<span class='co'>#tt &lt;- cellnumbers(cr, p)</span>
-<span class='co'>#library(dplyr)</span>
-<span class='co'>#tt %&gt;% mutate(v = extract(r, cell_)) %&gt;% </span>
-<span class='co'>#group_by(object_) %&gt;% </span>
-<span class='co'>#summarize(mean(v)) </span>
-<span class='co'>#head(pretty(values(r)), -1)</span>
-</div></span></pre>
+<span class='va'>cr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/cut.html'>cut</a></span><span class='op'>(</span><span class='va'>r</span>,  <span class='fu'><a href='https://rdrr.io/r/base/pretty.html'>pretty</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/getValues.html'>values</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span><span class='op'>(</span><span class='va'>tt</span> <span class='op'>&lt;-</span> <span class='fu'>cellnumbers</span><span class='op'>(</span><span class='va'>cr</span>, <span class='va'>polycano</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>projections not the same </span>
+#&gt; <span class='message'>    x: NA</span>
+#&gt; <span class='message'>query: NAFALSE</span></div><div class='output co'>#&gt; <span class='message'>cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'TRUE</span></div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>tt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>v <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extract.html'>extract</a></span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>cell_</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>object_</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span> 
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 2</span><span>
+#&gt;   object_ `mean(v)`
+#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>       1     157. 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>       2     173. 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>       3     184  
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>       4      99.5
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>       5     113. 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span>       6     128. 
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span>       7     142. </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/pretty.html'>pretty</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/getValues.html'>values</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  80 100 120 140 160 180</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -228,11 +248,11 @@ an extra level of grouping for layers would be sensible.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael D. Sumner.</p>
+  <p><p>Developed by Michael D. Sumner.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -240,6 +260,8 @@ an extra level of grouping for layers would be sensible.</p>
 
   
 
+
+  
 
   </body>
 </html>

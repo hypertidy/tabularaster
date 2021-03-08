@@ -44,6 +44,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -55,9 +57,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -102,7 +110,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hypertidy/tabularaster/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,9 +131,18 @@
       <small>Source: <a href='https://github.com/hypertidy/tabularaster/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tabularaster-070" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#tabularaster-070" class="anchor"></a>tabularaster 0.7.0<small> Unreleased </small>
+</h1>
+<ul>
+<li><p>Fix randomizing order for sf <code>object_</code>, thanks to <a href='https://github.com/CaptureOSM'>@CaptureOSM</a> https://github.com/hypertidy/tabularaster/issues/29.</p></li>
+<li><p>Align to new spatstat 2.0.0.</p></li>
+</ul>
+</div>
     <div id="tabularaster-066" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.6">
-<a href="#tabularaster-066" class="anchor"></a>tabularaster 0.6.6<small> Unreleased </small>
+<a href="#tabularaster-066" class="anchor"></a>tabularaster 0.6.6<small> 2020-12-02 </small>
 </h1>
 <ul>
 <li>Release to restore package on CRAN, archived when silicate was archived (for neglecting conditional use of Suggests).</li>
@@ -148,7 +165,7 @@
 <li><p>Now using silicate for the line-to-segments ops, removed spbabel imports.</p></li>
 <li><p>Remove old <code>bufext()</code> and outdated spex import.</p></li>
 <li><p>Un-deprecate and re-export <code><a href="../reference/decimate.html">decimate()</a></code>.</p></li>
-<li><p>Drop <code><a href="https://rdrr.io/pkg/raster/man/cellsFromExtent.html">extentFromCells()</a></code> export.</p></li>
+<li><p>Drop <code><a href="https://rdrr.io/pkg/raster/man/cellsFromExtent.html" class="external-link">extentFromCells()</a></code> export.</p></li>
 </ul>
 </div>
     <div id="tabularaster-050" class="section level1">
@@ -204,11 +221,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael D. Sumner.</p>
+  <p><p>Developed by Michael D. Sumner.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -216,6 +233,8 @@
 
   
 
+
+  
 
   </body>
 </html>

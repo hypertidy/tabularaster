@@ -47,6 +47,8 @@ are included in the output." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -58,9 +60,15 @@ are included in the output." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +82,7 @@ are included in the output." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -105,7 +113,7 @@ are included in the output." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hypertidy/tabularaster/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -179,18 +187,61 @@ are included in the output.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame ('tbl_df'/'tibble' form)</p>
+    <p>a data frame (tibble) with columns:</p><ul>
+<li><p><code>cellvalue</code> the actual value of the raster cell</p></li>
+<li><p><code>cellindex</code> the index of the cell (numbered from 1 to <code>ncell()</code> in the raster way).</p></li>
+</ul>
+
+<p>Columns <code>cellindex</code> or <code>cellvalue</code> may be omitted if either or both of <code>cell</code> and/or <code>value</code> are <code>FALSE</code>, respectively</p>
+<p>Other columns might be included depending on the properties of the raster and
+the arguments to the function:</p><ul>
+<li><p><code>year</code>,<code>month</code>,<code>day</code> if <code>split_date</code> is <code>TRUE</code></p></li>
+<li><p><code>x</code>,<code>y</code> if <code>xy</code> is <code>TRUE</code></p></li>
+<li><p><code>dimindex</code> if the input has more than 1 layer and <code>dim</code> is <code>TRUE</code>.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the raster has only one layer, the slice index is not added. Use 'dim = FALSE' to not include
 the slice index value.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#library(tabularaster)</span>
-<span class='co'>#library(tibble)</span>
-<span class='co'>#as_tibble(raster::raster(volcano))</span>
-<span class='co'>#as_tibble(raster::setZ(raster::raster(volcano), Sys.Date()), cell = TRUE)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## basic data frame version of a basic raster</span>
+<span class='fu'>as_tibble</span><span class='op'>(</span><span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'cli':</span>
+#&gt; <span class='message'>  method     from         </span>
+#&gt; <span class='message'>  print.boxx spatstat.geom</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5,307 x 2</span><span>
+#&gt;    cellvalue cellindex
+#&gt;        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>       100         1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>       100         2
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>       101         3
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>       101         4
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>       101         5
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>       101         6
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>       101         7
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>       100         8
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>       100         9
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>       100        10
+#&gt; </span><span style='color: #949494;'># … with 5,297 more rows</span><span></div><div class='input'>
+<span class='co'>## data frame with time column since raster has that set</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='va'>volcano</span><span class='op'>)</span>
+<span class='va'>br</span> <span class='op'>&lt;-</span> <span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/brick.html'>brick</a></span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>r</span><span class='op'>)</span>
+<span class='fu'>as_tibble</span><span class='op'>(</span><span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/zvalues.html'>setZ</a></span><span class='op'>(</span><span class='va'>br</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>, cell <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 10,614 x 3</span><span>
+#&gt;    cellvalue cellindex dimindex  
+#&gt;        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>    
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>       100         1 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>       100         2 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>       101         3 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>       101         4 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>       101         5 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>       101         6 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>       101         7 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>       100         8 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>       100         9 2021-03-09
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>       100        10 2021-03-09
+#&gt; </span><span style='color: #949494;'># … with 10,604 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -202,11 +253,11 @@ the slice index value.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael D. Sumner.</p>
+  <p><p>Developed by Michael D. Sumner.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -214,6 +265,8 @@ the slice index value.</p>
 
   
 
+
+  
 
   </body>
 </html>

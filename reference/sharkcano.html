@@ -40,9 +40,11 @@
 
 
 <meta property="og:title" content="Sharkcano, the shark and the volcano. — sharkcano" />
-<meta property="og:description" content="This is just a free image off the internetz.
+<meta property="og:description" content="This is just a free image off the internet.
 The image was read in and all non-essential items dropped. The dimensions in raster::raster terms is stored in
 attr(sharkcano, &quot;rasterdim&quot;)." />
+
+
 
 
 
@@ -58,9 +60,15 @@ attr(sharkcano, &quot;rasterdim&quot;)." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +82,7 @@ attr(sharkcano, &quot;rasterdim&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -105,7 +113,7 @@ attr(sharkcano, &quot;rasterdim&quot;)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hypertidy/tabularaster/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,7 +136,7 @@ attr(sharkcano, &quot;rasterdim&quot;)." />
     </div>
 
     <div class="ref-description">
-    <p>This is just a free image off the internetz.
+    <p>This is just a free image off the internet.
 The image was read in and all non-essential items dropped. The dimensions in <code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster</a></code> terms is stored in
 <code><a href='https://rdrr.io/r/base/attr.html'>attr(sharkcano, "rasterdim")</a></code>.</p>
     </div>
@@ -154,13 +162,13 @@ Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennyb
 <span class='va'>rastershark</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA_integer_</span>, <span class='va'>rd</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='va'>rd</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>rastershark</span><span class='op'>[</span><span class='va'>sharkcano</span><span class='op'>$</span><span class='va'>cell_</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>sharkcano</span><span class='op'>$</span><span class='va'>byte</span>  <span class='co'>## byte, heh</span>
 <span class='co'>## I present to you, Sharkcano!  (Just wait for the 3D version, Quadshark).</span>
-<span class='co'>#plot(rastercano)</span>
-<span class='co'>#contour(rastershark, add = TRUE, labels = FALSE)</span>
-<span class='co'>#plot(rastershark, col = "black")</span>
-<span class='co'>## another way</span>
-<span class='co'>#plot(rastercano)</span>
-<span class='co'>#points(xyFromCell(rastershark, sharkcano$cell_), pch = ".")</span>
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>rastercano</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/contour.html'>contour</a></span><span class='op'>(</span><span class='va'>rastershark</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, labels <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='sharkcano-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>rastershark</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
+</div><div class='img'><img src='sharkcano-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>## another way</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>rastercano</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/xyFromCell.html'>xyFromCell</a></span><span class='op'>(</span><span class='va'>rastershark</span>, <span class='va'>sharkcano</span><span class='op'>$</span><span class='va'>cell_</span><span class='op'>)</span>, pch <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
+</div><div class='img'><img src='sharkcano-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -172,11 +180,11 @@ Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennyb
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael D. Sumner.</p>
+  <p><p>Developed by Michael D. Sumner.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
 </div>
 
       </footer>
@@ -184,6 +192,8 @@ Thanks to @jennybc for pointers on finding free stuff: https://github.com/jennyb
 
   
 
+
+  
 
   </body>
 </html>
