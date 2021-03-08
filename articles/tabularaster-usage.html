@@ -234,8 +234,8 @@
 <pre><code>## # A tibble: 2 x 2
 ##   dimindex                n
 ##   &lt;dttm&gt;              &lt;int&gt;
-## 1 2021-03-08 22:32:44  5307
-## 2 2021-03-08 22:32:53  5307</code></pre>
+## 1 2021-03-08 22:46:28  5307
+## 2 2021-03-08 22:46:37  5307</code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">btime</span>, split_date <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 10,614 x 5
@@ -293,7 +293,7 @@
 <pre><code>## projections not the same 
 ##     x: +proj=longlat +datum=WGS84
 ## query: NAFALSE</code></pre>
-<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'TRUE</code></pre>
+<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
 <pre><code>## # A tibble: 63 x 2
 ##    object_ cell_
 ##      &lt;int&gt; &lt;dbl&gt;
@@ -319,29 +319,28 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>v.pct <span class="op">=</span> <span class="va">count</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'object_'. You can override using the `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 19 x 4
+<pre><code>## # A tibble: 18 x 4
 ## # Groups:   object_ [2]
 ##    object_     v count  v.pct
 ##      &lt;int&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-##  1       1     2     4 0.105 
-##  2       1     3     1 0.0263
-##  3       1     4     8 0.211 
+##  1       1     2     3 0.0789
+##  2       1     3     4 0.105 
+##  3       1     4     5 0.132 
 ##  4       1     5     8 0.211 
-##  5       1     6     5 0.132 
-##  6       1     7     5 0.132 
-##  7       1     8     2 0.0526
+##  5       1     6     3 0.0789
+##  6       1     7     8 0.211 
+##  7       1     8     4 0.105 
 ##  8       1     9     3 0.0789
-##  9       1    10     2 0.0526
-## 10       2     1     1 0.04  
-## 11       2     2     4 0.16  
-## 12       2     3     3 0.12  
-## 13       2     4     2 0.08  
-## 14       2     5     2 0.08  
-## 15       2     6     3 0.12  
-## 16       2     7     2 0.08  
-## 17       2     8     4 0.16  
-## 18       2     9     3 0.12  
-## 19       2    10     1 0.04</code></pre>
+##  9       2     1     1 0.04  
+## 10       2     2     6 0.24  
+## 11       2     3     1 0.04  
+## 12       2     4     2 0.08  
+## 13       2     5     2 0.08  
+## 14       2     6     4 0.16  
+## 15       2     7     2 0.08  
+## 16       2     8     2 0.08  
+## 17       2     9     3 0.12  
+## 18       2    10     2 0.08</code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## here is the traditional code used in the stackoverflow example</span>
 <span class="co"># Extract raster values to polygons                             </span>
@@ -360,7 +359,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sst_regions"</span><span class="op">)</span> <span class="co">## a polygon layer, contiguous with ghrsst</span>
 
 <span class="va">gcells</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span><span class="op">(</span><span class="va">ghrsst</span>, <span class="va">sst_regions</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>object_ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">object_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'TRUE</code></pre>
+<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">gcells</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sst <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">ghrsst</span>, <span class="va">cell_</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">object_</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -390,7 +389,7 @@
 <pre><code>## projections not the same 
 ##     x: NA
 ## query: NAFALSE</code></pre>
-<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'TRUE</code></pre>
+<pre><code>## cellnumbers is very slow for SpatialPolygons, consider conversion with 'sf::st_as_sf'</code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cellnumbers.html">cellnumbers</a></span><span class="op">(</span><span class="va">rastercano</span>, <span class="fu">as</span><span class="op">(</span><span class="va">polycano</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span>, <span class="st">"SpatialLinesDataFrame"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 305 x 2
@@ -416,15 +415,15 @@
 ##    object_ cell_
 ##      &lt;int&gt; &lt;dbl&gt;
 ##  1       1  1129
-##  2       1  1129
-##  3       1  1251
-##  4       1  1251
-##  5       1  1129
-##  6       1  1098
-##  7       1  1098
-##  8       1  1098
-##  9       1  1098
-## 10       1  1037
+##  2       2  1129
+##  3       3  1251
+##  4       4  1251
+##  5       5  1129
+##  6       6  1098
+##  7       7  1098
+##  8       8  1098
+##  9       9  1098
+## 10      10  1037
 ## # … with 321 more rows</code></pre>
 </div>
   </div>
