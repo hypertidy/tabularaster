@@ -6,10 +6,10 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
-[![Lifecycle_stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![R_build_status](https://github.com/hypertidy/tabularaster/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/tabularaster/actions?query=workflow%3AR-CMD-check)
 [![R_build_status](https://github.com/hypertidy/tabularaster/workflows/test-coverage/badge.svg)](https://github.com/hypertidy/tabularaster/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/tabularaster)](https://CRAN.R-project.org/package=tabularaster)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 ```{r, echo = FALSE}
