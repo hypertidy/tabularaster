@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -69,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/hypertidy/tabularaster/">
+  <a href="https://github.com/hypertidy/tabularaster/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,9 +88,9 @@
   <div class="contents col-md-9">
 
 
-<div id="tabularaster" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#tabularaster" class="anchor"></a>tabularaster</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="tabularaster">tabularaster<a class="anchor" aria-label="anchor" href="#tabularaster"></a>
+</h1></div>
 <p>The <code>raster</code> package is extremely powerful for spatial data. It provides very efficient data extraction and summary tools via consistent cell-index and comprehensive set of functions for working with grids, cells and their values.</p>
 <p>Tabularaster provides some more helpers for working with cells and tries to fill some of the (very few!) gaps in raster functionality. When raster returns cell values of hierarchical objects it returns a hierarchical (list) of cells to match the input query, while <code><a href="reference/cellnumbers.html">tabularaster::cellnumbers</a></code> instead returns a data frame of identifiers and cell numbers.</p>
 <p>Tabularaster provides these functions.</p>
@@ -106,31 +106,31 @@
 <p>All functions that work with <code>sp Spatial</code> also work with <code>sf simple features</code>.</p>
 <p>There is some overlap with <code>quadmesh</code> and <code>spex</code> while I figure out where things belong.</p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <p>Install from CRAN,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tabularaster"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tabularaster"</span><span class="op">)</span></span></code></pre></div>
 <p>or get the development version from Github.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"hypertidy/tabularaster"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"hypertidy/tabularaster"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h1>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
 <p>Basic usage is to extract the cell numbers from an object, where object is a a matrix of points, a <code>Spatial</code> object or a <code>simple features sf</code> object.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cellnumbers.html">cellnumbers</a></span><span class="op">(</span><span class="va">raster</span>, <span class="va">object</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cellnumbers.html">cellnumbers</a></span><span class="op">(</span><span class="va">raster</span>, <span class="va">object</span><span class="op">)</span></span></code></pre></div>
 <p>The value in this approach is not for getting cell numbers per se, but for using those downstream. The cell number is an index into the raster that means the geometric hard work is done, so we can apply the index for subsequent extractions, grouping aggregations, or for determining the coordinates or other structure summaries of where the cell belongs.</p>
 <p>E.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">## summarize by object grouping</span>
-<span class="va">cells</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>value<span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">raster</span>, <span class="va">cell_</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">object_</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">## summarize by cell grouping</span>
-<span class="va">cells</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>value<span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">raster</span>, <span class="va">cell_</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">cell_</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">summarize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co">## summarize by object grouping</span></span>
+<span><span class="va">cells</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">mutate</span><span class="op">(</span>value<span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">raster</span>, <span class="va">cell_</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">group_by</span><span class="op">(</span><span class="va">object_</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">summarize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## summarize by cell grouping</span></span>
+<span><span class="va">cells</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">mutate</span><span class="op">(</span>value<span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">raster</span>, <span class="va">cell_</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">group_by</span><span class="op">(</span><span class="va">cell_</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">summarize</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The utility of this is very much dependent on individual workflow, so this in its own right is not very exciting: Tabularaster simply provides an easier way to create news tools when format vagaries aren’t your day job.</p>
 <p>See the vignettes for more.</p>
 <hr>
@@ -143,19 +143,16 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=tabularaster">https://​cloud.r-project.org/​package=tabularaster</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/hypertidy/tabularaster/">https://​github.com/​hypertidy/​tabularaster/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/hypertidy/tabularaster/issues">https://​github.com/​hypertidy/​tabularaster/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=tabularaster" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/hypertidy/tabularaster/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/hypertidy/tabularaster/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
 
@@ -163,6 +160,13 @@
 <h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing tabularaster</a></li>
 </ul>
 </div>
 
@@ -176,10 +180,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle_stable"></a></li>
-<li><a href="https://github.com/hypertidy/tabularaster/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/hypertidy/tabularaster/workflows/R-CMD-check/badge.svg" alt="R_build_status"></a></li>
-<li><a href="https://github.com/hypertidy/tabularaster/actions" class="external-link"><img src="https://github.com/hypertidy/tabularaster/workflows/test-coverage/badge.svg" alt="R_build_status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=tabularaster" class="external-link"><img src="https://www.r-pkg.org/badges/version/tabularaster" alt="CRAN status"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://github.com/hypertidy/tabularaster/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/hypertidy/tabularaster/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
@@ -194,7 +197,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

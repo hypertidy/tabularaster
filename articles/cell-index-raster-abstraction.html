@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tabularaster</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -78,15 +78,15 @@
 
       
 
-      </header><script src="cell-index-raster-abstraction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>The raster functions for cell abstraction</h1>
                         <h4 data-toc-skip class="author">Michael Sumner</h4>
             
-            <h4 data-toc-skip class="date">2021-03-08</h4>
+            <h4 data-toc-skip class="date">2022-10-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/hypertidy/tabularaster/blob/master/vignettes/cell-index-raster-abstraction.Rmd" class="external-link"><code>vignettes/cell-index-raster-abstraction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/hypertidy/tabularaster/blob/HEAD/vignettes/cell-index-raster-abstraction.Rmd" class="external-link"><code>vignettes/cell-index-raster-abstraction.Rmd</code></a></small>
       <div class="hidden name"><code>cell-index-raster-abstraction.Rmd</code></div>
 
     </div>
@@ -96,7 +96,7 @@
 <p>The following functions in the <code>raster</code> package are designed to work with cell indexes.</p>
 <p><code>fun(r, cell)</code></p>
 <ul>
-<li><code><a href="https://rdrr.io/r/base/Extract.html" class="external-link">[</a></code></li>
+<li><code>[</code></li>
 <li><code>adjacent</code></li>
 <li><code>colFromCell</code></li>
 <li><code>extentFromCells</code></li>
@@ -129,7 +129,7 @@
 <code>setValues</code> will work as <code>fun(r, vals, index)</code> only for <code>RasterLayerSparse</code>
 </li>
 <li>
-<code><a href="https://rdrr.io/pkg/raster/man/extent.html" class="external-link">extent(Raster, r1, r2, c1, c2)</a></code> to crop an extent by row/column</li>
+<code>extent(Raster, r1, r2, c1, c2)</code> to crop an extent by row/column</li>
 </ul>
 </div>
 
@@ -148,7 +148,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
