@@ -2,12 +2,11 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![R\_build\_status](https://github.com/hypertidy/tabularaster/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/tabularaster/actions?query=workflow%3AR-CMD-check)
-[![R\_build\_status](https://github.com/hypertidy/tabularaster/workflows/test-coverage/badge.svg)](https://github.com/hypertidy/tabularaster/actions)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/tabularaster)](https://CRAN.R-project.org/package=tabularaster)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![R-CMD-check](https://github.com/hypertidy/tabularaster/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/tabularaster/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # tabularaster
@@ -72,6 +71,7 @@ the coordinates or other structure summaries of where the cell belongs.
 E.g.
 
 ``` r
+
 ## summarize by object grouping
 cells %>% mutate(value= extract(raster, cell_)) %>% group_by(object_) %>% summarize(mean(value))
 
