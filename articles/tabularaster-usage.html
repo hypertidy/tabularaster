@@ -84,7 +84,7 @@
       <h1 data-toc-skip>Tabularaster</h1>
                         <h4 data-toc-skip class="author">Michael D. Sumner</h4>
             
-            <h4 data-toc-skip class="date">2022-10-16</h4>
+            <h4 data-toc-skip class="date">2022-10-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hypertidy/tabularaster/blob/HEAD/vignettes/tabularaster-usage.Rmd" class="external-link"><code>vignettes/tabularaster-usage.Rmd</code></a></small>
       <div class="hidden name"><code>tabularaster-usage.Rmd</code></div>
@@ -231,23 +231,23 @@
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
 <span><span class="co">##   dimindex                n</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> 2022-10-16 <span style="color: #949494;">23:04:03</span>  <span style="text-decoration: underline;">5</span>307</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> 2022-10-16 <span style="color: #949494;">23:04:12</span>  <span style="text-decoration: underline;">5</span>307</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 2022-10-17 <span style="color: #949494;">01:02:14</span>  <span style="text-decoration: underline;">5</span>307</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 2022-10-17 <span style="color: #949494;">01:02:23</span>  <span style="text-decoration: underline;">5</span>307</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">btime</span>, split_date <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10,614 × 5</span></span></span>
-<span><span class="co">##    cellvalue cellindex  year month   day</span></span>
-<span><span class="co">##        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>       100         1  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>       100         2  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>       101         3  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>       101         4  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>       101         5  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>       101         6  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>       101         7  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>       100         8  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>       100         9  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>       100        10  <span style="text-decoration: underline;">2</span>022    10    16</span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10,614 × 3</span></span></span>
+<span><span class="co">##    cellvalue cellindex dimindex           </span></span>
+<span><span class="co">##        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>       100         1 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>       100         2 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>       101         3 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>       101         4 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>       101         5 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>       101         6 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>       101         7 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>       100         8 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>       100         9 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>       100        10 2022-10-17 <span style="color: #949494;">01:02:14</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 10,604 more rows</span></span></span></code></pre>
 </div>
 </div>
@@ -317,28 +317,29 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>v.pct <span class="op">=</span> <span class="va">count</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## `summarise()` has grouped output by 'object_'. You can override using the</span></span>
 <span><span class="co">## `.groups` argument.</span></span></code></pre>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 18 × 4</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 19 × 4</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   object_ [2]</span></span></span>
 <span><span class="co">##    object_     v count  v.pct</span></span>
 <span><span class="co">##      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>       1     1     5 0.132 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>       1     2     6 0.158 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>       1     3     4 0.105 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>       1     4     3 0.078<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>       1     5     4 0.105 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>       1     6     2 0.052<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>       1     7     3 0.078<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>       1     1     1 0.026<span style="text-decoration: underline;">3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>       1     2     4 0.105 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>       1     3     8 0.211 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>       1     4     2 0.052<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>       1     5     8 0.211 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>       1     6     5 0.132 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>       1     7     1 0.026<span style="text-decoration: underline;">3</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span>       1     8     8 0.211 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>       1     9     3 0.078<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>       2     2     3 0.12  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span>       2     3     4 0.16  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span>       2     4     4 0.16  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span>       2     5     2 0.08  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span>       2     6     2 0.08  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">15</span>       2     7     3 0.12  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">16</span>       2     8     4 0.16  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">17</span>       2     9     2 0.08  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">18</span>       2    10     1 0.04</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>       1     9     1 0.026<span style="text-decoration: underline;">3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>       2     1     3 0.12  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span>       2     2     2 0.08  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span>       2     3     5 0.2   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span>       2     4     3 0.12  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span>       2     5     1 0.04  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">15</span>       2     6     2 0.08  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">16</span>       2     7     3 0.12  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">17</span>       2     8     4 0.16  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">18</span>       2     9     1 0.04  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">19</span>       2    10     1 0.04</span></span></code></pre>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## here is the traditional code used in the stackoverflow example</span></span>
 <span><span class="co"># Extract raster values to polygons                             </span></span>
