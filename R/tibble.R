@@ -47,7 +47,10 @@
 #' @name as_tibble
 as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value = TRUE, split_date = FALSE, xy = FALSE,  ...) {
   dimindex <- raster::getZ(x)
-  
+  if (!(inherits(dimindex, "Date") || inherits(dimindex, "POSIXt"))) {
+    ## we can't do this if Z isn't this class, because R 4.3 allows as.Date(1) for example #31
+    split_date <- FALSE
+  }
   if (is.null(dimindex)) {
     dimindex <- seq(raster::nlayers(x))
     if (split_date) {
@@ -66,7 +69,7 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
   d <- dplyr::bind_cols(cellvalue = cellvalue, cellindex = cellindex)
   if (dim) {
     dimindex <- rep(dimindex, each = ncell(x))
-    if (split_date) {
+    if (split_date && inherits(dimindex, "Date")) {
       d <- dplyr::mutate(d, year = as.integer(format(dimindex, "%Y")), 
                                 month = as.integer(format(dimindex, "%m")), 
                                 day = as.integer(format(dimindex, "%d")))
