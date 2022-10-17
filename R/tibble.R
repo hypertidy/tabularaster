@@ -47,6 +47,7 @@
 #' @name as_tibble
 as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value = TRUE, split_date = FALSE, xy = FALSE,  ...) {
   dimindex <- raster::getZ(x)
+
   if (!(inherits(dimindex, "Date") || inherits(dimindex, "POSIXt"))) {
     ## we can't do this if Z isn't this class, because R 4.3 allows as.Date(1) for example #31
     split_date <- FALSE
@@ -61,7 +62,12 @@ as_tibble.BasicRaster <- function(x, cell = TRUE, dim = nlayers(x) > 1L, value =
         split_date <- FALSE
       }
     }
-  } 
+  } else {
+    if (length(dimindex) != raster::nlayers(x)) {
+      ## warning message in case of #30 
+      warning(sprintf("raster object is invalid, length of getZ(x): '%i' should match nlayers(x): '%i'", length(raster::getZ(x)), raster::nlayers(x)))
+    }
+  }
   
   cellvalue <- cellindex <-  NULL
   if (value) cellvalue <- as.vector(raster::values(x))

@@ -1,5 +1,5 @@
 ---
-title: "Tabularaster"
+title: "Using abularaster"
 author: "Michael D. Sumner"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

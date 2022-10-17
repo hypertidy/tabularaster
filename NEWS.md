@@ -1,3 +1,9 @@
+# tabularaster 0.7.1
+
+* Fix thanks to CRAN, now handling new Date and POSIXt behaviour with integer input #31. 
+
+* More robust to broken raster date-time values, #30. 
+
 # tabularaster 0.7.0
 
 * Fix randomizing order for sf `object_`, thanks to @CaptureOSM https://github.com/hypertidy/tabularaster/issues/29. 
