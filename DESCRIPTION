@@ -1,10 +1,8 @@
 Package: tabularaster
 Type: Package
 Title: Tidy Tools for 'Raster' Data
-Version: 0.7.1
-Authors@R: c(
-    person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre"))
-    )
+Version: 0.7.2
+Authors@R: c(person("Michael D.", "Sumner", , "mdsumner@gmail.com", c("aut", "cre")))
 Description: Facilities to work with vector and raster data in efficient 
  repeatable and systematic work flow. Missing functionality in existing packages 
  is included here to allow extraction from raster data with 'simple features' and 
@@ -24,7 +22,6 @@ Imports:
     silicate,
     spatstat.geom,
     tibble
-RoxygenNote: 7.2.1
 Encoding: UTF-8
 Suggests: 
     covr,

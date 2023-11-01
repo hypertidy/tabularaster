@@ -1,3 +1,7 @@
+# tabularaster 0.7.2
+
+* Fixed namespace doc thanks to CRAN.
+
 # tabularaster 0.7.1
 
 * Fix thanks to CRAN, now handling new Date and POSIXt behaviour with integer input #31. 

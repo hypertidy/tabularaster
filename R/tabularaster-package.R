@@ -1,10 +1,17 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
+
+
 #' Tabular tools for raster
 #' 
 #' Extract and index with raster tidy tools for raster.
 #' 
 #' 
-#' @name tabularaster
-#' @docType package
+#' @name tabularaster-package
 #' @details Tabularaster includes these main functions.  
 #' \tabular{ll}{
 #'  \code{\link{as_tibble}} \tab convert raster data to data frame form, with control over output and form of dimension/coordinate columns \cr
