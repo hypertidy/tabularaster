@@ -30,6 +30,6 @@ Suggests:
     testthat (>= 2.1.0),
     spelling
 VignetteBuilder: knitr
-URL: https://github.com/hypertidy/tabularaster
+URL: https://github.com/hypertidy/tabularaster, https://hypertidy.github.io/tabularaster/
 BugReports: https://github.com/hypertidy/tabularaster/issues
 Language: en-US
